@@ -1,0 +1,14 @@
+{
+  "_note": "SN 정상 구간 baseline 프로파일 (스캐폴드 placeholder). 실제 값은 Normal_Baseline 실험에서 산출해 채운다 — docs/decisions/ADR-002.",
+  "dataset": "SN",
+  "metric": {
+    "system_cpu_max": null
+  },
+  "log": {
+    "error_by_service": {}
+  },
+  "trace": {
+    "dur_p95_us_by_service": {},
+    "error_spans_by_service": {}
+  }
+}
