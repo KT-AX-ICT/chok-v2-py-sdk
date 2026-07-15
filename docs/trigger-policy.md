@@ -25,6 +25,6 @@
 |---|---|
 | Perf CPU Contention | metric cpu_max |
 | Svc_Kill_Media | **재시작 마커 (kill–gap–resume, "Starting" 2회)** — 신규 detector 필요 |
-| Code_Stop_Media | trace 5xx span, NginxThrift TTransportException |
+| Code_Stop_Media | trace 5xx span, NginxThrift `Could not resolve host for client socket.` |
 
 > ⚠️ `coverage_dir_missing`(연구 코드의 code_media 핵심 신호)은 실시간 관측 불가 → ADR-003 참조.
