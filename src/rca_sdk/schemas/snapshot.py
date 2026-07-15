@@ -1,6 +1,7 @@
-"""스냅샷 번들 스키마. snapshot.assembler 가 생성하고 transport.client 가 직렬화한다.
+"""SnapshotBundle — 중앙 FastAPI 전송 계약 (고정 형식).
 
-이 계약은 중앙 FastAPI 수집 API 와 공유된다 → docs/api-contract.md, docs/snapshot-contract.md.
+interface-contract §2.6. 이 구조는 서버와 합의된 고정 형식이다. `raw` 는 원본 JSON 을
+문자열로 감싼 형태(str)로 담는다.
 """
 
 from __future__ import annotations
@@ -9,26 +10,52 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field
 
-from rca_sdk.schemas.events import NormalizedEvent
+
+class Window(BaseModel):
+    start: datetime
+    end: datetime
 
 
 class TriggerInfo(BaseModel):
-    """번들을 유발한 트리거 요약."""
+    trigger_time: datetime
+    triggered_by: list[str] = Field(default_factory=list)  # 발화 모달리티 목록(다중 가능)
+    # raw: dict — 지금은 제외, 추후 추가 여지
 
-    fired_at: datetime
-    dataset: str = "SN"
-    modalities_triggered: list[str] = Field(default_factory=list)
-    suspect_service: str | None = None
-    score: float = 0.0
-    note: str | None = None
+
+class SourceInterval(BaseModel):
+    """roster_status(normalization-spec §2)에서 직렬화된 소스 구간 상태."""
+
+    fileName: str
+    status: str                          # "missing" | "empty" | "data"
+    start: datetime | None = None
+    end: datetime | None = None
+
+
+class ModalityInfo(BaseModel):
+    intervals: list[SourceInterval] = Field(default_factory=list)
+
+
+class BundleRecord(BaseModel):
+    """전송용 얇은 레코드."""
+
+    timestamp: datetime
+    service: str | None = None           # 없으면 None/"" (중앙 agent 가 guessing)
+    raw: str                             # 원본 JSON 을 문자열로 감싼 형태
 
 
 class SnapshotBundle(BaseModel):
-    """pre/post-trigger 윈도의 정규화 이벤트 + 트리거 근거."""
+    bundle_version: str = "1.0"
+    window: Window
+    trigger_info: TriggerInfo
+    modality_info: dict[str, ModalityInfo] = Field(default_factory=dict)  # log/metric/trace
+    logs: list[BundleRecord] = Field(default_factory=list)
+    metrics: list[BundleRecord] = Field(default_factory=list)
+    traces: list[BundleRecord] = Field(default_factory=list)
 
-    bundle_id: str
-    trigger: TriggerInfo
-    window_start: datetime
-    window_end: datetime
-    pre_events: list[NormalizedEvent] = Field(default_factory=list)
-    post_events: list[NormalizedEvent] = Field(default_factory=list)
+
+class SubmissionResult(BaseModel):
+    """Transport.send 결과."""
+
+    accepted: bool
+    job_id: str | None = None
+    error: str | None = None

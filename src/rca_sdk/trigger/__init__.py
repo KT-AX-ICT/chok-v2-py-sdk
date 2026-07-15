@@ -1,9 +1,21 @@
-"""④ 트리거 계층 — baseline 편차 감지 + 다중 모달리티 상관으로 incident 를 수렴한다.
+"""④ 트리거 계층 — 각 trigger별 조건으로 이상을 감지해 낱개 근거(TriggerEvidence)를 낸다.
 
-기존 연구 코드(AnoMod analysis/sn_db/detectors) 의 evaluate/correlate 로직을 실시간 버퍼
-입력에 맞게 포팅한다. 배치 폴더 로딩(detect) 부분은 재작성 대상.
+모달리티 수렴(correlation)은 엣지에서 제외되어 중앙 RCA가 담당한다(§0-4).
 """
 
-from rca_sdk.trigger.models import Candidate, CandidateIncident, ModalitySignal
+from rca_sdk.trigger.detector import TriggerDetector
+from rca_sdk.trigger.models import TriggerEvidence
 
-__all__ = ["Candidate", "CandidateIncident", "ModalitySignal"]
+# [미사용 · 주석처리] correlation 전용 모델 export
+# 사유: correlation 엣지 제외(§0-4)로 Candidate/CandidateIncident/ModalitySignal 이 죽은 코드.
+#       models.py 에서 주석처리됨 → 여기 import/export 도 함께 주석처리. (2026-07-15)
+# from rca_sdk.trigger.models import (
+#     Candidate,
+#     CandidateIncident,
+#     ModalitySignal,
+# )
+
+__all__ = [
+    "TriggerDetector",
+    "TriggerEvidence",
+]

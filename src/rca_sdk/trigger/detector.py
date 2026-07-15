@@ -1,22 +1,27 @@
-"""모달리티별 baseline 편차 감지 (스캐폴드).
+"""TriggerDetector 추상 인터페이스 (스캐폴드).
 
-기존 analysis/detectors 의 evaluate() 순수 함수 로직을 실시간 버퍼 입력으로 포팅한다.
-입력: buffer.window_events() 의 NormalizedEvent 목록 + baseline 프로파일.
-출력: 모달리티별 ModalitySignal.
+새로 들어온 NormalizedBatch 를 버퍼 맥락과 함께 평가해 낱개 근거(TriggerEvidence)를 반환한다.
+트리거 없으면 빈 리스트. 각 detector 는 자기 트리거 조건(threshold)을 직접 들고 있다
+(정상구간 baseline 산출 없음, interface-contract §0-5).
 
-미해결(ADR-003): coverage_dir_missing 처럼 실시간에 관측 불가한 신호는 여기서 제외하고,
-svc_kill(재시작 마커) / code_stop(trace 5xx·TTransportException) 을 실시간 신호로 재정의해야 한다.
+실시간 detector 목록: cpu_spike / trace_5xx / restart_marker(svc_kill) (§0-6, ADR-003).
 """
 
 from __future__ import annotations
 
+from abc import ABC, abstractmethod
 from typing import Any
 
-from rca_sdk.schemas.events import NormalizedEvent
-from rca_sdk.trigger.models import ModalitySignal
+from rca_sdk.buffer.memory_buffer import MemoryBuffer
+from rca_sdk.schemas.events import NormalizedBatch
+from rca_sdk.trigger.models import TriggerEvidence
 
 
-def detect_all(events: list[NormalizedEvent], baseline: dict[str, Any]) -> list[ModalitySignal]:
-    """전체 모달리티 감지 → ModalitySignal 목록 (스캐폴드)."""
-    # TODO: log/metric/trace 각 evaluate 구현 후 취합.
-    return []
+class TriggerDetector(ABC):
+    def __init__(self, condition: dict[str, Any]) -> None:
+        self.condition = condition                 # 각 trigger별 조건(threshold)
+
+    @abstractmethod
+    def evaluate(self, new_batch: NormalizedBatch, buffer: MemoryBuffer) -> list[TriggerEvidence]:
+        """신규 배치 + 버퍼 → 낱개 트리거 근거 목록 (없으면 [])."""
+        raise NotImplementedError

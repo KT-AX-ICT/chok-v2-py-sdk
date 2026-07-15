@@ -2,11 +2,8 @@
 
 from __future__ import annotations
 
-from collections.abc import Iterator
-from typing import Any
-
 from rca_sdk.collectors.base import Collector
-from rca_sdk.schemas.events import Modality
+from rca_sdk.schemas.events import Modality, RawBatch
 
 
 class LogCollector(Collector):
@@ -15,6 +12,6 @@ class LogCollector(Collector):
     def __init__(self, source_root: str) -> None:
         self.source_root = source_root
 
-    def poll(self) -> Iterator[dict[str, Any]]:
-        # TODO: 로그 디렉터리 tail → 신규 라인 dict 산출. docs/data-schema.md 참조.
-        return iter(())
+    def poll(self) -> RawBatch:
+        # TODO: 로그 디렉터리 tail → 신규 라인을 RawBatch.records 로, observed_from/until 세팅.
+        raise NotImplementedError("LogCollector.poll 스캐폴드")
