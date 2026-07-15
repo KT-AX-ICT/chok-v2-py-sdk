@@ -25,6 +25,23 @@ env/
 .DS_Store
 Thumbs.db
 
-# Local data (not committed; use examples/sample_data for shareable fixtures)
+# Local scratch
 scratch/
 *.local.json
+
+# 데이터셋 (ADR-004) — 전체는 833MB 라 MVP 3종의 log/metric/trace 만 커밋한다.
+# 나머지 시나리오와 api_responses/coverage_data 는 별도 공유. 폴더 구조는 README 로 유지.
+datasets/sn/*/*
+!datasets/sn/*/README.md
+!datasets/sn/log_data/Perf_CPU_Contention_*/
+!datasets/sn/log_data/Svc_Kill_Media_*/
+!datasets/sn/log_data/Code_Stop_MediaService_*/
+!datasets/sn/metric_data/Perf_CPU_Contention_*/
+!datasets/sn/metric_data/Svc_Kill_Media_*/
+!datasets/sn/metric_data/Code_Stop_MediaService_*/
+!datasets/sn/trace_data/Perf_CPU_Contention_*/
+!datasets/sn/trace_data/Svc_Kill_Media_*/
+!datasets/sn/trace_data/Code_Stop_MediaService_*/
+
+# 리플레이어 출력 — 실행 시 생성되는 런타임 산출물
+var/

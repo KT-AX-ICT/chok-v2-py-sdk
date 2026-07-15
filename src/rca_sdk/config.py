@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="RCA_", env_file=".env", extra="ignore")
 
     # 전송 대상
-    collect_endpoint: str = "http://localhost:8000/v1/snapshots"
+    collect_endpoint: str = "http://localhost:8000/v1/ingest"
 
     # 관측 루프
     loop_interval_sec: int = 30
@@ -21,8 +21,11 @@ class Settings(BaseSettings):
     # baseline 프로파일  (docs/decisions/ADR-002 참조)
     baseline_profile: str = "sn_normal"
 
-    # 원천 로그 경로
-    source_root: str = "./sample_data"
+    # 원천 로그 경로 - tail이 추적하는 데이터 경로
+    source_root: str = "./var"
+
+    # 원본 데이터셋 경로 - 리플레이어가 source_root로 전달할 데이터셋 경로
+    dataset_root: str = "./datasets/sn"
 
 
 def load_settings() -> Settings:

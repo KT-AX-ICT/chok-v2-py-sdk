@@ -1,0 +1,1001 @@
+[2025-Nov-04 02:56:21.740017] <info>: (ComposePostService.cpp:117:main) Starting the compose-post-service server ...
+[2025-Nov-04 02:58:25.874374] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=486324124695398080, user=6T1]
+[2025-Nov-04 02:58:25.877985] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217228734464 [req_id=486324124695398080]
+[2025-Nov-04 02:58:25.878084] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=486324124695398080]
+Thrift: Tue Nov  4 02:58:25 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 02:58:25.888677] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 02:58:31.247242] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=885796910012121728, user=6T1]
+[2025-Nov-04 02:58:31.248438] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217250734080 [req_id=885796910012121728]
+[2025-Nov-04 02:58:31.248528] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=885796910012121728]
+Thrift: Tue Nov  4 02:58:31 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 02:58:31.259831] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 02:58:36.625463] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1104392347718618240, user=6T1]
+[2025-Nov-04 02:58:36.626799] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217272762368 [req_id=1104392347718618240]
+[2025-Nov-04 02:58:36.626980] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1104392347718618240]
+Thrift: Tue Nov  4 02:58:36 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 02:58:36.638274] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 02:58:41.981806] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=162281387748801600, user=6T1]
+[2025-Nov-04 02:58:41.984158] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217294704640 [req_id=162281387748801600]
+[2025-Nov-04 02:58:41.984269] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=162281387748801600]
+Thrift: Tue Nov  4 02:58:41 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 02:58:41.994076] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 02:58:47.342063] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=953291639474888832, user=6T1]
+[2025-Nov-04 02:58:47.343062] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217316655104 [req_id=953291639474888832]
+[2025-Nov-04 02:58:47.343231] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=953291639474888832]
+Thrift: Tue Nov  4 02:58:47 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 02:58:47.354889] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 02:58:52.693943] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=342887880555957696, user=6T1]
+[2025-Nov-04 02:58:52.695242] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217338576896 [req_id=342887880555957696]
+[2025-Nov-04 02:58:52.695315] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=342887880555957696]
+Thrift: Tue Nov  4 02:58:52 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 02:58:52.705855] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 02:58:58.051863] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=377968913827493824, user=6T1]
+[2025-Nov-04 02:58:58.054040] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217360527360 [req_id=377968913827493824]
+[2025-Nov-04 02:58:58.054110] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=377968913827493824]
+Thrift: Tue Nov  4 02:58:58 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 02:58:58.064252] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 02:59:03.423327] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=603369128777823744, user=6T1]
+[2025-Nov-04 02:59:03.424972] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217382526976 [req_id=603369128777823744]
+[2025-Nov-04 02:59:03.425069] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=603369128777823744]
+Thrift: Tue Nov  4 02:59:03 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 02:59:03.435751] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 02:59:08.774753] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1083013615067335936, user=6T1]
+[2025-Nov-04 02:59:08.775904] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217404444672 [req_id=1083013615067335936]
+[2025-Nov-04 02:59:08.775978] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1083013615067335936]
+Thrift: Tue Nov  4 02:59:08 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 02:59:08.786520] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 02:59:14.144218] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=313476862062451712, user=6T1]
+[2025-Nov-04 02:59:14.146217] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217426440192 [req_id=313476862062451712]
+[2025-Nov-04 02:59:14.146286] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=313476862062451712]
+Thrift: Tue Nov  4 02:59:14 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 02:59:14.157199] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 02:59:19.527090] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=246331862173535168, user=6T1]
+[2025-Nov-04 02:59:19.528304] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217448484864 [req_id=246331862173535168]
+[2025-Nov-04 02:59:19.528377] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=246331862173535168]
+Thrift: Tue Nov  4 02:59:19 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 02:59:19.539775] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 02:59:24.895607] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=490151328678246144, user=6T1]
+[2025-Nov-04 02:59:24.896868] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217470476288 [req_id=490151328678246144]
+[2025-Nov-04 02:59:24.896941] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=490151328678246144]
+Thrift: Tue Nov  4 02:59:24 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 02:59:24.909461] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 02:59:30.261210] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=313809494384816640, user=6T1]
+[2025-Nov-04 02:59:30.263125] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217492455424 [req_id=313809494384816640]
+[2025-Nov-04 02:59:30.263496] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=313809494384816640]
+Thrift: Tue Nov  4 02:59:30 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 02:59:30.273944] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 02:59:35.624610] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=7230384885325946, user=6T1]
+[2025-Nov-04 02:59:35.626133] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217514422272 [req_id=7230384885325946]
+[2025-Nov-04 02:59:35.626203] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=7230384885325946]
+Thrift: Tue Nov  4 02:59:35 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 02:59:35.636603] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 02:59:40.971461] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=902831150455837184, user=6T1]
+[2025-Nov-04 02:59:40.972617] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217536323584 [req_id=902831150455837184]
+[2025-Nov-04 02:59:40.972696] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=902831150455837184]
+Thrift: Tue Nov  4 02:59:40 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 02:59:40.983367] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 02:59:46.321195] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=900604106867593600, user=6T1]
+[2025-Nov-04 02:59:46.323145] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217558237184 [req_id=900604106867593600]
+[2025-Nov-04 02:59:46.323289] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=900604106867593600]
+Thrift: Tue Nov  4 02:59:46 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 02:59:46.333505] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 02:59:51.717691] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=199931370054366240, user=6T1]
+[2025-Nov-04 02:59:51.719167] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217580339200 [req_id=199931370054366240]
+[2025-Nov-04 02:59:51.719261] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=199931370054366240]
+Thrift: Tue Nov  4 02:59:51 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 02:59:51.730168] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 02:59:57.067868] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=664610168315405696, user=6T1]
+[2025-Nov-04 02:59:57.068912] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217602252800 [req_id=664610168315405696]
+[2025-Nov-04 02:59:57.068984] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=664610168315405696]
+Thrift: Tue Nov  4 02:59:57 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 02:59:57.080683] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:00:02.414516] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=127123505366672064, user=6T1]
+[2025-Nov-04 03:00:02.416599] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217624158208 [req_id=127123505366672064]
+[2025-Nov-04 03:00:02.416674] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=127123505366672064]
+Thrift: Tue Nov  4 03:00:02 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:00:02.426969] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:00:07.795295] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=992938581789726208, user=6T1]
+[2025-Nov-04 03:00:07.797201] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217646194688 [req_id=992938581789726208]
+[2025-Nov-04 03:00:07.797412] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=992938581789726208]
+Thrift: Tue Nov  4 03:00:07 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:00:07.808002] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:00:13.162245] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1122847616528820224, user=6T1]
+[2025-Nov-04 03:00:13.163508] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217668177920 [req_id=1122847616528820224]
+[2025-Nov-04 03:00:13.163606] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1122847616528820224]
+Thrift: Tue Nov  4 03:00:13 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:00:13.174430] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:00:18.534797] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=437323912374312064, user=6T1]
+[2025-Nov-04 03:00:18.536658] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217690185728 [req_id=437323912374312064]
+[2025-Nov-04 03:00:18.536746] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=437323912374312064]
+Thrift: Tue Nov  4 03:00:18 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:00:18.546938] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:00:23.887099] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=20460340970636584, user=6T1]
+[2025-Nov-04 03:00:23.888110] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217712103424 [req_id=20460340970636584]
+[2025-Nov-04 03:00:23.888178] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=20460340970636584]
+Thrift: Tue Nov  4 03:00:23 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:00:23.899396] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:00:29.250165] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=30897935045850176, user=6T1]
+[2025-Nov-04 03:00:29.251209] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217734070272 [req_id=30897935045850176]
+[2025-Nov-04 03:00:29.251283] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=30897935045850176]
+Thrift: Tue Nov  4 03:00:29 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:00:29.263322] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:00:34.603160] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=908087361205002368, user=6T1]
+[2025-Nov-04 03:00:34.605407] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217756004352 [req_id=908087361205002368]
+[2025-Nov-04 03:00:34.605486] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=908087361205002368]
+Thrift: Tue Nov  4 03:00:34 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:00:34.615434] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:00:39.969490] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=280197670310834752, user=6T1]
+[2025-Nov-04 03:00:39.970482] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217777979392 [req_id=280197670310834752]
+[2025-Nov-04 03:00:39.970552] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=280197670310834752]
+Thrift: Tue Nov  4 03:00:39 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:00:39.982152] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:00:45.341584] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=970414906722945792, user=6T1]
+[2025-Nov-04 03:00:45.342925] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217799983104 [req_id=970414906722945792]
+[2025-Nov-04 03:00:45.343099] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=970414906722945792]
+Thrift: Tue Nov  4 03:00:45 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:00:45.354260] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:00:50.702181] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=433460826945560448, user=6T1]
+[2025-Nov-04 03:00:50.704225] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217821941760 [req_id=433460826945560448]
+[2025-Nov-04 03:00:50.704297] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=433460826945560448]
+Thrift: Tue Nov  4 03:00:50 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:00:50.743428] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:00:56.091397] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=433187706239056704, user=6T1]
+[2025-Nov-04 03:00:56.092478] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217844015104 [req_id=433187706239056704]
+[2025-Nov-04 03:00:56.092552] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=433187706239056704]
+Thrift: Tue Nov  4 03:00:56 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:00:56.103398] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:01:01.447974] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=97062098573349440, user=6T1]
+[2025-Nov-04 03:01:01.450344] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217865957376 [req_id=97062098573349440]
+[2025-Nov-04 03:01:01.450415] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=97062098573349440]
+Thrift: Tue Nov  4 03:01:01 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:01:01.460366] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:01:06.839827] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=883998480727733248, user=6T1]
+[2025-Nov-04 03:01:06.842712] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217888047104 [req_id=883998480727733248]
+[2025-Nov-04 03:01:06.842843] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=883998480727733248]
+Thrift: Tue Nov  4 03:01:06 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:01:06.852789] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:01:12.200577] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=151240905354864992, user=6T1]
+[2025-Nov-04 03:01:12.201497] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217909997568 [req_id=151240905354864992]
+[2025-Nov-04 03:01:12.201868] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=151240905354864992]
+Thrift: Tue Nov  4 03:01:12 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:01:12.213306] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:01:17.596890] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=167396208329106944, user=6T1]
+[2025-Nov-04 03:01:17.598096] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217932099584 [req_id=167396208329106944]
+[2025-Nov-04 03:01:17.598187] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=167396208329106944]
+Thrift: Tue Nov  4 03:01:17 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:01:17.609905] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:01:22.954596] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1098015365885370880, user=6T1]
+[2025-Nov-04 03:01:22.957010] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217954050048 [req_id=1098015365885370880]
+[2025-Nov-04 03:01:22.957125] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1098015365885370880]
+Thrift: Tue Nov  4 03:01:22 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:01:22.967684] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:01:28.325617] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=275522517096239200, user=6T1]
+[2025-Nov-04 03:01:28.326935] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217976045568 [req_id=275522517096239200]
+[2025-Nov-04 03:01:28.327038] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=275522517096239200]
+Thrift: Tue Nov  4 03:01:28 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:01:28.337833] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:01:33.711582] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=320091145939763008, user=6T1]
+[2025-Nov-04 03:01:33.713196] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118217998106624 [req_id=320091145939763008]
+[2025-Nov-04 03:01:33.713387] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=320091145939763008]
+Thrift: Tue Nov  4 03:01:33 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:01:33.724127] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:01:39.088014] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1085813942204490496, user=6T1]
+[2025-Nov-04 03:01:39.090463] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218020130816 [req_id=1085813942204490496]
+[2025-Nov-04 03:01:39.090540] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1085813942204490496]
+Thrift: Tue Nov  4 03:01:39 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:01:39.101594] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:01:44.444849] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1146386359598792960, user=6T1]
+[2025-Nov-04 03:01:44.446327] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218042068992 [req_id=1146386359598792960]
+[2025-Nov-04 03:01:44.446413] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1146386359598792960]
+Thrift: Tue Nov  4 03:01:44 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:01:44.456999] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:01:49.793704] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=69302311658439376, user=6T1]
+[2025-Nov-04 03:01:49.795534] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218063978496 [req_id=69302311658439376]
+[2025-Nov-04 03:01:49.795611] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=69302311658439376]
+Thrift: Tue Nov  4 03:01:49 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:01:49.805965] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:01:55.174697] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=689464901065572864, user=6T1]
+[2025-Nov-04 03:01:55.177133] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218086023168 [req_id=689464901065572864]
+[2025-Nov-04 03:01:55.177210] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=689464901065572864]
+Thrift: Tue Nov  4 03:01:55 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:01:55.187759] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:02:00.548117] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=436065725402110656, user=6T1]
+[2025-Nov-04 03:02:00.549613] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218108030976 [req_id=436065725402110656]
+[2025-Nov-04 03:02:00.549833] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=436065725402110656]
+Thrift: Tue Nov  4 03:02:00 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:02:00.562269] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:02:05.913657] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=910680505856852992, user=6T1]
+[2025-Nov-04 03:02:05.915020] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218130006016 [req_id=910680505856852992]
+[2025-Nov-04 03:02:05.915102] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=910680505856852992]
+Thrift: Tue Nov  4 03:02:05 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:02:05.926119] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:02:11.284864] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=661394861351026048, user=6T1]
+[2025-Nov-04 03:02:11.287110] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218152009728 [req_id=661394861351026048]
+[2025-Nov-04 03:02:11.287553] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=661394861351026048]
+Thrift: Tue Nov  4 03:02:11 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:02:11.297352] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:02:16.648817] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=414166404449845056, user=6T1]
+[2025-Nov-04 03:02:16.649740] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218173976576 [req_id=414166404449845056]
+[2025-Nov-04 03:02:16.649822] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=414166404449845056]
+Thrift: Tue Nov  4 03:02:16 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:02:16.660575] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:02:22.007183] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=823164377895290112, user=6T1]
+[2025-Nov-04 03:02:22.008223] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218195922944 [req_id=823164377895290112]
+[2025-Nov-04 03:02:22.008322] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=823164377895290112]
+Thrift: Tue Nov  4 03:02:22 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:02:22.021914] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:02:27.371232] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=958464950050930560, user=6T1]
+[2025-Nov-04 03:02:27.373184] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218217897984 [req_id=958464950050930560]
+[2025-Nov-04 03:02:27.373273] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=958464950050930560]
+Thrift: Tue Nov  4 03:02:27 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:02:27.383437] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:02:32.729105] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=524860100498458560, user=6T1]
+[2025-Nov-04 03:02:32.730316] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218239840256 [req_id=524860100498458560]
+[2025-Nov-04 03:02:32.730413] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=524860100498458560]
+Thrift: Tue Nov  4 03:02:32 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:02:32.742107] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:02:38.075184] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=546054663353102144, user=6T1]
+[2025-Nov-04 03:02:38.076339] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218261741568 [req_id=546054663353102144]
+[2025-Nov-04 03:02:38.076430] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=546054663353102144]
+Thrift: Tue Nov  4 03:02:38 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:02:38.087778] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:02:43.427310] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1005433043864807680, user=6T1]
+[2025-Nov-04 03:02:43.429135] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218283663360 [req_id=1005433043864807680]
+[2025-Nov-04 03:02:43.429269] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1005433043864807680]
+Thrift: Tue Nov  4 03:02:43 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:02:43.439731] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:02:48.786230] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1136105002815014528, user=6T1]
+[2025-Nov-04 03:02:48.787431] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218305613824 [req_id=1136105002815014528]
+[2025-Nov-04 03:02:48.787501] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1136105002815014528]
+Thrift: Tue Nov  4 03:02:48 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:02:48.798740] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:02:54.160843] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=362297571077488640, user=6T1]
+[2025-Nov-04 03:02:54.161970] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218327625728 [req_id=362297571077488640]
+[2025-Nov-04 03:02:54.162097] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=362297571077488640]
+Thrift: Tue Nov  4 03:02:54 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:02:54.172489] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:02:59.520590] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=63583063072047536, user=6T1]
+[2025-Nov-04 03:02:59.522561] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218349584384 [req_id=63583063072047536]
+[2025-Nov-04 03:02:59.522733] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=63583063072047536]
+Thrift: Tue Nov  4 03:02:59 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:02:59.533501] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:03:04.879292] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=845560530208352640, user=6T1]
+[2025-Nov-04 03:03:04.880467] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218371530752 [req_id=845560530208352640]
+[2025-Nov-04 03:03:04.880533] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=845560530208352640]
+Thrift: Tue Nov  4 03:03:04 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:03:04.891867] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:03:10.237837] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1050762464549401856, user=6T1]
+[2025-Nov-04 03:03:10.238845] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218393477120 [req_id=1050762464549401856]
+[2025-Nov-04 03:03:10.238915] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1050762464549401856]
+Thrift: Tue Nov  4 03:03:10 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:03:10.249931] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:03:15.589080] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=394405581838855552, user=6T1]
+[2025-Nov-04 03:03:15.591397] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218415403008 [req_id=394405581838855552]
+[2025-Nov-04 03:03:15.591473] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=394405581838855552]
+Thrift: Tue Nov  4 03:03:15 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:03:15.601203] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:03:20.940949] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=516266310661698560, user=6T1]
+[2025-Nov-04 03:03:20.942100] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218437316608 [req_id=516266310661698560]
+[2025-Nov-04 03:03:20.942193] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=516266310661698560]
+Thrift: Tue Nov  4 03:03:20 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:03:20.954078] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:03:26.309562] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=214508257723655840, user=6T1]
+[2025-Nov-04 03:03:26.310666] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218459308032 [req_id=214508257723655840]
+[2025-Nov-04 03:03:26.310756] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=214508257723655840]
+Thrift: Tue Nov  4 03:03:26 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:03:26.321942] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:03:31.668084] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=123628311798885024, user=6T1]
+[2025-Nov-04 03:03:31.670136] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218481258496 [req_id=123628311798885024]
+[2025-Nov-04 03:03:31.670219] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=123628311798885024]
+Thrift: Tue Nov  4 03:03:31 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:03:31.681238] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:03:37.070682] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=600022593656409472, user=6T1]
+[2025-Nov-04 03:03:37.071917] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218503385088 [req_id=600022593656409472]
+[2025-Nov-04 03:03:37.071986] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=600022593656409472]
+Thrift: Tue Nov  4 03:03:37 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:03:37.083806] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:03:42.435256] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=214186823431189568, user=6T1]
+[2025-Nov-04 03:03:42.436509] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218525360128 [req_id=214186823431189568]
+[2025-Nov-04 03:03:42.436576] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=214186823431189568]
+Thrift: Tue Nov  4 03:03:42 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:03:42.484424] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:03:47.817593] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1058588947784762368, user=6T1]
+[2025-Nov-04 03:03:47.819313] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218547408896 [req_id=1058588947784762368]
+[2025-Nov-04 03:03:47.820905] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1058588947784762368]
+Thrift: Tue Nov  4 03:03:47 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:03:47.831192] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:03:53.180827] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=767828609532023296, user=6T1]
+[2025-Nov-04 03:03:53.182238] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218569375744 [req_id=767828609532023296]
+[2025-Nov-04 03:03:53.182315] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=767828609532023296]
+Thrift: Tue Nov  4 03:03:53 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:03:53.193196] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:03:58.552504] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=801150490480565888, user=6T1]
+[2025-Nov-04 03:03:58.553884] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218591375360 [req_id=801150490480565888]
+[2025-Nov-04 03:03:58.553955] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=801150490480565888]
+Thrift: Tue Nov  4 03:03:58 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:03:58.564648] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:04:03.899356] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=337694454771944384, user=6T1]
+[2025-Nov-04 03:04:03.901337] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218613276672 [req_id=337694454771944384]
+[2025-Nov-04 03:04:03.901431] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=337694454771944384]
+Thrift: Tue Nov  4 03:04:03 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:04:03.911744] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:04:09.275579] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=343665054238433280, user=6T1]
+[2025-Nov-04 03:04:09.276578] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218635296768 [req_id=343665054238433280]
+[2025-Nov-04 03:04:09.276709] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=343665054238433280]
+Thrift: Tue Nov  4 03:04:09 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:04:09.303756] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:04:14.679939] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=417179297568297472, user=6T1]
+[2025-Nov-04 03:04:14.681020] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218657431552 [req_id=417179297568297472]
+[2025-Nov-04 03:04:14.681104] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=417179297568297472]
+Thrift: Tue Nov  4 03:04:14 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:04:14.715334] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:04:20.055623] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=336238362000919232, user=6T1]
+[2025-Nov-04 03:04:20.057381] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218679455744 [req_id=336238362000919232]
+[2025-Nov-04 03:04:20.057452] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=336238362000919232]
+Thrift: Tue Nov  4 03:04:20 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:04:20.067657] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:04:25.417252] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=537198254756527872, user=6T1]
+[2025-Nov-04 03:04:25.418218] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218701410304 [req_id=537198254756527872]
+[2025-Nov-04 03:04:25.418286] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=537198254756527872]
+Thrift: Tue Nov  4 03:04:25 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:04:25.430163] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:04:30.763059] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=245442494822000992, user=6T1]
+[2025-Nov-04 03:04:30.763996] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218723307520 [req_id=245442494822000992]
+[2025-Nov-04 03:04:30.764340] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=245442494822000992]
+Thrift: Tue Nov  4 03:04:30 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:04:30.775199] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:04:36.124476] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=928502705130241152, user=6T1]
+[2025-Nov-04 03:04:36.126525] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218745274368 [req_id=928502705130241152]
+[2025-Nov-04 03:04:36.127319] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=928502705130241152]
+Thrift: Tue Nov  4 03:04:36 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:04:36.137104] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:04:41.494626] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1007089917156313216, user=6T1]
+[2025-Nov-04 03:04:41.496244] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218767265792 [req_id=1007089917156313216]
+[2025-Nov-04 03:04:41.496317] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1007089917156313216]
+Thrift: Tue Nov  4 03:04:41 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:04:41.507352] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:04:46.859430] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=471635349514816320, user=6T1]
+[2025-Nov-04 03:04:46.860505] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218789240832 [req_id=471635349514816320]
+[2025-Nov-04 03:04:46.860582] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=471635349514816320]
+Thrift: Tue Nov  4 03:04:46 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:04:46.871327] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:04:52.215448] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=145829871810533280, user=6T1]
+[2025-Nov-04 03:04:52.217299] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218811179008 [req_id=145829871810533280]
+[2025-Nov-04 03:04:52.217401] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=145829871810533280]
+Thrift: Tue Nov  4 03:04:52 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:04:52.227470] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:04:57.571281] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=803292500890888064, user=6T1]
+[2025-Nov-04 03:04:57.572389] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218833117184 [req_id=803292500890888064]
+[2025-Nov-04 03:04:57.572451] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=803292500890888064]
+Thrift: Tue Nov  4 03:04:57 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:04:57.583154] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:05:02.936093] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=705312279034310400, user=6T1]
+[2025-Nov-04 03:05:02.937386] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218855092224 [req_id=705312279034310400]
+[2025-Nov-04 03:05:02.937455] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=705312279034310400]
+Thrift: Tue Nov  4 03:05:02 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:05:02.961486] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:05:08.318296] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=694148600577113344, user=6T1]
+[2025-Nov-04 03:05:08.320262] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218877136896 [req_id=694148600577113344]
+[2025-Nov-04 03:05:08.320353] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=694148600577113344]
+Thrift: Tue Nov  4 03:05:08 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:05:08.331816] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:05:13.715014] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=442065011413733888, user=6T1]
+[2025-Nov-04 03:05:13.716120] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218899238912 [req_id=442065011413733888]
+[2025-Nov-04 03:05:13.716185] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=442065011413733888]
+Thrift: Tue Nov  4 03:05:13 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:05:13.727815] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:05:19.099400] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1056926730772369536, user=6T1]
+[2025-Nov-04 03:05:19.101291] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218921295872 [req_id=1056926730772369536]
+[2025-Nov-04 03:05:19.101917] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1056926730772369536]
+Thrift: Tue Nov  4 03:05:19 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:05:19.111864] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:05:24.472666] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=710581823272077312, user=6T1]
+[2025-Nov-04 03:05:24.475044] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218943307776 [req_id=710581823272077312]
+[2025-Nov-04 03:05:24.475113] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=710581823272077312]
+Thrift: Tue Nov  4 03:05:24 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:05:24.484890] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:05:29.838247] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=550490799074394112, user=6T1]
+[2025-Nov-04 03:05:29.839367] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218965282816 [req_id=550490799074394112]
+[2025-Nov-04 03:05:29.839478] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=550490799074394112]
+Thrift: Tue Nov  4 03:05:29 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:05:29.851070] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:05:35.214450] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=457908927829654144, user=6T1]
+[2025-Nov-04 03:05:35.215540] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118218987302912 [req_id=457908927829654144]
+[2025-Nov-04 03:05:35.215606] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=457908927829654144]
+Thrift: Tue Nov  4 03:05:35 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:05:35.226839] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:05:40.649180] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1002654281231450240, user=6T1]
+[2025-Nov-04 03:05:40.651315] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219009568768 [req_id=1002654281231450240]
+[2025-Nov-04 03:05:40.651408] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1002654281231450240]
+Thrift: Tue Nov  4 03:05:40 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:05:40.661898] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:05:46.069006] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=750835277523033088, user=6T1]
+[2025-Nov-04 03:05:46.070460] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219031764992 [req_id=750835277523033088]
+[2025-Nov-04 03:05:46.070918] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=750835277523033088]
+Thrift: Tue Nov  4 03:05:46 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:05:46.082553] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:05:51.446698] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=117184584115549840, user=6T1]
+[2025-Nov-04 03:05:51.448098] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219053789184 [req_id=117184584115549840]
+[2025-Nov-04 03:05:51.448164] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=117184584115549840]
+Thrift: Tue Nov  4 03:05:51 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:05:51.459828] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:05:56.810671] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=109612749931690288, user=6T1]
+[2025-Nov-04 03:05:56.812554] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219075764224 [req_id=109612749931690288]
+[2025-Nov-04 03:05:56.813448] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=109612749931690288]
+Thrift: Tue Nov  4 03:05:56 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:05:56.823149] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:06:02.163493] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=781550682163291392, user=6T1]
+[2025-Nov-04 03:06:02.164743] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219097686016 [req_id=781550682163291392]
+[2025-Nov-04 03:06:02.164854] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=781550682163291392]
+Thrift: Tue Nov  4 03:06:02 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:06:02.176453] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:06:07.515878] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=798388290397530752, user=6T1]
+[2025-Nov-04 03:06:07.516995] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219119607808 [req_id=798388290397530752]
+[2025-Nov-04 03:06:07.517062] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=798388290397530752]
+Thrift: Tue Nov  4 03:06:07 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:06:07.528660] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:06:12.866245] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=388984562196535872, user=6T1]
+[2025-Nov-04 03:06:12.868262] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219141525504 [req_id=388984562196535872]
+[2025-Nov-04 03:06:12.868364] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=388984562196535872]
+Thrift: Tue Nov  4 03:06:12 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:06:12.878842] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:06:18.220643] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=355208033200728000, user=6T1]
+[2025-Nov-04 03:06:18.221688] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219163455488 [req_id=355208033200728000]
+[2025-Nov-04 03:06:18.222029] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=355208033200728000]
+Thrift: Tue Nov  4 03:06:18 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:06:18.233305] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:06:23.565139] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=256734995595412416, user=6T1]
+[2025-Nov-04 03:06:23.566788] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219185344512 [req_id=256734995595412416]
+[2025-Nov-04 03:06:23.566854] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=256734995595412416]
+Thrift: Tue Nov  4 03:06:23 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:06:23.577839] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:06:28.956061] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=406798848444114752, user=6T1]
+[2025-Nov-04 03:06:28.958585] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219207434240 [req_id=406798848444114752]
+[2025-Nov-04 03:06:28.958661] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=406798848444114752]
+Thrift: Tue Nov  4 03:06:28 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:06:28.967995] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:06:34.330408] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=551767736379868096, user=6T1]
+[2025-Nov-04 03:06:34.331678] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219229442048 [req_id=551767736379868096]
+[2025-Nov-04 03:06:34.331748] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=551767736379868096]
+Thrift: Tue Nov  4 03:06:34 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:06:34.344850] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:06:39.681577] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=178680296206628064, user=6T1]
+[2025-Nov-04 03:06:39.682920] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219251359744 [req_id=178680296206628064]
+[2025-Nov-04 03:06:39.683059] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=178680296206628064]
+Thrift: Tue Nov  4 03:06:39 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:06:39.694114] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:06:45.042947] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=793997840577032320, user=6T1]
+[2025-Nov-04 03:06:45.044785] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219273322496 [req_id=793997840577032320]
+[2025-Nov-04 03:06:45.044861] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=793997840577032320]
+Thrift: Tue Nov  4 03:06:45 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:06:45.070052] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:06:50.407554] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=811587020158371712, user=6T1]
+[2025-Nov-04 03:06:50.408563] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219295293440 [req_id=811587020158371712]
+[2025-Nov-04 03:06:50.408966] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=811587020158371712]
+Thrift: Tue Nov  4 03:06:50 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:06:50.421040] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:06:55.750404] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=374331265302042816, user=6T1]
+[2025-Nov-04 03:06:55.751670] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219317178368 [req_id=374331265302042816]
+[2025-Nov-04 03:06:55.752002] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=374331265302042816]
+Thrift: Tue Nov  4 03:06:55 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:06:55.762305] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:07:01.129287] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=295372488327001472, user=6T1]
+[2025-Nov-04 03:07:01.131837] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219339214848 [req_id=295372488327001472]
+[2025-Nov-04 03:07:01.131956] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=295372488327001472]
+Thrift: Tue Nov  4 03:07:01 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:07:01.141545] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:07:06.474552] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=928299709122670720, user=6T1]
+[2025-Nov-04 03:07:06.475548] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219361103872 [req_id=928299709122670720]
+[2025-Nov-04 03:07:06.476337] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=928299709122670720]
+Thrift: Tue Nov  4 03:07:06 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:07:06.486898] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:07:11.825484] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1100258610827585024, user=6T1]
+[2025-Nov-04 03:07:11.826798] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219383021568 [req_id=1100258610827585024]
+[2025-Nov-04 03:07:11.826878] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1100258610827585024]
+Thrift: Tue Nov  4 03:07:11 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:07:11.842082] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:07:17.195082] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=669878946334835968, user=6T1]
+[2025-Nov-04 03:07:17.197451] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219405021184 [req_id=669878946334835968]
+[2025-Nov-04 03:07:17.197513] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=669878946334835968]
+Thrift: Tue Nov  4 03:07:17 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:07:17.207249] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:07:22.540524] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=424645855267243200, user=6T1]
+[2025-Nov-04 03:07:22.541902] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219426910208 [req_id=424645855267243200]
+[2025-Nov-04 03:07:22.542055] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=424645855267243200]
+Thrift: Tue Nov  4 03:07:22 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:07:22.552985] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:07:27.888630] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=487848832210035136, user=6T1]
+[2025-Nov-04 03:07:27.890410] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219448815616 [req_id=487848832210035136]
+[2025-Nov-04 03:07:27.890478] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=487848832210035136]
+Thrift: Tue Nov  4 03:07:27 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:07:27.901049] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:07:33.239927] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=671804139569838976, user=6T1]
+[2025-Nov-04 03:07:33.241947] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219470737408 [req_id=671804139569838976]
+[2025-Nov-04 03:07:33.242140] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=671804139569838976]
+Thrift: Tue Nov  4 03:07:33 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:07:33.253121] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:07:38.614525] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=590901127732598144, user=6T1]
+[2025-Nov-04 03:07:38.615992] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219492749312 [req_id=590901127732598144]
+[2025-Nov-04 03:07:38.616066] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=590901127732598144]
+Thrift: Tue Nov  4 03:07:38 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:07:38.627414] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:07:43.961278] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=685108665934302464, user=6T1]
+[2025-Nov-04 03:07:43.962574] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219514650624 [req_id=685108665934302464]
+[2025-Nov-04 03:07:43.963142] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=685108665934302464]
+Thrift: Tue Nov  4 03:07:43 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:07:43.973803] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:07:49.316881] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=879940644530727168, user=6T1]
+[2025-Nov-04 03:07:49.318891] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219536588800 [req_id=879940644530727168]
+[2025-Nov-04 03:07:49.318962] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=879940644530727168]
+Thrift: Tue Nov  4 03:07:49 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:07:49.329301] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:07:54.656977] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=837715499729784064, user=6T1]
+[2025-Nov-04 03:07:54.657985] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219558457344 [req_id=837715499729784064]
+[2025-Nov-04 03:07:54.658116] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=837715499729784064]
+Thrift: Tue Nov  4 03:07:54 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:07:54.669061] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:08:00.007611] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1096612632196493568, user=6T1]
+[2025-Nov-04 03:08:00.009537] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219580379136 [req_id=1096612632196493568]
+[2025-Nov-04 03:08:00.009654] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1096612632196493568]
+Thrift: Tue Nov  4 03:08:00 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:08:00.019734] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:08:05.375615] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=537916360777089152, user=6T1]
+[2025-Nov-04 03:08:05.377616] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219602366464 [req_id=537916360777089152]
+[2025-Nov-04 03:08:05.378466] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=537916360777089152]
+Thrift: Tue Nov  4 03:08:05 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:08:05.387950] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:08:10.724341] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=766355323932337280, user=6T1]
+[2025-Nov-04 03:08:10.725821] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219624271872 [req_id=766355323932337280]
+[2025-Nov-04 03:08:10.726031] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=766355323932337280]
+Thrift: Tue Nov  4 03:08:10 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:08:10.737017] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:08:16.070582] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=91928095792337792, user=6T1]
+[2025-Nov-04 03:08:16.072070] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219646169088 [req_id=91928095792337792]
+[2025-Nov-04 03:08:16.072143] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=91928095792337792]
+Thrift: Tue Nov  4 03:08:16 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:08:16.082690] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:08:21.426566] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=723513532576319872, user=6T1]
+[2025-Nov-04 03:08:21.429866] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219668115456 [req_id=723513532576319872]
+[2025-Nov-04 03:08:21.429939] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=723513532576319872]
+Thrift: Tue Nov  4 03:08:21 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:08:21.439662] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:08:26.794648] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=361352282652264576, user=6T1]
+[2025-Nov-04 03:08:26.796076] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219690094592 [req_id=361352282652264576]
+[2025-Nov-04 03:08:26.796154] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=361352282652264576]
+Thrift: Tue Nov  4 03:08:26 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:08:26.864106] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:08:32.206358] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=448556981571493248, user=6T1]
+[2025-Nov-04 03:08:32.207623] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219712262144 [req_id=448556981571493248]
+[2025-Nov-04 03:08:32.207690] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=448556981571493248]
+Thrift: Tue Nov  4 03:08:32 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:08:32.219378] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:08:37.564300] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=383658343172476480, user=6T1]
+[2025-Nov-04 03:08:37.566327] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219734212608 [req_id=383658343172476480]
+[2025-Nov-04 03:08:37.566405] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=383658343172476480]
+Thrift: Tue Nov  4 03:08:37 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:08:37.576524] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:08:42.911680] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1094363097858601216, user=6T1]
+[2025-Nov-04 03:08:42.912818] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219756109824 [req_id=1094363097858601216]
+[2025-Nov-04 03:08:42.913096] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1094363097858601216]
+Thrift: Tue Nov  4 03:08:42 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:08:42.924163] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:08:48.256616] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=313501386601336768, user=6T1]
+[2025-Nov-04 03:08:48.257823] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219778002944 [req_id=313501386601336768]
+[2025-Nov-04 03:08:48.257908] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=313501386601336768]
+Thrift: Tue Nov  4 03:08:48 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:08:48.269004] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:08:53.602640] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=884749549101069312, user=6T1]
+[2025-Nov-04 03:08:53.604946] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219799904256 [req_id=884749549101069312]
+[2025-Nov-04 03:08:53.605023] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=884749549101069312]
+Thrift: Tue Nov  4 03:08:53 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:08:53.614746] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:08:58.950079] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1086571472068600960, user=6T1]
+[2025-Nov-04 03:08:58.951198] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219821801472 [req_id=1086571472068600960]
+[2025-Nov-04 03:08:58.951291] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1086571472068600960]
+Thrift: Tue Nov  4 03:08:58 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:08:58.962713] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:09:04.336105] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=35244223616834636, user=6T1]
+[2025-Nov-04 03:09:04.337543] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219843866624 [req_id=35244223616834636]
+[2025-Nov-04 03:09:04.337618] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=35244223616834636]
+Thrift: Tue Nov  4 03:09:04 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:09:04.348397] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:09:09.701844] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=109868290038782320, user=6T1]
+[2025-Nov-04 03:09:09.703991] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219865845760 [req_id=109868290038782320]
+[2025-Nov-04 03:09:09.704175] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=109868290038782320]
+Thrift: Tue Nov  4 03:09:09 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:09:09.713886] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:09:15.067871] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=994838136601657216, user=6T1]
+[2025-Nov-04 03:09:15.068957] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219887820800 [req_id=994838136601657216]
+[2025-Nov-04 03:09:15.069117] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=994838136601657216]
+Thrift: Tue Nov  4 03:09:15 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:09:15.080166] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:09:20.430694] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=440168561203177792, user=6T1]
+[2025-Nov-04 03:09:20.431922] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219909787648 [req_id=440168561203177792]
+[2025-Nov-04 03:09:20.431993] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=440168561203177792]
+Thrift: Tue Nov  4 03:09:20 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:09:20.442923] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:09:25.783949] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=560682232071200000, user=6T1]
+[2025-Nov-04 03:09:25.786236] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219931717632 [req_id=560682232071200000]
+[2025-Nov-04 03:09:25.786406] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=560682232071200000]
+Thrift: Tue Nov  4 03:09:25 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:09:25.796090] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:09:31.139122] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=251196555592217920, user=6T1]
+[2025-Nov-04 03:09:31.140233] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219953647616 [req_id=251196555592217920]
+[2025-Nov-04 03:09:31.140326] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=251196555592217920]
+Thrift: Tue Nov  4 03:09:31 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:09:31.151704] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:09:36.493330] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=926520061978403200, user=6T1]
+[2025-Nov-04 03:09:36.494357] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219975581696 [req_id=926520061978403200]
+[2025-Nov-04 03:09:36.494423] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=926520061978403200]
+Thrift: Tue Nov  4 03:09:36 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:09:36.506312] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:09:41.845430] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=292574677422884224, user=6T1]
+[2025-Nov-04 03:09:41.847196] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118219997503488 [req_id=292574677422884224]
+[2025-Nov-04 03:09:41.847793] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=292574677422884224]
+Thrift: Tue Nov  4 03:09:41 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:09:41.858101] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:09:47.240360] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=657377545175852416, user=6T1]
+[2025-Nov-04 03:09:47.241590] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220019601408 [req_id=657377545175852416]
+[2025-Nov-04 03:09:47.242460] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=657377545175852416]
+Thrift: Tue Nov  4 03:09:47 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:09:47.252741] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:09:52.581461] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=752084124984343936, user=6T1]
+[2025-Nov-04 03:09:52.582879] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220041478144 [req_id=752084124984343936]
+[2025-Nov-04 03:09:52.582989] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=752084124984343936]
+Thrift: Tue Nov  4 03:09:52 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:09:52.594623] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:09:57.935125] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=896225603788861952, user=6T1]
+[2025-Nov-04 03:09:57.937524] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220063412224 [req_id=896225603788861952]
+[2025-Nov-04 03:09:57.937627] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=896225603788861952]
+Thrift: Tue Nov  4 03:09:57 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:09:57.947954] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:10:03.290288] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=756299934539784192, user=6T1]
+[2025-Nov-04 03:10:03.291352] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220085342208 [req_id=756299934539784192]
+[2025-Nov-04 03:10:03.291693] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=756299934539784192]
+Thrift: Tue Nov  4 03:10:03 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:10:03.302359] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:10:08.654952] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=166287945252643520, user=6T1]
+[2025-Nov-04 03:10:08.656097] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220107313152 [req_id=166287945252643520]
+[2025-Nov-04 03:10:08.656219] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=166287945252643520]
+Thrift: Tue Nov  4 03:10:08 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:10:08.667600] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:10:14.017687] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1028088475319601024, user=6T1]
+[2025-Nov-04 03:10:14.020510] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220129288192 [req_id=1028088475319601024]
+[2025-Nov-04 03:10:14.020595] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1028088475319601024]
+Thrift: Tue Nov  4 03:10:14 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:10:14.029945] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:10:19.388293] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=956669312816997376, user=6T1]
+[2025-Nov-04 03:10:19.390019] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220151279616 [req_id=956669312816997376]
+[2025-Nov-04 03:10:19.390100] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=956669312816997376]
+Thrift: Tue Nov  4 03:10:19 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:10:19.401918] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:10:24.759004] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1003069074624475776, user=6T1]
+[2025-Nov-04 03:10:24.760285] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220173275136 [req_id=1003069074624475776]
+[2025-Nov-04 03:10:24.760401] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1003069074624475776]
+Thrift: Tue Nov  4 03:10:24 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:10:24.772124] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:10:30.124560] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1146770912649342464, user=6T1]
+[2025-Nov-04 03:10:30.126562] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220195258368 [req_id=1146770912649342464]
+[2025-Nov-04 03:10:30.126706] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1146770912649342464]
+Thrift: Tue Nov  4 03:10:30 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:10:30.137329] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:10:35.474578] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=255903680042658368, user=6T1]
+[2025-Nov-04 03:10:35.476204] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220217167872 [req_id=255903680042658368]
+[2025-Nov-04 03:10:35.476292] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=255903680042658368]
+Thrift: Tue Nov  4 03:10:35 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:10:35.486522] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:10:40.817890] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=828587578444246400, user=6T1]
+[2025-Nov-04 03:10:40.819338] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220239052800 [req_id=828587578444246400]
+[2025-Nov-04 03:10:40.819416] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=828587578444246400]
+Thrift: Tue Nov  4 03:10:40 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:10:40.845691] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:10:46.189657] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=700726794786450560, user=6T1]
+[2025-Nov-04 03:10:46.194477] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220261068800 [req_id=700726794786450560]
+[2025-Nov-04 03:10:46.194566] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=700726794786450560]
+Thrift: Tue Nov  4 03:10:46 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:10:46.201972] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:10:51.547898] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1048520773358609664, user=6T1]
+[2025-Nov-04 03:10:51.549197] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220283002880 [req_id=1048520773358609664]
+[2025-Nov-04 03:10:51.549285] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1048520773358609664]
+Thrift: Tue Nov  4 03:10:51 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:10:51.560032] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:10:56.902905] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=280863724250496832, user=6T1]
+[2025-Nov-04 03:10:56.904530] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220304936960 [req_id=280863724250496832]
+[2025-Nov-04 03:10:56.904602] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=280863724250496832]
+Thrift: Tue Nov  4 03:10:56 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:10:56.916124] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:11:02.279858] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=709211623791287424, user=6T1]
+[2025-Nov-04 03:11:02.282347] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220326965248 [req_id=709211623791287424]
+[2025-Nov-04 03:11:02.282664] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=709211623791287424]
+Thrift: Tue Nov  4 03:11:02 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:11:02.292289] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:11:07.651571] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1114274612192333184, user=6T1]
+[2025-Nov-04 03:11:07.652932] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220348964864 [req_id=1114274612192333184]
+[2025-Nov-04 03:11:07.653026] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1114274612192333184]
+Thrift: Tue Nov  4 03:11:07 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:11:07.665366] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:11:13.001185] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=549050633104990272, user=6T1]
+[2025-Nov-04 03:11:13.002986] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220370878464 [req_id=549050633104990272]
+[2025-Nov-04 03:11:13.003097] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=549050633104990272]
+Thrift: Tue Nov  4 03:11:13 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:11:13.013397] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:11:18.376015] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=221873435518088160, user=6T1]
+[2025-Nov-04 03:11:18.377719] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220392894464 [req_id=221873435518088160]
+[2025-Nov-04 03:11:18.377971] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=221873435518088160]
+Thrift: Tue Nov  4 03:11:18 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:11:18.388132] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:11:23.759307] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=319221293498053632, user=6T1]
+[2025-Nov-04 03:11:23.760710] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220414943232 [req_id=319221293498053632]
+[2025-Nov-04 03:11:23.760838] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=319221293498053632]
+Thrift: Tue Nov  4 03:11:23 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:11:23.772035] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:11:29.135335] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=628293010211544704, user=6T1]
+[2025-Nov-04 03:11:29.137001] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220436963328 [req_id=628293010211544704]
+[2025-Nov-04 03:11:29.137118] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=628293010211544704]
+Thrift: Tue Nov  4 03:11:29 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:11:29.147636] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:11:34.489209] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=10883255164537636, user=6T1]
+[2025-Nov-04 03:11:34.490958] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220458893312 [req_id=10883255164537636]
+[2025-Nov-04 03:11:34.491133] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=10883255164537636]
+Thrift: Tue Nov  4 03:11:34 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:11:34.501969] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:11:39.856665] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=698884164231657984, user=6T1]
+[2025-Nov-04 03:11:39.857731] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220480876544 [req_id=698884164231657984]
+[2025-Nov-04 03:11:39.857806] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=698884164231657984]
+Thrift: Tue Nov  4 03:11:39 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:11:39.869311] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:11:45.243887] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=30285517502859768, user=6T1]
+[2025-Nov-04 03:11:45.245427] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220502941696 [req_id=30285517502859768]
+[2025-Nov-04 03:11:45.245520] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=30285517502859768]
+Thrift: Tue Nov  4 03:11:45 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:11:45.256291] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:11:50.639750] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=225504171700201696, user=6T1]
+[2025-Nov-04 03:11:50.641797] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220525047808 [req_id=225504171700201696]
+[2025-Nov-04 03:11:50.641900] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=225504171700201696]
+Thrift: Tue Nov  4 03:11:50 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:11:50.652686] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:11:55.986160] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=247596182254555680, user=6T1]
+[2025-Nov-04 03:11:55.987312] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220546940928 [req_id=247596182254555680]
+[2025-Nov-04 03:11:55.987384] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=247596182254555680]
+Thrift: Tue Nov  4 03:11:55 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:11:55.998278] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:12:01.337987] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=353913096405676288, user=6T1]
+[2025-Nov-04 03:12:01.338941] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220568862720 [req_id=353913096405676288]
+[2025-Nov-04 03:12:01.339013] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=353913096405676288]
+Thrift: Tue Nov  4 03:12:01 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:12:01.350583] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:12:06.726244] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=359725869687722432, user=6T1]
+[2025-Nov-04 03:12:06.728444] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220590940160 [req_id=359725869687722432]
+[2025-Nov-04 03:12:06.728594] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=359725869687722432]
+Thrift: Tue Nov  4 03:12:06 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:12:06.738222] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:12:12.090784] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=668107026745583488, user=6T1]
+[2025-Nov-04 03:12:12.092870] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220612911104 [req_id=668107026745583488]
+[2025-Nov-04 03:12:12.092946] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=668107026745583488]
+Thrift: Tue Nov  4 03:12:12 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:12:12.103206] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:12:17.440219] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=601994553579911552, user=6T1]
+[2025-Nov-04 03:12:17.441345] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220634816512 [req_id=601994553579911552]
+[2025-Nov-04 03:12:17.442666] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=601994553579911552]
+Thrift: Tue Nov  4 03:12:17 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:12:17.452300] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:12:22.792978] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=802897110694590208, user=6T1]
+[2025-Nov-04 03:12:22.794934] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220656746496 [req_id=802897110694590208]
+[2025-Nov-04 03:12:22.795047] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=802897110694590208]
+Thrift: Tue Nov  4 03:12:22 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:12:22.806322] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:12:28.161189] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=325290648471208064, user=6T1]
+[2025-Nov-04 03:12:28.162658] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220678733824 [req_id=325290648471208064]
+[2025-Nov-04 03:12:28.162730] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=325290648471208064]
+Thrift: Tue Nov  4 03:12:28 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:12:28.172919] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:12:33.528239] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=346340799333726400, user=6T1]
+[2025-Nov-04 03:12:33.529903] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220700717056 [req_id=346340799333726400]
+[2025-Nov-04 03:12:33.530059] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=346340799333726400]
+Thrift: Tue Nov  4 03:12:33 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:12:33.540725] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:12:38.890742] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=650891869389843072, user=6T1]
+[2025-Nov-04 03:12:38.892756] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220722683904 [req_id=650891869389843072]
+[2025-Nov-04 03:12:38.892840] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=650891869389843072]
+Thrift: Tue Nov  4 03:12:38 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:12:38.903291] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:12:44.259899] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=483464010360984704, user=6T1]
+[2025-Nov-04 03:12:44.261136] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220744671232 [req_id=483464010360984704]
+[2025-Nov-04 03:12:44.261212] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=483464010360984704]
+Thrift: Tue Nov  4 03:12:44 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:12:44.272364] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:12:49.620051] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=273938838115634528, user=6T1]
+[2025-Nov-04 03:12:49.621104] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220766625792 [req_id=273938838115634528]
+[2025-Nov-04 03:12:49.621286] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=273938838115634528]
+Thrift: Tue Nov  4 03:12:49 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:12:49.632416] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:12:54.970729] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1043240856408261248, user=6T1]
+[2025-Nov-04 03:12:54.972542] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220788547584 [req_id=1043240856408261248]
+[2025-Nov-04 03:12:54.972617] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1043240856408261248]
+Thrift: Tue Nov  4 03:12:54 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:12:54.992808] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:13:00.332857] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=478432982569196608, user=6T1]
+[2025-Nov-04 03:13:00.334184] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220810506240 [req_id=478432982569196608]
+[2025-Nov-04 03:13:00.334393] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=478432982569196608]
+Thrift: Tue Nov  4 03:13:00 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:13:00.345569] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:13:05.736345] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=375653650934055680, user=6T1]
+[2025-Nov-04 03:13:05.737902] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220832641024 [req_id=375653650934055680]
+[2025-Nov-04 03:13:05.738019] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=375653650934055680]
+Thrift: Tue Nov  4 03:13:05 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:13:05.748995] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:13:11.100842] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=557386124994293760, user=6T1]
+[2025-Nov-04 03:13:11.103098] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220854616064 [req_id=557386124994293760]
+[2025-Nov-04 03:13:11.103174] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=557386124994293760]
+Thrift: Tue Nov  4 03:13:11 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:13:11.112719] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:13:16.464151] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1129096423749041536, user=6T1]
+[2025-Nov-04 03:13:16.465463] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220876582912 [req_id=1129096423749041536]
+[2025-Nov-04 03:13:16.465551] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1129096423749041536]
+Thrift: Tue Nov  4 03:13:16 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:13:16.476801] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:13:21.829519] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=191618304106923648, user=6T1]
+[2025-Nov-04 03:13:21.831371] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220898557952 [req_id=191618304106923648]
+[2025-Nov-04 03:13:21.831484] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=191618304106923648]
+Thrift: Tue Nov  4 03:13:21 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:13:21.846711] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:13:27.200402] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=825039348113046656, user=6T1]
+[2025-Nov-04 03:13:27.202275] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220920561664 [req_id=825039348113046656]
+[2025-Nov-04 03:13:27.202341] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=825039348113046656]
+Thrift: Tue Nov  4 03:13:27 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:13:27.213077] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:13:32.543279] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=739821421918041984, user=6T1]
+[2025-Nov-04 03:13:32.544338] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220942442496 [req_id=739821421918041984]
+[2025-Nov-04 03:13:32.544988] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=739821421918041984]
+Thrift: Tue Nov  4 03:13:32 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:13:32.555199] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:13:37.890143] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=315933440675169984, user=6T1]
+[2025-Nov-04 03:13:37.891267] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220964343808 [req_id=315933440675169984]
+[2025-Nov-04 03:13:37.891337] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=315933440675169984]
+Thrift: Tue Nov  4 03:13:37 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:13:37.902796] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:13:43.245023] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=892770272141678592, user=6T1]
+[2025-Nov-04 03:13:43.246709] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118220986277888 [req_id=892770272141678592]
+[2025-Nov-04 03:13:43.246791] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=892770272141678592]
+Thrift: Tue Nov  4 03:13:43 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:13:43.257087] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:13:48.612590] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=601572541658177792, user=6T1]
+[2025-Nov-04 03:13:48.613815] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221008261120 [req_id=601572541658177792]
+[2025-Nov-04 03:13:48.613883] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=601572541658177792]
+Thrift: Tue Nov  4 03:13:48 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:13:48.624453] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:13:53.971869] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=733266265593413632, user=6T1]
+[2025-Nov-04 03:13:53.973803] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221030211584 [req_id=733266265593413632]
+[2025-Nov-04 03:13:53.973947] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=733266265593413632]
+Thrift: Tue Nov  4 03:13:53 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:13:53.985480] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:13:59.323945] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=9909354221536112, user=6T1]
+[2025-Nov-04 03:13:59.325668] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221052137472 [req_id=9909354221536112]
+[2025-Nov-04 03:13:59.325886] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=9909354221536112]
+Thrift: Tue Nov  4 03:13:59 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:13:59.336025] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:14:04.670788] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=956116943840014080, user=6T1]
+[2025-Nov-04 03:14:04.671662] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221074034688 [req_id=956116943840014080]
+[2025-Nov-04 03:14:04.671728] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=956116943840014080]
+Thrift: Tue Nov  4 03:14:04 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:14:04.683101] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:14:10.016337] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=521541036864559552, user=6T1]
+[2025-Nov-04 03:14:10.017567] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221095931904 [req_id=521541036864559552]
+[2025-Nov-04 03:14:10.017641] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=521541036864559552]
+Thrift: Tue Nov  4 03:14:10 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:14:10.028509] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:14:15.382049] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=794918286873100032, user=6T1]
+[2025-Nov-04 03:14:15.384167] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221117911040 [req_id=794918286873100032]
+[2025-Nov-04 03:14:15.386242] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=794918286873100032]
+Thrift: Tue Nov  4 03:14:15 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:14:15.395556] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:14:20.744624] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=33014601370620304, user=6T1]
+[2025-Nov-04 03:14:20.745735] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221139873792 [req_id=33014601370620304]
+[2025-Nov-04 03:14:20.745842] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=33014601370620304]
+Thrift: Tue Nov  4 03:14:20 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:14:20.757103] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:14:26.117245] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=113599018161602752, user=6T1]
+[2025-Nov-04 03:14:26.118827] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221161881600 [req_id=113599018161602752]
+[2025-Nov-04 03:14:26.118922] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=113599018161602752]
+Thrift: Tue Nov  4 03:14:26 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:14:26.130302] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:14:31.490268] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=701509522384048384, user=6T1]
+[2025-Nov-04 03:14:31.492506] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221183893504 [req_id=701509522384048384]
+[2025-Nov-04 03:14:31.492596] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=701509522384048384]
+Thrift: Tue Nov  4 03:14:31 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:14:31.502846] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:14:36.865979] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1102073940294735744, user=6T1]
+[2025-Nov-04 03:14:36.867492] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221205909504 [req_id=1102073940294735744]
+[2025-Nov-04 03:14:36.867580] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1102073940294735744]
+Thrift: Tue Nov  4 03:14:36 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:14:36.878736] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:14:42.229541] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=970873864376023680, user=6T1]
+[2025-Nov-04 03:14:42.230894] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221227876352 [req_id=970873864376023680]
+[2025-Nov-04 03:14:42.230963] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=970873864376023680]
+Thrift: Tue Nov  4 03:14:42 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:14:42.241916] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:14:47.575127] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=462047045525466432, user=6T1]
+[2025-Nov-04 03:14:47.577258] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221249777664 [req_id=462047045525466432]
+[2025-Nov-04 03:14:47.577331] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=462047045525466432]
+Thrift: Tue Nov  4 03:14:47 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:14:47.624750] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:14:52.958531] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1038753291231099648, user=6T1]
+[2025-Nov-04 03:14:52.959999] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221271822336 [req_id=1038753291231099648]
+[2025-Nov-04 03:14:52.960083] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1038753291231099648]
+Thrift: Tue Nov  4 03:14:52 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:14:52.970549] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:14:58.318014] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=958647335380239488, user=6T1]
+[2025-Nov-04 03:14:58.319238] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221293772800 [req_id=958647335380239488]
+[2025-Nov-04 03:14:58.319324] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=958647335380239488]
+Thrift: Tue Nov  4 03:14:58 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:14:58.330183] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:15:03.662845] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=785257778392604160, user=6T1]
+[2025-Nov-04 03:15:03.664806] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221315670016 [req_id=785257778392604160]
+[2025-Nov-04 03:15:03.664876] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=785257778392604160]
+Thrift: Tue Nov  4 03:15:03 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:15:03.675405] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:15:09.043227] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=1141457446289109376, user=6T1]
+[2025-Nov-04 03:15:09.044303] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221337706496 [req_id=1141457446289109376]
+[2025-Nov-04 03:15:09.044657] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=1141457446289109376]
+Thrift: Tue Nov  4 03:15:09 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:15:09.056422] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:15:14.415633] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=836760667100345216, user=6T1]
+[2025-Nov-04 03:15:14.416841] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221359710208 [req_id=836760667100345216]
+[2025-Nov-04 03:15:14.417064] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=836760667100345216]
+Thrift: Tue Nov  4 03:15:14 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:15:14.428539] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:15:19.758333] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=925990344533161088, user=6T1]
+[2025-Nov-04 03:15:19.760277] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221381599232 [req_id=925990344533161088]
+[2025-Nov-04 03:15:19.760385] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=925990344533161088]
+Thrift: Tue Nov  4 03:15:19 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:15:19.770560] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:15:25.118752] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=639044277683667072, user=6T1]
+[2025-Nov-04 03:15:25.119951] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221403549696 [req_id=639044277683667072]
+[2025-Nov-04 03:15:25.120122] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=639044277683667072]
+Thrift: Tue Nov  4 03:15:25 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:15:25.131484] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:15:30.465556] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=810882276161075712, user=6T1]
+[2025-Nov-04 03:15:30.466838] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221425451008 [req_id=810882276161075712]
+[2025-Nov-04 03:15:30.466947] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=810882276161075712]
+Thrift: Tue Nov  4 03:15:30 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:15:30.478257] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:15:35.842154] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=585724059668493440, user=6T1]
+[2025-Nov-04 03:15:35.844460] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221447475200 [req_id=585724059668493440]
+[2025-Nov-04 03:15:35.844535] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=585724059668493440]
+Thrift: Tue Nov  4 03:15:35 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:15:35.854954] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:15:41.220465] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=902662822047453440, user=6T1]
+[2025-Nov-04 03:15:41.221979] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221469503488 [req_id=902662822047453440]
+[2025-Nov-04 03:15:41.222088] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=902662822047453440]
+Thrift: Tue Nov  4 03:15:41 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:15:41.232733] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:15:46.571131] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=140678202271524368, user=6T1]
+[2025-Nov-04 03:15:46.573465] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221491421184 [req_id=140678202271524368]
+[2025-Nov-04 03:15:46.573544] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=140678202271524368]
+Thrift: Tue Nov  4 03:15:46 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:15:46.647689] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:15:51.983314] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=773408932180948992, user=6T1]
+[2025-Nov-04 03:15:51.985307] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221513592832 [req_id=773408932180948992]
+[2025-Nov-04 03:15:51.985392] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=773408932180948992]
+Thrift: Tue Nov  4 03:15:51 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:15:51.996070] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:15:57.329229] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=649346415025528576, user=6T1]
+[2025-Nov-04 03:15:57.330400] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221535485952 [req_id=649346415025528576]
+[2025-Nov-04 03:15:57.330494] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=649346415025528576]
+Thrift: Tue Nov  4 03:15:57 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:15:57.342236] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:16:02.715687] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=777536889581894144, user=6T1]
+[2025-Nov-04 03:16:02.717115] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118221557547008 [req_id=777536889581894144]
+[2025-Nov-04 03:16:02.717195] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=777536889581894144]
+Thrift: Tue Nov  4 03:16:02 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:16:02.728827] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:21:29.405538] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=554485556551095232, user=6T1]
+[2025-Nov-04 03:21:29.407727] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118222895673344 [req_id=554485556551095232]
+[2025-Nov-04 03:21:29.407808] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=554485556551095232]
+Thrift: Tue Nov  4 03:21:29 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:21:29.418606] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
+[2025-Nov-04 03:21:34.756213] <info>: (ComposePostHandler.h:372:ComposePost) start process compose post request [req_id=753939807007684096, user=6T1]
+[2025-Nov-04 03:21:34.757570] <info>: (ComposePostHandler.h:402:ComposePost) get unique id: 7013118222917586944 [req_id=753939807007684096]
+[2025-Nov-04 03:21:34.757635] <info>: (ComposePostHandler.h:405:ComposePost) get creator info [req_id=753939807007684096]
+Thrift: Tue Nov  4 03:21:34 2025 TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known
+[2025-Nov-04 03:21:34.768056] <error>: (ClientPool.h:114:Pop) Failed to connect media-service-client
