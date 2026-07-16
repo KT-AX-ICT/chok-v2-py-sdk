@@ -83,7 +83,7 @@
   <rect x="62" y="774" width="876" height="64" rx="6" fill="#ffffff" stroke="#7bb894"/>
   <text x="80" y="798" font-size="13" font-weight="700" fill="#2f6b4a">④ 라이터</text>
   <text x="80" y="818" font-size="11.5" fill="#3f3f46">var/&lt;모달리티&gt;/&lt;<tspan font-weight="700">원본 파일명</tspan>&gt; 에 append — 이름도 내용도 바꾸지 않는다</text>
-  <text x="80" y="833" font-size="11" fill="#71717a">CSV 는 헤더 먼저 한 줄 · --reset 은 var/ 를 비우고 시작 (var/ 밖은 절대 지우지 않는다)</text>
+  <text x="80" y="833" font-size="11" fill="#71717a">CSV 헤더는 파일이 비어 있을 때만 · 시나리오를 바꿔 이어 돌리는 것이 정상 · --reset 은 선택적 정리</text>
   <text x="915" y="798" font-size="10.5" fill="#7bb894" text-anchor="end">Phase 3</text>
 
   <line x1="500" y1="856" x2="500" y2="886" stroke="#52525b" stroke-width="1.6" marker-end="url(#arw)"/>
@@ -91,7 +91,7 @@
   <!-- ============ VAR ============ -->
   <rect x="40" y="890" width="920" height="132" rx="8" fill="#fef9ef" stroke="#d9a441" stroke-width="1.4"/>
   <text x="60" y="916" font-size="14" font-weight="700" fill="#8a6414">var/ — 원천 로그 (런타임 산출물, 커밋 안 함)</text>
-  <text x="60" y="935" font-size="11.5" fill="#a8823a">RCA_SOURCE_ROOT · 파일명·내용 모두 원본 그대로, 타임스탬프만 다르다</text>
+  <text x="60" y="935" font-size="11.5" fill="#a8823a">RCA_SOURCE_ROOT · 파일명·내용 모두 원본 그대로, 타임스탬프만 다르다 · .replay/runs.csv 에 실행 이력 (reset 대상 아님)</text>
 
   <rect x="62" y="948" width="288" height="58" rx="6" fill="#ffffff" stroke="#e3c078"/>
   <text x="76" y="969" font-size="12.5" font-weight="600" fill="#8a6414">log/</text>
