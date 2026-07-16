@@ -23,7 +23,7 @@ runtime.runner 가 위 전부를 30초 루프로 오케스트레이션한다.
 
 | 경로 | 계층 | 역할 | 핵심 인터페이스 |
 |---|---|---|---|
-| `schemas/` | 계약 | 정규화·전송 데이터 계약(중심 허브) | `RawBatch`, `NormalizedLog/Trace/Metric`, `NormalizedBatch`, `MultimodalSnapshot`, `SnapshotBundle`, `SubmissionResult` |
+| `schemas/` | 계약 | 정규화·전송 데이터 계약(중심 허브) | `RawBatch`, `NormalizedLog/Trace/Metric`, `SourceStatus`, `NormalizedBatch`, `MultimodalSnapshot`, `SnapshotBundle`, `SubmissionResult` |
 | `collectors/` | ① 수집 | log/metric/trace tail → 원시 배치 | `Collector.poll() -> RawBatch` |
 | `normalization/` | ② 정규화 | 원시 → 모달리티별 정규화 스키마. 소스 present/missing 판정 전담 | `Normalizer.normalize(RawBatch) -> NormalizedBatch` |
 | `buffer/` | ③ 버퍼 | 3분 30초 롤링 윈도 유지, 구간 조회 | `MemoryBuffer.append(batch)` / `get_snapshot(start,end) -> MultimodalSnapshot` |
@@ -51,8 +51,9 @@ runtime.runner 가 위 전부를 30초 루프로 오케스트레이션한다.
 - 실시간 detector: **`cpu_spike` / `trace_5xx` / `restart_marker`(svc_kill)** (ADR-003)
 - 스냅샷: **최초 트리거 anchor ±3분 고정**, 재트리거는 같은 세션 누적 (ADR-001)
 - 윈도 경계 **반열림 `[start, end)`**, 모든 시각 **`datetime`(naive)** 통일
-- `SnapshotBundle`은 FastAPI 전송 형식으로 **고정** (`raw`는 원본 JSON을 문자열로 감싼 형태 `str`)
-- `raw_ref`(원본 위치 포인터)는 **사용 안 함** — 원본은 번들 `raw`로만 전달
+- `SnapshotBundle`은 FastAPI 전송 형식으로 **고정**. `raw`는 **정규화 레코드를 JSON 문자열로 직렬화**(원본 라인은 안 들고 감)
+- `raw_ref`·원본 라인 모두 **미보관** — 번들 `raw`엔 정규화 레코드를 직렬화해 담는다
+- 소스 상태(`SourceStatus`)를 정규화가 `NormalizedBatch.roster`로 출력 → 버퍼 보관 → 스냅샷 윈도 집계로 번들 `modality_info`(missing/empty/data). `present`+`record_count`로 missing/empty 구분
 
 ## 남은 미확정
 
