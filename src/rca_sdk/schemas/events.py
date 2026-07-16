@@ -85,12 +85,17 @@ class SourceStatus(BaseModel):
 
 
 class RawBatch(BaseModel):
-    """Collector 산출물 — 원시 레코드 + 관측 범위."""
+    """Collector 산출물 — 원시 레코드 + 관측 범위.
+
+    `sources` 는 이번 poll 에서 디렉터리에 존재한 소스 파일명 목록 (계획 02 C2).
+    normalizer 가 기대 로스터와 대조해 missing/empty 를 판정하는 재료다.
+    """
 
     modality: Modality
     observed_from: datetime              # 관측 시간 하한
     observed_until: datetime             # 관측 시간 상한 (watermark)
     records: list[dict[str, Any]] = Field(default_factory=list)
+    sources: list[str] = Field(default_factory=list)
 
 
 class NormalizedBatch(BaseModel):
