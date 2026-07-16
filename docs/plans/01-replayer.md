@@ -2,6 +2,7 @@
 
 `datasets/sn` 의 SN 원본을 타임시프트 재생해 `var/` 로 원천 로그를 만들어내는 Python 리플레이어.
 경로·레이아웃 계약은 [ADR-004](../decisions/ADR-004-replayer-data-layout.md).
+전체 흐름은 [01-replayer-flow.svg](01-replayer-flow.svg).
 
 ## 범위
 
@@ -263,7 +264,7 @@ mypy 는 설정만 있고 CI 미실행.
 
 - CLI: `rca-replay <scenario> [--duration <초>] [--reset]`. `cli.py:11-28` 패턴 복사
   (`build_parser()` 분리, `main(argv) -> int`).
-- 스케줄러는 벽시계 기준으로 `new_ts` 에 도달하면 그 줄을 쓴다. `--duration` 경과 시 정지하고, 생략 시
+- 스케줄러는 현재 시각이 `new_ts` 에 도달하면 그 줄을 쓴다. `--duration` 경과 시 정지하고, 생략 시
   데이터 끝까지 재생한다.
 - 여러 파일의 줄을 `new_ts` 순으로 병합해 내보낸다. 파일 단위로 순차 처리하면 시각축이 깨진다.
 - `pyproject.toml` `[project.scripts]` 에 `rca-replay = "rca_sdk.replay.cli:main"` 추가.

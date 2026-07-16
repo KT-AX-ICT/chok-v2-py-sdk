@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1190" width="1000" height="1190" font-family="'Malgun Gothic','Apple SD Gothic Neo','Segoe UI',sans-serif">
+  <defs>
+    <marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#52525b"/>
+    </marker>
+    <marker id="arwg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#a1a1aa"/>
+    </marker>
+  </defs>
+
+  <rect width="1000" height="1190" fill="#ffffff"/>
+
+  <text x="40" y="46" font-size="21" font-weight="700" fill="#18181b">리플레이어 흐름</text>
+  <text x="40" y="70" font-size="13" fill="#71717a">타임스탬프만 파싱 → 시각 맞춰 원본 줄 그대로 쌓기</text>
+
+  <!-- ============ SOURCE ============ -->
+  <rect x="40" y="96" width="920" height="132" rx="8" fill="#fafafa" stroke="#d4d4d8"/>
+  <text x="60" y="122" font-size="14" font-weight="700" fill="#3f3f46">datasets/sn/ — 원본 (불변)</text>
+  <text x="60" y="141" font-size="11.5" fill="#71717a">RCA_DATASET_ROOT · 시나리오는 CLI 인자로 선택 (cpu / kill_media / code_media)</text>
+
+  <rect x="62" y="154" width="288" height="58" rx="6" fill="#ffffff" stroke="#d4d4d8"/>
+  <text x="76" y="175" font-size="12.5" font-weight="600" fill="#3f3f46">log_data/&lt;시나리오&gt;/</text>
+  <text x="76" y="194" font-size="11" fill="#71717a">*_.log — boost 평문 11~12개</text>
+  <text x="76" y="207" font-size="11" fill="#a1a1aa">NginxThrift_.log 만 nginx 포맷</text>
+
+  <rect x="360" y="154" width="288" height="58" rx="6" fill="#ffffff" stroke="#d4d4d8"/>
+  <text x="374" y="175" font-size="12.5" font-weight="600" fill="#3f3f46">metric_data/&lt;시나리오&gt;/</text>
+  <text x="374" y="194" font-size="11" fill="#71717a">*.csv — 15개, 헤더 + 행</text>
+  <text x="374" y="207" font-size="11" fill="#a1a1aa">timestamp 컬럼</text>
+
+  <rect x="658" y="154" width="280" height="58" rx="6" fill="#ffffff" stroke="#d4d4d8"/>
+  <text x="672" y="175" font-size="12.5" font-weight="600" fill="#3f3f46">trace_data/&lt;시나리오&gt;/</text>
+  <text x="672" y="194" font-size="11" fill="#71717a">all_traces.csv — 헤더 + 행</text>
+  <text x="672" y="207" font-size="11" fill="#a1a1aa">start_time 컬럼</text>
+
+  <text x="40" y="248" font-size="11" fill="#a1a1aa">재생 안 함 — all_traces.json (pretty-print, 줄 단위 tail 불가) · summary.txt · metadata.txt · available_services.json</text>
+
+  <line x1="500" y1="258" x2="500" y2="288" stroke="#52525b" stroke-width="1.6" marker-end="url(#arw)"/>
+
+  <!-- ============ REPLAYER ============ -->
+  <rect x="40" y="292" width="920" height="564" rx="8" fill="#f2faf5" stroke="#4a9d6e" stroke-width="1.4"/>
+  <text x="60" y="318" font-size="14" font-weight="700" fill="#2f6b4a">리플레이어 (rca-replay)</text>
+  <text x="60" y="337" font-size="11.5" fill="#5f8f74">줄의 내용은 읽지 않는다 — 타임스탬프만 본다</text>
+
+  <!-- Phase 1 -->
+  <rect x="62" y="352" width="876" height="76" rx="6" fill="#ffffff" stroke="#7bb894"/>
+  <text x="80" y="376" font-size="13" font-weight="700" fill="#2f6b4a">① 리더</text>
+  <text x="80" y="396" font-size="11.5" fill="#3f3f46">각 파일을 제너레이터로 흘리며 <tspan font-weight="700">타임스탬프만</tspan> 파싱 → (시각, 원본 줄) 산출</text>
+  <text x="80" y="414" font-size="11" fill="#71717a">boost / nginx / CSV 3종 파서 · UTC 명시 부여 · 파일 부재·0바이트는 정상 · CSV 헤더는 따로 반환</text>
+  <text x="915" y="376" font-size="10.5" fill="#7bb894" text-anchor="end">Phase 1</text>
+
+  <line x1="500" y1="434" x2="500" y2="456" stroke="#4a9d6e" stroke-width="1.4" marker-end="url(#arw)"/>
+  <text x="512" y="450" font-size="10.5" fill="#5f8f74">(원본 시각, 원본 줄)</text>
+
+  <!-- t0 -->
+  <rect x="62" y="460" width="876" height="52" rx="6" fill="#fdf8ec" stroke="#d9a441"/>
+  <text x="80" y="482" font-size="12.5" font-weight="700" fill="#8a6414">t0 = 전 모달리티 통틀어 실측 min</text>
+  <text x="80" y="500" font-size="11" fill="#8a6414">폴더명 시각이 아니다 · 모달리티별 t0 를 쓰면 trace 가 126~179초 앞당겨져 원본에 없던 정렬이 생긴다</text>
+
+  <line x1="500" y1="518" x2="500" y2="540" stroke="#4a9d6e" stroke-width="1.4" marker-end="url(#arw)"/>
+
+  <!-- Phase 2 -->
+  <rect x="62" y="544" width="876" height="90" rx="6" fill="#ffffff" stroke="#7bb894"/>
+  <text x="80" y="568" font-size="13" font-weight="700" fill="#2f6b4a">② 시프트</text>
+  <text x="80" y="589" font-size="12" fill="#3f3f46" font-family="'Consolas','D2Coding',monospace">new_ts = T0 + (orig_ts − t0)</text>
+  <text x="80" y="608" font-size="11.5" fill="#3f3f46">줄 안의 타임스탬프 문자열만 <tspan font-weight="700">원본과 같은 포맷으로</tspan> 다시 렌더링해 치환</text>
+  <text x="80" y="625" font-size="11" fill="#71717a">T0 는 고정 앵커 (레코드마다 now() 재호출 금지) · 배율 없음 · 마이크로초 없던 줄은 없이 내보낸다</text>
+  <text x="915" y="568" font-size="10.5" fill="#7bb894" text-anchor="end">Phase 2</text>
+
+  <line x1="500" y1="640" x2="500" y2="662" stroke="#4a9d6e" stroke-width="1.4" marker-end="url(#arw)"/>
+  <text x="512" y="656" font-size="10.5" fill="#5f8f74">(재생 시각, 원본 줄)</text>
+
+  <!-- Phase 4 scheduler -->
+  <rect x="62" y="666" width="876" height="76" rx="6" fill="#ffffff" stroke="#7bb894"/>
+  <text x="80" y="690" font-size="13" font-weight="700" fill="#2f6b4a">③ 스케줄러</text>
+  <text x="80" y="710" font-size="11.5" fill="#3f3f46">27개 파일의 줄을 <tspan font-weight="700">재생 시각순으로 병합</tspan> → 현재 시각이 그 시각에 닿으면 방출</text>
+  <text x="80" y="728" font-size="11" fill="#71717a">파일 단위 순차 처리는 시각축을 깬다 · --duration 경과 시 정지, 생략 시 끝까지</text>
+  <text x="915" y="690" font-size="10.5" fill="#7bb894" text-anchor="end">Phase 4</text>
+
+  <line x1="500" y1="748" x2="500" y2="770" stroke="#4a9d6e" stroke-width="1.4" marker-end="url(#arw)"/>
+
+  <!-- Phase 3 writer -->
+  <rect x="62" y="774" width="876" height="64" rx="6" fill="#ffffff" stroke="#7bb894"/>
+  <text x="80" y="798" font-size="13" font-weight="700" fill="#2f6b4a">④ 라이터</text>
+  <text x="80" y="818" font-size="11.5" fill="#3f3f46">var/&lt;모달리티&gt;/&lt;<tspan font-weight="700">원본 파일명</tspan>&gt; 에 append — 이름도 내용도 바꾸지 않는다</text>
+  <text x="80" y="833" font-size="11" fill="#71717a">CSV 는 헤더 먼저 한 줄 · --reset 은 var/ 를 비우고 시작 (var/ 밖은 절대 지우지 않는다)</text>
+  <text x="915" y="798" font-size="10.5" fill="#7bb894" text-anchor="end">Phase 3</text>
+
+  <line x1="500" y1="856" x2="500" y2="886" stroke="#52525b" stroke-width="1.6" marker-end="url(#arw)"/>
+
+  <!-- ============ VAR ============ -->
+  <rect x="40" y="890" width="920" height="132" rx="8" fill="#fef9ef" stroke="#d9a441" stroke-width="1.4"/>
+  <text x="60" y="916" font-size="14" font-weight="700" fill="#8a6414">var/ — 원천 로그 (런타임 산출물, 커밋 안 함)</text>
+  <text x="60" y="935" font-size="11.5" fill="#a8823a">RCA_SOURCE_ROOT · 파일명·내용 모두 원본 그대로, 타임스탬프만 다르다</text>
+
+  <rect x="62" y="948" width="288" height="58" rx="6" fill="#ffffff" stroke="#e3c078"/>
+  <text x="76" y="969" font-size="12.5" font-weight="600" fill="#8a6414">log/</text>
+  <text x="76" y="988" font-size="11" fill="#a8823a">MediaService_.log</text>
+  <text x="76" y="1001" font-size="11" fill="#c4a05e">NginxThrift_.log …</text>
+
+  <rect x="360" y="948" width="288" height="58" rx="6" fill="#ffffff" stroke="#e3c078"/>
+  <text x="374" y="969" font-size="12.5" font-weight="600" fill="#8a6414">metric/</text>
+  <text x="374" y="988" font-size="11" fill="#a8823a">socialnet_container_cpu.csv</text>
+  <text x="374" y="1001" font-size="11" fill="#c4a05e">system_cpu_usage.csv …</text>
+
+  <rect x="658" y="948" width="280" height="58" rx="6" fill="#ffffff" stroke="#e3c078"/>
+  <text x="672" y="969" font-size="12.5" font-weight="600" fill="#8a6414">trace/</text>
+  <text x="672" y="988" font-size="11" fill="#a8823a">all_traces.csv</text>
+
+  <!-- ============ BOUNDARY ============ -->
+  <line x1="40" y1="1058" x2="960" y2="1058" stroke="#d4d4d8" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="40" y="1052" font-size="11" font-weight="700" fill="#a1a1aa">여기까지가 리플레이어</text>
+
+  <line x1="500" y1="1022" x2="500" y2="1096" stroke="#a1a1aa" stroke-width="1.4" stroke-dasharray="4 4" marker-end="url(#arwg)"/>
+
+  <rect x="240" y="1100" width="520" height="56" rx="8" fill="#fafafa" stroke="#d4d4d8" stroke-dasharray="4 4"/>
+  <text x="500" y="1124" font-size="12.5" font-weight="600" fill="#a1a1aa" text-anchor="middle">SDK 콜렉터 — var/ 를 tail 해 원본 형식을 파싱</text>
+  <text x="500" y="1143" font-size="11" fill="#c4c4cc" text-anchor="middle">별도 작업자 · 리플레이어 범위 밖</text>
+</svg>
