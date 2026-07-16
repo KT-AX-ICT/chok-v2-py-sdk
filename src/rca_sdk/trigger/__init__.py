@@ -6,16 +6,4 @@
 from rca_sdk.trigger.detector import TriggerDetector
 from rca_sdk.trigger.models import TriggerEvidence
 
-# [미사용 · 주석처리] correlation 전용 모델 export
-# 사유: correlation 엣지 제외(§0-4)로 Candidate/CandidateIncident/ModalitySignal 이 죽은 코드.
-#       models.py 에서 주석처리됨 → 여기 import/export 도 함께 주석처리. (2026-07-15)
-# from rca_sdk.trigger.models import (
-#     Candidate,
-#     CandidateIncident,
-#     ModalitySignal,
-# )
-
-__all__ = [
-    "TriggerDetector",
-    "TriggerEvidence",
-]
+__all__ = ["TriggerDetector", "TriggerEvidence"]

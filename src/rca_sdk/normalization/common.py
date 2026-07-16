@@ -18,7 +18,7 @@ def canonical_service(name: str | None) -> str | None:
     규칙(normalization-spec §1-1): 소문자화·특수문자 제거·"service" 접미사 제거·ALIASES 적용.
     단, 인프라(DB/캐시) 명칭은 특수문자만 제거하고 유지한다.
     """
-    # TODO: 규칙 구현 + 인프라 예외 처리. 기존 trigger/correlation.canonical_service 에서 포팅.
+    # TODO: 규칙 구현 + 인프라 예외 처리 (normalization-spec §1-1).
     raise NotImplementedError("canonical_service 스캐폴드")
 
 

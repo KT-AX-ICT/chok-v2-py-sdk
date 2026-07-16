@@ -18,10 +18,6 @@ class Settings(BaseSettings):
     buffer_window_sec: int = 210        # 3분 30초 롤링 윈도
     post_trigger_wait_sec: int = 180    # 트리거 후 3분 post 수집
 
-    # [미사용 · 주석처리] baseline 프로파일 (2026-07-15)
-    # 사유: 트리거 조건을 각 trigger별로 직접 지정(§0-5) → baseline 산출/로드 안 함.
-    # baseline_profile: str = "sn_normal"
-
     # 원천 로그 경로 - tail이 추적하는 데이터 경로
     source_root: str = "./var"
 

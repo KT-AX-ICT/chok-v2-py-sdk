@@ -36,8 +36,9 @@ runtime.runner 가 위 전부를 30초 루프로 오케스트레이션한다.
 
 각 폴더의 `__init__.py`는 그 계층의 공개 API(위 인터페이스)를 re-export 한다.
 
-> `resources/baselines/`, `trigger/correlation.py`, `trigger/baseline.py`는 현재 **미연결/주석처리**
-> (correlation·baseline은 설계상 엣지 제외). 상세는 현행 리포트(노션에서 확인) 참조.
+> correlation·baseline은 설계상 엣지 제외(§0-4/§0-5)라, 관련 파일(`trigger/correlation.py`,
+> `trigger/baseline.py`, `resources/baselines/`)과 죽은 코드(옛 트리거 모델·`baseline_profile`)를 **삭제**했다.
+> 상세는 현행 리포트(노션에서 확인).
 
 > 원천 데이터는 리플레이어가 `var/{log,metric,trace}/<service>.jsonl`(JSONL)로 공급하고 collector가 tail 한다.
 > 경로·레이아웃은 [ADR-004](ADR-004-replayer-data-layout.md), 설정은 `RCA_SOURCE_ROOT`(=`./var`)·`RCA_DATASET_ROOT`(=`./datasets/sn`).
