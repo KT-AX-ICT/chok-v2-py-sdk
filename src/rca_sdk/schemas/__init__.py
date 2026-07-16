@@ -13,6 +13,7 @@ from rca_sdk.schemas.events import (
     NormalizedRecord,
     NormalizedTrace,
     RawBatch,
+    SourceStatus,
 )
 from rca_sdk.schemas.snapshot import (
     BundleRecord,
@@ -30,6 +31,7 @@ __all__ = [
     "NormalizedTrace",
     "NormalizedMetric",
     "NormalizedRecord",
+    "SourceStatus",
     "RawBatch",
     "NormalizedBatch",
     "MultimodalSnapshot",

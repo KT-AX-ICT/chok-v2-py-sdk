@@ -22,6 +22,7 @@ from rca_sdk.schemas import (
     NormalizedTrace,
     RawBatch,
     SnapshotBundle,
+    SourceStatus,
     SubmissionResult,
     TriggerInfo,
     Window,
@@ -48,11 +49,18 @@ def test_record_schemas_instantiate():
 def test_batch_and_snapshot_contracts():
     log = NormalizedLog(timestamp=TS, canonical_service="user")
     raw = RawBatch(modality=Modality.LOG, observed_from=TS, observed_until=TS, records=[{"x": 1}])
-    nb = NormalizedBatch(modality=Modality.LOG, observed_from=TS, observed_until=TS, records=[log])
-    snap = MultimodalSnapshot(logs=[log])
+    nb = NormalizedBatch(
+        modality=Modality.LOG,
+        observed_from=TS,
+        observed_until=TS,
+        records=[log],
+        roster=[SourceStatus(source="UserService", present=True, record_count=1)],
+    )
+    snap = MultimodalSnapshot(logs=[log], coverage={"log": nb.roster})
     assert raw.modality is Modality.LOG
     assert nb.records[0].canonical_service == "user"
-    assert snap.metrics == []
+    assert nb.roster[0].present is True
+    assert snap.coverage["log"][0].source == "UserService"
 
 
 def test_trigger_evidence():

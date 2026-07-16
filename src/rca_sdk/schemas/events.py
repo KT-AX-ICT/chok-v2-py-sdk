@@ -72,6 +72,18 @@ NormalizedRecord = NormalizedLog | NormalizedTrace | NormalizedMetric
 # --- 배치 계약 (interface-contract §2.1~2.3) ---
 
 
+class SourceStatus(BaseModel):
+    """정규화가 배치마다 출력하는 소스 관측 상태 (roster).
+
+    윈도 구간으로 집계하면 번들 `modality_info`(missing/empty/data)가 된다.
+    `present`/`record_count`가 함께 있어야 missing(파일 없음)과 empty(있지만 0건)를 구분한다.
+    """
+
+    source: str                          # artifact / canonical_service
+    present: bool                        # 소스(파일/데이터)가 존재했는가
+    record_count: int = 0                # 이번 배치의 레코드 수
+
+
 class RawBatch(BaseModel):
     """Collector 산출물 — 원시 레코드 + 관측 범위."""
 
@@ -88,6 +100,7 @@ class NormalizedBatch(BaseModel):
     observed_from: datetime
     observed_until: datetime
     records: list[NormalizedRecord] = Field(default_factory=list)
+    roster: list[SourceStatus] = Field(default_factory=list)  # 소스 상태 (modality_info 원천)
 
 
 class MultimodalSnapshot(BaseModel):
@@ -96,3 +109,4 @@ class MultimodalSnapshot(BaseModel):
     logs: list[NormalizedLog] = Field(default_factory=list)
     metrics: list[NormalizedMetric] = Field(default_factory=list)
     traces: list[NormalizedTrace] = Field(default_factory=list)
+    coverage: dict[str, list[SourceStatus]] = Field(default_factory=dict)  # modality → 윈도 roster
