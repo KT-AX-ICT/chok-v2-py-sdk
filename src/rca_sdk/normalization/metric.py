@@ -1,12 +1,13 @@
-"""메트릭 원시 샘플 → NormalizedEvent (스캐폴드)."""
+"""메트릭 정규화 (스캐폴드). RawBatch(metric) → NormalizedBatch(NormalizedMetric)."""
 
 from __future__ import annotations
 
-from typing import Any
+from rca_sdk.normalization.base import Normalizer
+from rca_sdk.schemas.events import NormalizedBatch, RawBatch
 
-from rca_sdk.schemas.events import NormalizedEvent
 
-
-def normalize_metric(raw: dict[str, Any]) -> NormalizedEvent:
-    # TODO: name/value/timestamp 추출. docs/data-schema.md 확정 후 구현.
-    raise NotImplementedError("normalize_metric 스캐폴드")
+class MetricNormalizer(Normalizer):
+    def normalize(self, batch: RawBatch) -> NormalizedBatch:
+        # TODO: metric_name/value/dimension/unit 추출 → NormalizedMetric.
+        #       canonical_service(노드 지표는 __node__)·timestamp 통일. normalization-spec §5 참조.
+        raise NotImplementedError("MetricNormalizer.normalize 스캐폴드")

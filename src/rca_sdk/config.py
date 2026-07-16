@@ -18,9 +18,6 @@ class Settings(BaseSettings):
     buffer_window_sec: int = 210        # 3분 30초 롤링 윈도
     post_trigger_wait_sec: int = 180    # 트리거 후 3분 post 수집
 
-    # baseline 프로파일  (docs/decisions/ADR-002 참조)
-    baseline_profile: str = "sn_normal"
-
     # 원천 로그 경로 - tail이 추적하는 데이터 경로
     source_root: str = "./var"
 

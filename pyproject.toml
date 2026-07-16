@@ -20,7 +20,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "pytest>=8",
-    "ruff>=0.6",
+    "ruff==0.15.21",   # 핀 고정: CI/로컬 lint 결과 드리프트 방지 (버전 올릴 땐 여기서)
     "mypy>=1.11",
 ]
 

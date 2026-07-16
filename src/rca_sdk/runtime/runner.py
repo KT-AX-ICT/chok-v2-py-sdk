@@ -1,9 +1,9 @@
 """30초 관측 루프 오케스트레이터 (스캐폴드).
 
 한 tick 흐름:
-  collectors.poll → normalization → buffer.add
-  → trigger.detect_all + correlation.correlate
-  → dispatch 판정: incident 있으면 snapshot.assemble → transport.send, 없으면 관찰 지속
+  collectors.poll → normalization.normalize → buffer.append
+  → detector.evaluate → snapshot_manager.register_triggers / finalize_ready
+  → 완성 번들 있으면 transport.send, 없으면 관찰 지속
 """
 
 from __future__ import annotations
