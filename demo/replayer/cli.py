@@ -10,6 +10,8 @@
 from __future__ import annotations
 
 import argparse
+import io
+import sys
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -43,6 +45,13 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    # Windows 기본 콘솔은 cp949 라 진행 메시지의 '—'·'→' 를 못 찍고 UnicodeEncodeError 로 죽는다.
+    # 출력 스트림을 UTF-8 로 돌려 실행 환경과 무관하게 나가게 한다. reconfigure 는 TextIOWrapper
+    # 에만 있으므로 isinstance 로 좁힌다 — pytest capture 등 다른 스트림은 건너뛴다.
+    for stream in (sys.stdout, sys.stderr):
+        if isinstance(stream, io.TextIOWrapper):
+            stream.reconfigure(encoding="utf-8")
+
     args = build_parser().parse_args(argv)
     settings = load_settings()
 
