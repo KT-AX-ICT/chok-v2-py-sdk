@@ -1,13 +1,19 @@
 # normalization — ② 정규화
 
-`collectors/` 가 낸 원시 레코드를 파이프라인 공통 정규형(`schemas.NormalizedEvent`)으로 변환한다.
+collector 의 원시 레코드를 표준 스키마(`NormalizedLog/Metric/Trace`)로 변환하고,
+기대 로스터 대조로 소스 상태(roster)를 판정한다.
+설계 근거는 [계획 03](../../../docs/plans/03-tail-rework-normalization.md) §2 참조.
 
-공통 처리(정규화 스키마 문서 기준):
-- 서비스명 canonical 통일
-- timestamp 표시 형식 통일
-- 공백값 `null` 처리
+- `common.canonical_service()` — 서비스명 정규화 (스펙 §1-1, 인프라 예외·nginx ALIASES).
+- `common.parse_timestamp()` — boost 영문월·nginx·ISO 공백형 → **naive** datetime (C6).
+- `log.LogNormalizer` — `{"raw": 라인}` 을 boost/nginx 정규식으로 분해.
+  `event_type`(service_start = restart_marker 원천 / connection_error / normal_log),
+  `code_loc`, `target_service`(Could not connect to 패턴만, 익명 resolve-host 는 None) 파생.
+- `metric.MetricNormalizer` — CSV 컬럼 dict. container_label → canonical,
+  `instance`(system_*) → `__node__`(cpu_spike 원천), unit 상수 테이블.
+- `trace.TraceNormalizer` — all_traces.csv 컬럼 직행 매핑, 공백 → None, tags/logs JSON 파싱.
+- roster — `Normalizer(expected_services)` × `batch.sources` × 서비스별 건수 →
+  `SourceStatus(source=canonical, present, record_count)`.
+  missing(파일 없음) / empty(있는데 0건) / data 구분 재료 (Code_Stop 국소화, 계획 03 N2).
 
-모달리티별 구체 필드셋(log/metric/trace 각각 어떤 필드를 추출할지)은 **구현 단계에서 정규화 스키마
-문서로 확정**한다. 현재 파일들은 시그니처만 있는 스텁이다.
-
-참고: `chok_기술문서/정규화 스키마`, [docs/data-schema.md](../../../docs/data-schema.md)
+레코드 단위 파싱 실패는 skip + warning (N3) — 한 줄 오염이 30초 루프를 멈추지 않는다.
