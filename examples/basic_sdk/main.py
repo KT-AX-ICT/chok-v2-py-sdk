@@ -38,10 +38,10 @@ def main() -> None:
         modality=Modality.LOG,
         observed_from=now,
         observed_until=now,
-        records=[NormalizedLog(timestamp=now, canonical_service="user", level="error")],
+        records=[NormalizedLog(timestamp=now, service="user", level="error")],
         roster=[SourceStatus(source="UserService", present=True, record_count=1)],
     )
-    print("normalized:", norm.records[0].canonical_service, norm.roster[0].present)
+    print("normalized:", norm.records[0].service, norm.roster[0].present)
 
     # ⑤~⑥ 전송 번들 (raw = 정규화 레코드를 JSON 문자열로)
     bundle = SnapshotBundle(

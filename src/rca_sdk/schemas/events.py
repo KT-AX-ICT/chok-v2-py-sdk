@@ -30,7 +30,7 @@ class NormalizedLog(BaseModel):
     """정규화 로그 1줄 (normalized_logs)."""
 
     timestamp: datetime                  # 표시/전송 시 "YYYY-MM-DD HH:MM:SS.fff"
-    canonical_service: str | None = None
+    service: str | None = None           # canonical 서비스명 (계획 03 N4)
     log_type: str | None = None          # "service_log" | "nginx_log"
     level: str | None = None             # "info" | "warn" | "error" ...
     code_loc: str | None = None          # "MediaService.cpp:44" 등, 없으면 None
@@ -43,7 +43,7 @@ class NormalizedTrace(BaseModel):
     """정규화 span 1개 (normalized_traces)."""
 
     timestamp: datetime
-    canonical_service: str | None = None
+    service: str | None = None           # canonical 서비스명 (계획 03 N4)
     trace_id: str | None = None
     span_id: str | None = None
     parent_span_id: str | None = None    # 공백이면 None
@@ -59,7 +59,7 @@ class NormalizedMetric(BaseModel):
     """정규화 metric row 1개 (normalized_metrics)."""
 
     timestamp: datetime
-    canonical_service: str | None = None  # 노드 지표는 "__node__"
+    service: str | None = None            # canonical 서비스명, 노드 지표는 "__node__" (N4)
     metric_name: str | None = None
     value: float | None = None
     dimension: str | None = None
@@ -79,7 +79,7 @@ class SourceStatus(BaseModel):
     `present`/`record_count`가 함께 있어야 missing(파일 없음)과 empty(있지만 0건)를 구분한다.
     """
 
-    source: str                          # artifact / canonical_service
+    source: str                          # canonical 서비스명 (계획 03 N2)
     present: bool                        # 소스(파일/데이터)가 존재했는가
     record_count: int = 0                # 이번 배치의 레코드 수
 
