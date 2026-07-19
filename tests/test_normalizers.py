@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
+from rca_sdk.config import Settings
 from rca_sdk.normalization.log import LogNormalizer
 from rca_sdk.normalization.metric import MetricNormalizer
 from rca_sdk.normalization.trace import TraceNormalizer
@@ -194,3 +195,55 @@ def test_window_preserved():
     assert out.modality is Modality.LOG
     assert out.observed_from == WINDOW["observed_from"]
     assert out.observed_until == WINDOW["observed_until"]
+
+
+def roster_of(batch_out):
+    return {s.source: (s.present, s.record_count) for s in batch_out.roster}
+
+
+def test_log_roster_missing_empty_data():
+    """Code_Stop 실측: media 파일 자체 없음(missing) · nginx 0바이트(empty) · text 데이터."""
+    normalizer = LogNormalizer(expected_services=["media", "nginx", "text"])
+    batch = log_batch(
+        [{"raw": BOOST_CONNECT, "_source": "TextService_.log"}],
+        sources=["TextService_.log", "NginxThrift_.log"],  # media 파일은 관측 안 됨
+    )
+    roster = roster_of(normalizer.normalize(batch))
+    assert roster["media"] == (False, 0)   # missing
+    assert roster["nginx"] == (True, 0)    # empty
+    assert roster["text"] == (True, 1)     # data
+
+
+def test_metric_roster_includes_node():
+    normalizer = MetricNormalizer(expected_services=["user"])
+    rec = {
+        "timestamp": "2025-11-04 00:02:21",
+        "value": "0.5",
+        "container_label_com_docker_compose_service": "user-service",
+        "_source": "socialnet_container_cpu.csv",
+    }
+    batch = metric_batch([rec], ["socialnet_container_cpu.csv", "system_cpu_usage.csv"])
+    roster = roster_of(normalizer.normalize(batch))
+    assert roster["user"] == (True, 1)
+    assert roster["__node__"] == (True, 0)  # expected 에 자동 포함
+
+
+def test_trace_roster_single_artifact():
+    normalizer = TraceNormalizer(expected_services=["nginx", "media"])
+    roster = roster_of(normalizer.normalize(trace_batch([TRACE_ROW])))
+    assert roster["nginx"] == (True, 1)
+    assert roster["media"] == (True, 0)     # 파일은 있으니 empty
+
+
+def test_trace_roster_missing_when_no_file():
+    normalizer = TraceNormalizer(expected_services=["nginx"])
+    batch = RawBatch(modality=Modality.TRACE, records=[], sources=[], **WINDOW)
+    roster = roster_of(normalizer.normalize(batch))
+    assert roster["nginx"] == (False, 0)
+
+
+def test_settings_default_expected_services():
+    settings = Settings()
+    assert "media" in settings.expected_services
+    assert "nginx" in settings.expected_services
+    assert len(settings.expected_services) == 12

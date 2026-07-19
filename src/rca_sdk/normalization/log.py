@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import re
+from collections import Counter
 from typing import Any
 
 from rca_sdk.normalization.base import Normalizer
@@ -34,11 +35,19 @@ class LogNormalizer(Normalizer):
             normalized = self._normalize_record(rec)
             if normalized is not None:
                 records.append(normalized)
+        counts = Counter(r.service for r in records if r.service)
+        # 파일명 → canonical 로 접어 "서비스 파일 존재" 를 판정한다 (계획 03 N2)
+        present = {
+            svc
+            for src in batch.sources
+            if (svc := canonical_service(src.removesuffix(".log"))) is not None
+        }
         return NormalizedBatch(
             modality=batch.modality,
             observed_from=batch.observed_from,
             observed_until=batch.observed_until,
             records=records,
+            roster=self._build_roster(self.expected_services, present, counts),
         )
 
     def _normalize_record(self, rec: dict[str, Any]) -> NormalizedLog | None:

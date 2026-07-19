@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+from collections import Counter
 from typing import Any
 
 from rca_sdk.normalization.base import Normalizer
@@ -20,11 +21,15 @@ class TraceNormalizer(Normalizer):
             normalized = self._normalize_record(rec)
             if normalized is not None:
                 records.append(normalized)
+        counts = Counter(r.service for r in records if r.service)
+        # 전 서비스가 단일 아티팩트(all_traces.csv)에 담긴다 — 서비스별 유무는 행수로 (계획 03 N2)
+        present = set(self.expected_services) if "all_traces.csv" in batch.sources else set()
         return NormalizedBatch(
             modality=batch.modality,
             observed_from=batch.observed_from,
             observed_until=batch.observed_until,
             records=records,
+            roster=self._build_roster(self.expected_services, present, counts),
         )
 
     def _normalize_record(self, rec: dict[str, Any]) -> NormalizedTrace | None:

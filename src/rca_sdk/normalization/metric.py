@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+from collections import Counter
 from typing import Any
 
 from rca_sdk.normalization.base import Normalizer
@@ -24,11 +25,20 @@ class MetricNormalizer(Normalizer):
             normalized = self._normalize_record(rec)
             if normalized is not None:
                 records.append(normalized)
+        counts = Counter(r.service for r in records if r.service)
+        # 서비스 행은 socialnet_container_*, 노드 행은 system_* 아티팩트가 담는다 (계획 03 N2)
+        expected = [*self.expected_services, NODE_SERVICE]
+        has_container = any(s.startswith("socialnet_container_") for s in batch.sources)
+        has_system = any(s.startswith("system_") for s in batch.sources)
+        present = {
+            svc for svc in expected if (has_system if svc == NODE_SERVICE else has_container)
+        }
         return NormalizedBatch(
             modality=batch.modality,
             observed_from=batch.observed_from,
             observed_until=batch.observed_until,
             records=records,
+            roster=self._build_roster(expected, present, counts),
         )
 
     def _normalize_record(self, rec: dict[str, Any]) -> NormalizedMetric | None:
