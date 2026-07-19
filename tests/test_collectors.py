@@ -139,6 +139,36 @@ def test_each_collector_owns_its_subdir(tmp_path, collector_cls, modality, subdi
     assert len(batch.records) == 1
 
 
+def test_file_deleted_between_glob_and_read(tmp_path, monkeypatch):
+    """이슈 A — 나열과 읽기 사이 파일 삭제(--reset 레이스)가 poll 전체를 죽이면 안 된다."""
+    root = make_layout(tmp_path)
+    f = root / "log" / "media-service.jsonl"
+    append_lines(f, [{"msg": "a"}])
+    collector = LogCollector(str(root))
+    real_stat = type(f).stat
+
+    def racy_stat(self, *args, **kwargs):
+        if self.name == "media-service.jsonl":
+            raise FileNotFoundError(self)  # glob 직후 삭제된 상황 재현
+        return real_stat(self, *args, **kwargs)
+
+    monkeypatch.setattr(type(f), "stat", racy_stat)
+    batch = collector.poll()  # 예외 없이 완료
+    assert batch.records == []
+    assert batch.sources == []  # 읽지 못한 파일은 이번 poll 관측에서 제외
+
+
+def test_first_poll_window_starts_at_creation(tmp_path):
+    """이슈 B — 첫 poll 의 관측 구간은 폭 0 이 아니라 [생성 시각, poll 시각] 이어야 한다."""
+    import time
+
+    root = make_layout(tmp_path)
+    collector = LogCollector(str(root))
+    time.sleep(0.02)
+    batch = collector.poll()
+    assert batch.observed_from < batch.observed_until
+
+
 def test_validate_source_layout_ok(tmp_path):
     validate_source_layout(str(make_layout(tmp_path)))  # 예외 없음
 

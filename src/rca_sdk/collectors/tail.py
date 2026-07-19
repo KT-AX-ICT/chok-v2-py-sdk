@@ -42,18 +42,25 @@ class JsonlTailCollector(Collector):
         self.source_root = source_root
         self._dir = Path(source_root) / self.modality.value
         self._offsets: dict[str, int] = {}  # 파일명 → 소비한 byte 수 (인메모리, 계획 02 C1)
-        self._last_poll_at: datetime | None = None
+        self._last_poll_at = datetime.now()  # 첫 poll 의 관측 하한 = 생성 시각 (폭 0 구간 방지)
 
     def poll(self) -> RawBatch:
         now = datetime.now()  # naive (계획 02 C6)
-        records: list[dict[str, Any]] = []
-        sources: list[str] = []
+        records: list[dict[str, Any]] = [] #poll에서 새롭게 읽은 데이터
+        sources: list[str] = [] # 현재 디렉토리에 존재하는 파일 목록
+        # 현재 디렉토리에서 모든 .jsonl 파일을 순회하며 새롭게 추가된 라인을 읽어온다
         for path in sorted(self._dir.glob("*.jsonl")):
-            sources.append(path.name)
-            records.extend(self._read_new_lines(path))
+            try:
+                new_records = self._read_new_lines(path)
+            except OSError:
+                # 나열과 읽기 사이 파일 소실(--reset 레이스) 등 — 이 파일만 이번 poll 제외
+                logger.warning("%s: 읽기 실패 — 이번 poll 관측에서 제외", path.name)
+                continue
+            sources.append(path.name)  # 신규 데이터가 0 건이어도 source에는 포함
+            records.extend(new_records)
         batch = RawBatch(
             modality=self.modality,
-            observed_from=self._last_poll_at or now,
+            observed_from=self._last_poll_at,  # 직전 poll 시각 (첫 poll 은 생성 시각)
             observed_until=now,
             records=records,
             sources=sources,
@@ -63,9 +70,10 @@ class JsonlTailCollector(Collector):
 
     def _read_new_lines(self, path: Path) -> list[dict[str, Any]]:
         offset = self._offsets.get(path.name, 0)
+        # 현재 파일 크기 < 내가 기억하는 offset
         if path.stat().st_size < offset:
             offset = 0  # 파일이 줄어듦 = 리플레이어 --reset 재실행 → 처음부터
-        with path.open("rb") as f:
+        with path.open("rb") as f: # read binary 모드로 열어 offset 위치부터 읽는다. 
             f.seek(offset)
             chunk = f.read()
         incomplete = chunk.rpartition(b"\n")[2]
@@ -80,6 +88,7 @@ class JsonlTailCollector(Collector):
             except (json.JSONDecodeError, UnicodeDecodeError):
                 logger.warning("%s: JSON 파싱 실패 줄 스킵 (계획 02 C7)", path.name)
                 continue
+            # 원하는 jsonl 형식이 아니면 스킵 
             if not isinstance(rec, dict):
                 logger.warning("%s: 객체가 아닌 JSON 줄 스킵", path.name)
                 continue
