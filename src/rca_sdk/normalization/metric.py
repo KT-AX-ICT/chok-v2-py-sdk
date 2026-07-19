@@ -1,13 +1,57 @@
-"""메트릭 정규화 (스캐폴드). RawBatch(metric) → NormalizedBatch(NormalizedMetric)."""
+"""메트릭 정규화 — CSV 컬럼 dict → NormalizedMetric (정규화 스펙 §5, 계획 03 §2)."""
 
 from __future__ import annotations
 
+import logging
+from typing import Any
+
 from rca_sdk.normalization.base import Normalizer
-from rca_sdk.schemas.events import NormalizedBatch, RawBatch
+from rca_sdk.normalization.common import canonical_service, parse_timestamp
+from rca_sdk.schemas.events import NormalizedBatch, NormalizedMetric, RawBatch
+
+logger = logging.getLogger(__name__)
+
+NODE_SERVICE = "__node__"
+_CONTAINER_DIM = "container_label_com_docker_compose_service"
+# metric_name → 단위 (미정의는 None)
+_UNITS = {"container_cpu": "fraction", "system_cpu_usage": "percent"}
 
 
 class MetricNormalizer(Normalizer):
     def normalize(self, batch: RawBatch) -> NormalizedBatch:
-        # TODO: metric_name/value/dimension/unit 추출 → NormalizedMetric.
-        #       canonical_service(노드 지표는 __node__)·timestamp 통일. normalization-spec §5 참조.
-        raise NotImplementedError("MetricNormalizer.normalize 스캐폴드")
+        records = []
+        for rec in batch.records:
+            normalized = self._normalize_record(rec)
+            if normalized is not None:
+                records.append(normalized)
+        return NormalizedBatch(
+            modality=batch.modality,
+            observed_from=batch.observed_from,
+            observed_until=batch.observed_until,
+            records=records,
+        )
+
+    def _normalize_record(self, rec: dict[str, Any]) -> NormalizedMetric | None:
+        source = rec.get("_source", "")
+        metric_name = source.rsplit(".", 1)[0].removeprefix("socialnet_")
+        if _CONTAINER_DIM in rec:
+            dimension = rec[_CONTAINER_DIM]
+            service = canonical_service(dimension)
+        elif "instance" in rec:
+            dimension = rec["instance"]
+            service = NODE_SERVICE  # 노드 지표 (§5) — cpu_spike 신호 원천
+        else:
+            dimension = None
+            service = None
+        try:
+            return NormalizedMetric(
+                timestamp=parse_timestamp(rec["timestamp"]),
+                service=service,
+                metric_name=metric_name,
+                value=float(rec["value"]),
+                dimension=dimension,
+                unit=_UNITS.get(metric_name),
+            )
+        except (KeyError, ValueError, TypeError):
+            logger.warning("%s: metric 행 해석 실패 스킵 (계획 03 N3)", source)
+            return None

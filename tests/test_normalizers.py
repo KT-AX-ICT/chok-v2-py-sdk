@@ -5,6 +5,7 @@ from __future__ import annotations
 from datetime import datetime
 
 from rca_sdk.normalization.log import LogNormalizer
+from rca_sdk.normalization.metric import MetricNormalizer
 from rca_sdk.schemas.events import Modality, RawBatch
 
 WINDOW = {
@@ -78,6 +79,57 @@ def test_unparseable_line_skipped():
     )
     out = LogNormalizer().normalize(batch)
     assert len(out.records) == 1  # 해석 불가 줄만 스킵 (N3)
+
+
+def metric_batch(records: list[dict], sources: list[str]) -> RawBatch:
+    return RawBatch(modality=Modality.METRIC, records=records, sources=sources, **WINDOW)
+
+
+def test_container_metric_normalized():
+    rec = {
+        "timestamp": "2025-11-04 00:02:21",
+        "value": "0.006794",
+        "metric": 'container_label_com_docker_compose_service="user-service"',
+        "container_label_com_docker_compose_service": "user-service",
+        "_source": "socialnet_container_cpu.csv",
+    }
+    [out] = (
+        MetricNormalizer().normalize(metric_batch([rec], ["socialnet_container_cpu.csv"])).records
+    )
+    assert out.service == "user"
+    assert out.metric_name == "container_cpu"     # socialnet_ 접두 제거
+    assert out.value == 0.006794
+    assert out.dimension == "user-service"
+    assert out.unit == "fraction"
+    assert out.timestamp == datetime(2025, 11, 4, 0, 2, 21)
+
+
+def test_system_metric_is_node():
+    rec = {
+        "timestamp": "2025-11-04 00:03:13",
+        "value": "53.95",
+        "metric": 'instance="node-exporter:9100"',
+        "instance": "node-exporter:9100",
+        "_source": "system_cpu_usage.csv",
+    }
+    [out] = MetricNormalizer().normalize(metric_batch([rec], ["system_cpu_usage.csv"])).records
+    assert out.service == "__node__"              # cpu_spike 신호 원천
+    assert out.metric_name == "system_cpu_usage"
+    assert out.unit == "percent"
+    assert out.dimension == "node-exporter:9100"
+
+
+def test_unknown_dimension_service_none():
+    rec = {"timestamp": "2025-11-04 00:03:13", "value": "1.5", "_source": "jaeger_spans_rate.csv"}
+    [out] = MetricNormalizer().normalize(metric_batch([rec], ["jaeger_spans_rate.csv"])).records
+    assert out.service is None
+    assert out.unit is None
+
+
+def test_bad_metric_value_skipped():
+    rec = {"timestamp": "2025-11-04 00:03:13", "value": "?", "_source": "system_load1.csv"}
+    out = MetricNormalizer().normalize(metric_batch([rec], ["system_load1.csv"]))
+    assert out.records == []                      # N3
 
 
 def test_window_preserved():
