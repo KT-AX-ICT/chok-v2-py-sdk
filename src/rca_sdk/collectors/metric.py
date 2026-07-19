@@ -1,17 +1,10 @@
-"""메트릭 tailer — 임시 raw 프레이밍 (Task 3 에서 CsvTailCollector 로 교체 예정)."""
+"""메트릭 tailer — `<source_root>/metric/*.csv` 행을 컬럼 dict 로 산출한다 (계획 03 N1)."""
 
 from __future__ import annotations
 
-from pathlib import Path
-from typing import Any
-
-from rca_sdk.collectors.tail import LineTailCollector
+from rca_sdk.collectors.tail import CsvTailCollector
 from rca_sdk.schemas.events import Modality
 
 
-class MetricCollector(LineTailCollector):
+class MetricCollector(CsvTailCollector):
     modality = Modality.METRIC
-    pattern = "*.csv"
-
-    def _frame(self, line: str, path: Path) -> dict[str, Any] | None:
-        return {"raw": line}

@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+import csv
 import logging
 from datetime import datetime
 from pathlib import Path
@@ -105,3 +106,31 @@ class LineTailCollector(Collector):
             records.append(rec)
         self._offsets[path.name] = offset + len(chunk)
         return records
+
+
+class CsvTailCollector(LineTailCollector):
+    """CSV tail — 파일 맨 앞 헤더를 기억해 각 행을 {컬럼명: 값} dict 로 프레이밍한다 (계획 03 N1).
+
+    헤더는 offset 이어읽기 특성상 첫 배치에만 나타나므로, 상태를 가진 collector 가
+    기억해야 한다 (무상태 normalizer 는 볼 수 없다).
+    """
+
+    pattern = "*.csv"
+
+    def __init__(self, source_root: str) -> None:
+        super().__init__(source_root)
+        self._headers: dict[str, list[str]] = {}  # 파일명 → 컬럼 목록
+
+    def _reset_file_state(self, name: str) -> None:
+        self._headers.pop(name, None)  # truncate 후 새 헤더를 다시 학습
+
+    def _frame(self, line: str, path: Path) -> dict[str, Any] | None:
+        row = next(csv.reader([line]))  # 인용 콤마 안전 (1레코드=1줄 전제, 계획 03 §1)
+        header = self._headers.get(path.name)
+        if header is None:
+            self._headers[path.name] = row  # 파일 맨 앞 1회 — 레코드 아님
+            return None
+        if len(row) != len(header):
+            logger.warning("%s: 컬럼 수 불일치 줄 스킵 (계획 03 N3)", path.name)
+            return None
+        return dict(zip(header, row, strict=True))

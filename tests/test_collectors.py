@@ -10,12 +10,19 @@ from pathlib import Path
 import pytest
 
 from rca_sdk.collectors.log import LogCollector
+from rca_sdk.collectors.metric import MetricCollector
 from rca_sdk.collectors.tail import SourceLayoutError, validate_source_layout
+from rca_sdk.collectors.trace import TraceCollector
 from rca_sdk.schemas.events import Modality
 
 BOOST_LINE = (
     "[2025-Nov-04 00:01:57.490560] <info>: "
     "(MediaService.cpp:44:main) Starting the media-service server..."
+)
+METRIC_HEADER = "timestamp,value,metric,container_label_com_docker_compose_service\n"
+METRIC_ROW = (
+    '2025-11-04 00:02:21,0.006794,'
+    '"container_label_com_docker_compose_service=""cadvisor""",cadvisor\n'
 )
 
 
@@ -147,6 +154,87 @@ def test_first_poll_window_starts_at_creation(tmp_path):
     time.sleep(0.02)
     batch = collector.poll()
     assert batch.observed_from < batch.observed_until
+
+
+def test_csv_header_consumed_and_rows_dicted(tmp_path):
+    root = make_layout(tmp_path)
+    append_text(root / "metric" / "socialnet_container_cpu.csv", METRIC_HEADER + METRIC_ROW)
+    batch = MetricCollector(str(root)).poll()
+    assert len(batch.records) == 1  # 헤더는 레코드가 아님
+    rec = batch.records[0]
+    assert rec["timestamp"] == "2025-11-04 00:02:21"
+    assert rec["value"] == "0.006794"
+    assert rec["container_label_com_docker_compose_service"] == "cadvisor"
+    assert rec["_source"] == "socialnet_container_cpu.csv"
+
+
+def test_csv_header_remembered_across_polls(tmp_path):
+    root = make_layout(tmp_path)
+    f = root / "metric" / "socialnet_container_cpu.csv"
+    collector = MetricCollector(str(root))
+    append_text(f, METRIC_HEADER + METRIC_ROW)
+    assert len(collector.poll().records) == 1
+    append_text(f, METRIC_ROW)  # 두 번째 배치에는 헤더가 없다
+    second = collector.poll()
+    assert len(second.records) == 1
+    assert second.records[0]["timestamp"] == "2025-11-04 00:02:21"
+
+
+def test_csv_header_only_file_is_empty_source(tmp_path):
+    root = make_layout(tmp_path)
+    append_text(root / "metric" / "system_cpu_usage.csv", "timestamp,value,metric,instance\n")
+    batch = MetricCollector(str(root)).poll()
+    assert batch.sources == ["system_cpu_usage.csv"]
+    assert batch.records == []  # empty 판정 재료
+
+
+def test_csv_quoted_comma_field(tmp_path):
+    root = make_layout(tmp_path)
+    header = "trace_id,service,tags\n"
+    row = 'abc,nginx-web-server,"{""a"": 1, ""b"": 2}"\n'  # 인용 필드 안 콤마
+    append_text(root / "trace" / "all_traces.csv", header + row)
+    batch = TraceCollector(str(root)).poll()
+    assert batch.records[0]["tags"] == '{"a": 1, "b": 2}'
+
+
+def test_csv_column_mismatch_skipped(tmp_path):
+    root = make_layout(tmp_path)
+    append_text(
+        root / "metric" / "system_cpu_usage.csv",
+        "timestamp,value,metric,instance\n1,2\n"
+        + "2025-11-04 00:02:28,2.27,m,node-exporter:9100\n",
+    )
+    batch = MetricCollector(str(root)).poll()
+    assert len(batch.records) == 1  # 컬럼 수 불일치 줄만 스킵
+    assert batch.records[0]["value"] == "2.27"
+
+
+def test_csv_truncate_relearns_header(tmp_path):
+    root = make_layout(tmp_path)
+    f = root / "metric" / "system_cpu_usage.csv"
+    collector = MetricCollector(str(root))
+    append_text(f, "timestamp,value,metric,instance\n2025-11-04 00:02:28,2.27,m,n\n")
+    collector.poll()
+    f.write_text("ts,v\n1,2\n", encoding="utf-8")  # --reset 후 다른 헤더
+    batch = collector.poll()
+    assert batch.records == [{"ts": "1", "v": "2", "_source": "system_cpu_usage.csv"}]
+
+
+@pytest.mark.parametrize(
+    ("collector_cls", "modality", "subdir", "content"),
+    [
+        (LogCollector, Modality.LOG, "log", BOOST_LINE + "\n"),
+        (MetricCollector, Modality.METRIC, "metric", METRIC_HEADER + METRIC_ROW),
+        (TraceCollector, Modality.TRACE, "trace", METRIC_HEADER + METRIC_ROW),
+    ],
+)
+def test_each_collector_owns_its_subdir(tmp_path, collector_cls, modality, subdir, content):
+    root = make_layout(tmp_path)
+    name = "sample.log" if subdir == "log" else "sample.csv"
+    append_text(root / subdir / name, content)
+    batch = collector_cls(str(root)).poll()
+    assert batch.modality is modality
+    assert len(batch.records) == 1
 
 
 def test_validate_source_layout_ok(tmp_path):
