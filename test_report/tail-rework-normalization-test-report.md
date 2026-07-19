@@ -1,7 +1,9 @@
-# 원본 형식 tail 개편 · normalization 테스트 리포트
+# tail 개편 · normalization · buffer 테스트 리포트
 
 > 대상: `tests/test_collectors.py`(개편) · `tests/test_normalization_common.py`(신규) ·
-> `tests/test_normalizers.py`(신규) — 설계: [계획 03](../docs/plans/03-tail-rework-normalization.md)
+> `tests/test_normalizers.py`(신규) · `tests/test_buffer.py`(신규)
+> 설계: [계획 03](../docs/plans/03-tail-rework-normalization.md) ·
+> [계획 04](../docs/plans/04-memory-buffer.md)
 > 실행일: 2026-07-19 · 브랜치 `feat/tailer-normalization-buffer`
 
 ## 실행 환경·전체 결과
@@ -10,7 +12,7 @@
 |---|---|
 | 명령 | `uv run pytest` / `uv run ruff check .` |
 | 플랫폼 | Windows (win32), Python 3.11.9, pytest 9.1.1 |
-| 결과 | **80 passed** (collectors 23 · normalization_common 29 · normalizers 18 · smoke 10), lint clean |
+| 결과 | **96 passed** (collectors 23 · normalization_common 29 · normalizers 18 · buffer 16 · smoke 10), lint clean |
 | 테스트 데이터 | tmp_path·인라인 픽스처 (SN 실측 라인/행 축약, fixture 파일 커밋 없음 — ADR-004) |
 
 이전 리포트(collector-test-report.md, JSONL 가정 16종)는 리플레이어 실구현 확인으로
@@ -117,6 +119,47 @@
 | trace_roster_missing_when_no_file | sources=[] | nginx=(False,0) | ✅ |
 | settings_default_expected_services | `Settings()` 기본값 | canonical 12종 (media·nginx 포함) | ✅ |
 
+## 4. buffer (16) — MemoryBuffer
+
+시각은 전부 고정 기준시 `T0`에서 만든 naive datetime이다. **실제 벽시계를 쓰지 않는 것 자체가
+"축출 기준은 watermark이지 벽시계가 아니다"(B3)를 보장한다.** 아래 표의 `at(n)`은 `T0 + n초`.
+
+### 적재·조회
+
+| 테스트 | 입력 (I) | 기대 출력 (O) | 결과 |
+|---|---|---|---|
+| records_within_window_returned | 배치[0,30] 레코드 at(10)·at(20) | 조회[0,30) → `[at(10), at(20)]` | ✅ |
+| window_is_half_open | 레코드 at(10)·at(20)·at(30), 조회 `[10, 30)` | **start 포함·end 제외** → `[at(10), at(20)]` | ✅ |
+| empty_window_returns_empty_snapshot | 조회 구간에 레코드 없음 | `logs == []` | ✅ |
+| records_sorted_by_timestamp | 파일 순서로 at(50)→at(10)→at(30) 유입 | **timestamp 오름차순** `[10, 30, 50]` (B4) | ✅ |
+| modalities_are_separated | log·metric·trace 각 1건 | `logs`/`metrics`/`traces` 각 1건 | ✅ |
+
+### 축출 — watermark 기준 (B3)
+
+| 테스트 | 입력 (I) | 기대 출력 (O) | 결과 |
+|---|---|---|---|
+| evicts_records_older_than_retention | retention=60, 레코드 at(10) 후 배치 until=90 | 임계 30 → at(10) **축출**, at(70) 유지 | ✅ |
+| keeps_record_exactly_at_eviction_threshold | 레코드 at(30), 임계 정확히 30 | **경계값 유지** `[at(30), at(70)]` | ✅ |
+| eviction_uses_watermark_not_wall_clock | 2025년 레코드, watermark 낮음 | 실제 현재가 2026이어도 **축출 안 됨** | ✅ |
+| history_evicted_with_records | 배치[0,30] 후 배치[300,330] | 옛 구간 coverage 사라짐 | ✅ |
+
+### coverage 집계 (B2)
+
+| 테스트 | 입력 (I) | 기대 출력 (O) | 결과 |
+|---|---|---|---|
+| zero_record_batch_kept_in_coverage | 레코드 0건 배치 + roster(nginx present) | 이력 유지 → `(True, 0)` **empty 판정 재료** | ✅ |
+| coverage_present_is_or_across_batches | 배치1 present=False, 배치2 present=True | **OR** → `present=True` | ✅ |
+| coverage_record_count_is_summed | count 3 + count 5 | **합계** 8 | ✅ |
+| coverage_excludes_batch_ending_at_window_start | 배치[0,30] count=10, 조회 `[30,60)` | `until == start`라 **제외** → count=0 (이중 계산 방지) | ✅ |
+| coverage_three_states | roster media(F,0)·nginx(T,0)·text(T,7) | **missing·empty·data** 3상태 구분 | ✅ |
+
+### 독립성 (deep copy)
+
+| 테스트 | 입력 (I) | 기대 출력 (O) | 결과 |
+|---|---|---|---|
+| snapshot_records_are_deep_copies | 스냅샷 레코드의 `service` 변조 | 버퍼 원본 불변 → 재조회 시 `media` | ✅ |
+| snapshot_unaffected_by_later_eviction | 스냅샷 취득 후 버퍼에서 해당 레코드 축출 | **이미 꺼낸 스냅샷은 그대로** `[at(10)]` | ✅ |
+
 ## 관찰 사항
 
 - 스킵 경로 테스트(불량 JSON 컬럼·불량 값·해석 불가 줄)에서 잡히는 `logging.warning` 은
@@ -130,5 +173,7 @@
   CsvTailCollector 헤더 생명주기 (학습→기억→truncate 재학습).
 - normalization: 스펙 §1-1 표 전체 · §1-2 3계열 · §3 파생 필드 규칙(실측 트리거 신호 3종 원천
   포함) · §4 공백/JSON 처리 · §5 container/__node__ 구분 · §2 roster 3상태.
-- 의도적으로 안 한 것: 리플레이어 실출력 통합 검증(리플레이어 완성 후), buffer(다음 단계),
-  Runner 배선(범위 밖 — 계획 02).
+- buffer: 축출(임계·경계값·watermark 기준) · 반열림 구간 · 정렬 · deep copy 독립성 ·
+  coverage 집계(OR·합계·겹침 경계·3상태) · 모달리티 분리.
+- 의도적으로 안 한 것: 리플레이어 실출력 통합 검증(리플레이어 완성 후),
+  Runner 배선(범위 밖 — 계획 02·04), 파이프라인 3계층 결합 시나리오 테스트.
