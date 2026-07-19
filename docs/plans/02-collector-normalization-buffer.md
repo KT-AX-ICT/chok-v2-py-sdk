@@ -15,6 +15,11 @@
 **범위 밖**: Runner 통합·기동 시 경로 검증 실행(ADR-004 — Runner 소관. 단 collector 가 검증 헬퍼를
 제공한다), trigger/snapshot/transport, 리플레이어.
 
+> **⚠️ 입력 형식 전제 대체됨**: 리플레이어 실구현 확인 결과 var/ 는 JSONL 이 아니라
+> **원본 형식 그대로**(log 텍스트 라인·CSV)다. 아래 "전제 — D4 미결 대응" 절과 §① 의 JSONL
+> 서술은 [계획 03](03-tail-rework-normalization.md) 이 대체한다. 결정 C1~C7 중 입력 형식
+> 관련만 바뀌고 나머지(오프셋·roster·watermark·naive 시각·스킵 정책)는 유지.
+
 ## 전제 — 리플레이어 D4(JSONL 필드 집합) 미결 대응
 
 리플레이어 출력 레코드의 필드 집합이 미확정이므로:
@@ -90,8 +95,8 @@ poll() 한 번의 흐름:
 
 ## 팀 조율 항목 (구현과 병행)
 
-1. ⚠️ **리플레이어가 `system_*.csv` 를 범위 밖으로 둔 것** — `cpu_spike` 의 신호 원천(host CPU
-   plateau, `__node__`)이라 재생에 포함돼야 한다. 빠진 채면 Perf CPU 트리거가 성립 불가. **최우선.**
+1. ~~⚠️ 리플레이어가 `system_*.csv` 를 범위 밖으로 둔 것~~ — **해소 확인** (계획 03 §0):
+   리플레이어 실구현이 `system_*.csv` 를 재생 범위에 포함한다. `cpu_spike` 신호 원천 확보.
 2. `RawBatch.sources` 계약 변경(C2) 공유 — schemas 는 공용 계약.
 3. D4 제안 전달: "타임시프트된 `timestamp` + 모달리티 원본 필드 평탄화 + 한 줄 JSON".
 4. 리플레이어 출력 타임스탬프의 tz 표기 여부 확인 (우리는 naive 로 통일, C6).
