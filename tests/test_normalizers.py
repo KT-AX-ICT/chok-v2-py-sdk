@@ -6,6 +6,7 @@ from datetime import datetime
 
 from rca_sdk.normalization.log import LogNormalizer
 from rca_sdk.normalization.metric import MetricNormalizer
+from rca_sdk.normalization.trace import TraceNormalizer
 from rca_sdk.schemas.events import Modality, RawBatch
 
 WINDOW = {
@@ -129,6 +130,62 @@ def test_unknown_dimension_service_none():
 def test_bad_metric_value_skipped():
     rec = {"timestamp": "2025-11-04 00:03:13", "value": "?", "_source": "system_load1.csv"}
     out = MetricNormalizer().normalize(metric_batch([rec], ["system_load1.csv"]))
+    assert out.records == []                      # N3
+
+
+TRACE_ROW = {
+    "trace_id": "00375a1ade701ffa",
+    "span_id": "b04a35bc78367bd0",
+    "parent_span_id": "",
+    "service": "nginx-web-server",
+    "operation": "read_home_timeline_client",
+    "start_time": "2025-11-04 00:20:00.521783",
+    "duration_us": "490",
+    "http_status_code": "",
+    "http_method": "",
+    "http_url": "",
+    "component": "",
+    "tags": '{"internal.span.format": "proto"}',
+    "logs": "",
+    "_source": "all_traces.csv",
+}
+
+
+def trace_batch(records: list[dict]) -> RawBatch:
+    return RawBatch(
+        modality=Modality.TRACE, records=records, sources=["all_traces.csv"], **WINDOW
+    )
+
+
+def test_trace_row_normalized():
+    [out] = TraceNormalizer().normalize(trace_batch([TRACE_ROW])).records
+    assert out.service == "nginx"
+    assert out.trace_id == "00375a1ade701ffa"
+    assert out.parent_span_id is None             # 공백 → None
+    assert out.http_status_code is None           # 공백 → None
+    assert out.duration_us == 490
+    assert out.duration_ms == 0.49
+    assert out.timestamp == datetime(2025, 11, 4, 0, 20, 0, 521783)
+    assert out.tags == {"internal.span.format": "proto"}
+    assert out.logs is None                       # 공백 → None
+
+
+def test_trace_status_code_parsed():
+    row = dict(TRACE_ROW, http_status_code="500", parent_span_id="c4c6197d4cc6a67e")
+    [out] = TraceNormalizer().normalize(trace_batch([row])).records
+    assert out.http_status_code == 500            # trace_5xx 신호 원천
+    assert out.parent_span_id == "c4c6197d4cc6a67e"
+
+
+def test_trace_bad_tags_kept_as_empty_dict():
+    row = dict(TRACE_ROW, tags="{broken")
+    [out] = TraceNormalizer().normalize(trace_batch([row])).records
+    assert out.tags == {}                         # 파싱 실패 → 빈 dict + warning
+
+
+def test_trace_missing_start_time_skipped():
+    row = dict(TRACE_ROW, start_time="")
+    out = TraceNormalizer().normalize(trace_batch([row]))
     assert out.records == []                      # N3
 
 
