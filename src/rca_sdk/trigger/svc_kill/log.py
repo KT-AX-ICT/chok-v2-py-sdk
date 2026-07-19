@@ -1,8 +1,8 @@
 """svc_kill · log — restart_marker.
 
-buffer 윈도(210초) 안의 부팅 마커(event_type=="service_start")를 canonical_service 별로
-세어 threshold(기본 2) 이상이면 발화. 발화 서비스명이 곧 kill 후 재시작된 서비스.
-무상태: 매 evaluate 마다 buffer 윈도를 다시 센다(설계 §5.4).
+최근 창(condition window_sec, 기본 210초) 안의 부팅 마커(event_type=="service_start")를
+canonical_service 별로 세어 threshold(기본 2) 이상이면 발화. 발화 서비스명이 곧 kill 후
+재시작된 서비스. 무상태: 매 evaluate 마다 buffer.get_snapshot 으로 창을 다시 센다(설계 §5.4).
 """
 
 from __future__ import annotations
@@ -26,10 +26,12 @@ class RestartMarkerDetector(TriggerDetector):
 
         threshold = max(1, int(self.condition.get("threshold", 2)))  # 최소 1 보장(음수/0 방어)
         baseline = float(self.condition.get("baseline", 1.0))
+        lookback = int(self.condition.get("window_sec", 210))  # 되돌아볼 창(초) — detector 설정
 
-        # 부팅 2회가 배치를 가로지르므로 이번 배치가 아니라 buffer 210초 윈도 전체를 본다.
+        # 부팅 2회가 배치를 가로지르므로 최근 lookback 초 구간을 조회한다.
+        # 계약의 get_snapshot 만 사용 — buffer 내부 속성 의존 안 함(§2.3).
         anchor = new_batch.observed_until
-        start = anchor - timedelta(seconds=buffer.window_sec)
+        start = anchor - timedelta(seconds=lookback)
         snapshot = buffer.get_snapshot(start, anchor)
 
         # 윈도 내 부팅 마커(service_start)를 서비스별로 모은다.

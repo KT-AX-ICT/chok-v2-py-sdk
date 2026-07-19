@@ -1,26 +1,66 @@
-"""perf · metric — cpu_spike. cpu 지표 최댓값이 임계 초과면 발화."""
+"""perf · metric — cpu_spike (plateau).
+
+host CPU(`system_cpu`)가 bar(기본 50%)를 넘는 샘플이 최근 창(condition window_sec, 기본 210초)
+안에서 min_over(기본 5)개 이상 누적되면 발화한다. 단일 봉우리(1회 초과)가 아니라 "높은 샘플의
+지속(plateau)"으로 판정한다 — 실측상 median/단일절대는 판별 불가고, baseline은 3/80 산발 vs
+주입은 23/80 연속이다(ADR-006). container_cpu 는 국소화용이라 트리거 대상이 아니다.
+무상태: 매 evaluate 마다 buffer.get_snapshot 으로 창을 다시 센다(restart_marker 와 동형).
+"""
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import timedelta
 
+from rca_sdk.buffer.memory_buffer import MemoryBuffer
 from rca_sdk.schemas.events import Modality, NormalizedBatch, NormalizedMetric
-from rca_sdk.trigger.base import NumericThresholdDetector
+from rca_sdk.trigger.detector import TriggerDetector
+from rca_sdk.trigger.models import TriggerEvidence
 
-CPU_METRICS = {"container_cpu", "system_cpu"}
+CPU_METRIC = "system_cpu"  # host CPU (node-exporter). container_cpu 는 트리거 아님(ADR-006).
 
 
-class CpuSpikeDetector(NumericThresholdDetector):
+class CpuSpikeDetector(TriggerDetector):
     MODALITY = Modality.METRIC
     DETECTOR_TYPE = "cpu_spike"
 
-    def _value_and_meta(
-        self, new_batch: NormalizedBatch
-    ) -> tuple[float, str | None, datetime] | None:
-        # cpu 지표 레코드만 골라 배치 내 최댓값을 추적. isinstance 로 union 좁힘(mypy 안전).
-        best: tuple[float, str | None, datetime] | None = None
-        for rec in new_batch.records:
-            if isinstance(rec, NormalizedMetric) and rec.metric_name in CPU_METRICS:
-                if rec.value is not None and (best is None or rec.value > best[0]):
-                    best = (float(rec.value), rec.canonical_service, rec.timestamp)
-        return best  # cpu 레코드 없으면 None → 무발화
+    def evaluate(self, new_batch: NormalizedBatch, buffer: MemoryBuffer) -> list[TriggerEvidence]:
+        if new_batch.modality != self.MODALITY:
+            return []  # metric 배치만 평가
+
+        bar = float(self.condition.get("bar", 50.0))         # 샘플을 '높음'으로 치는 기준선(%)
+        min_over = int(self.condition.get("min_over", 5))    # 윈도 내 초과 샘플 최소 개수(plateau)
+        lookback = int(self.condition.get("window_sec", 210))  # 되돌아볼 창(초) — detector 설정
+
+        # 이번 배치가 아니라 최근 lookback 초 구간을 계약의 get_snapshot 으로만 조회한다
+        # (buffer 내부 속성에 의존하지 않음 — 계약 §2.3).
+        anchor = new_batch.observed_until
+        start = anchor - timedelta(seconds=lookback)
+        snapshot = buffer.get_snapshot(start, anchor)
+
+        # 윈도 내 system_cpu 샘플 중 bar 초과분을 모은다.
+        over = [
+            rec
+            for rec in snapshot.metrics
+            if isinstance(rec, NormalizedMetric)
+            and rec.metric_name == CPU_METRIC
+            and rec.value is not None
+            and rec.value > bar
+        ]
+        if len(over) < min_over:
+            return []  # 산발 스파이크(초과 소수)는 무시 → 지속(plateau)만 발화
+
+        over_sorted = sorted(over, key=lambda r: r.timestamp)
+        confirm = over_sorted[min_over - 1]  # min_over 번째 초과 = plateau 확증 시점
+        peak = max(rec.value for rec in over if rec.value is not None)
+        return [
+            TriggerEvidence(
+                trigger_time=confirm.timestamp,
+                modality=self.MODALITY,
+                service=confirm.canonical_service,  # 호스트 지표면 "__node__"
+                detector_type=self.DETECTOR_TYPE,
+                value=float(len(over)),  # 초과 샘플 수 = plateau 강도
+                baseline=float(self.condition.get("baseline", 0.0)),
+                threshold=float(min_over),
+                extra={"bar": bar, "max_cpu": float(peak)},
+            )
+        ]
