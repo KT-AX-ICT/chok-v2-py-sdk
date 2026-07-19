@@ -1,13 +1,80 @@
-"""로그 정규화 (스캐폴드). RawBatch(로그) → NormalizedBatch(NormalizedLog)."""
+"""로그 정규화 — {"raw": 원본 라인} → NormalizedLog (정규화 스펙 §3, 계획 03 §2)."""
 
 from __future__ import annotations
 
+import logging
+import re
+from typing import Any
+
 from rca_sdk.normalization.base import Normalizer
-from rca_sdk.schemas.events import NormalizedBatch, RawBatch
+from rca_sdk.normalization.common import canonical_service, parse_timestamp
+from rca_sdk.schemas.events import NormalizedBatch, NormalizedLog, RawBatch
+
+logger = logging.getLogger(__name__)
+
+# boost: [ts] <level>: (file:line:func) message
+_BOOST_RE = re.compile(
+    r"^\[(?P<ts>[^\]]+)\] <(?P<level>\w+)>: "
+    r"\((?P<file>[^:()]+):(?P<line>\d+):(?P<func>[^)]*)\) (?P<msg>.*)$"
+)
+# nginx: YYYY/MM/DD HH:MM:SS [level] message
+_NGINX_RE = re.compile(
+    r"^(?P<ts>\d{4}/\d{2}/\d{2} \d{2}:\d{2}:\d{2}) \[(?P<level>\w+)\] (?P<msg>.*)$"
+)
+_LUA_LOC_RE = re.compile(r"([\w.]+\.lua:\d+)")
+_CONNECT_TARGET_RE = re.compile(r"Could not connect to ([A-Za-z0-9-]+):\d+")
+# 익명 resolve-host 는 target 없음 그대로 둔다 — Code_Stop 신호 (ADR-003)
+_CONNECTION_ERROR_MARKERS = ("Could not resolve host", "Could not connect", "TTransportException")
 
 
 class LogNormalizer(Normalizer):
     def normalize(self, batch: RawBatch) -> NormalizedBatch:
-        # TODO: level/message/code_loc/target_service/event_type 추출 → NormalizedLog.
-        #       canonical_service·timestamp 통일. normalization-spec §3 참조.
-        raise NotImplementedError("LogNormalizer.normalize 스캐폴드")
+        records = []
+        for rec in batch.records:
+            normalized = self._normalize_record(rec)
+            if normalized is not None:
+                records.append(normalized)
+        return NormalizedBatch(
+            modality=batch.modality,
+            observed_from=batch.observed_from,
+            observed_until=batch.observed_until,
+            records=records,
+        )
+
+    def _normalize_record(self, rec: dict[str, Any]) -> NormalizedLog | None:
+        raw = rec.get("raw", "")
+        source = rec.get("_source", "")
+        service = canonical_service(source.removesuffix(".log"))
+        match = _BOOST_RE.match(raw)
+        if match:
+            code_loc = f"{match['file']}:{match['line']}"
+        else:
+            match = _NGINX_RE.match(raw)
+            if match is None:
+                logger.warning("%s: 해석 불가 로그 줄 스킵 (계획 03 N3)", source)
+                return None
+            lua = _LUA_LOC_RE.search(match["msg"])
+            code_loc = lua.group(1) if lua else None
+        message = match["msg"]
+        try:
+            timestamp = parse_timestamp(match["ts"])
+        except (ValueError, TypeError):
+            logger.warning("%s: timestamp 해석 실패 줄 스킵 (계획 03 N3)", source)
+            return None
+        if message.startswith("Starting"):
+            event_type = "service_start"  # restart_marker 원천 (trigger-policy)
+        elif any(marker in message for marker in _CONNECTION_ERROR_MARKERS):
+            event_type = "connection_error"
+        else:
+            event_type = "normal_log"
+        target = _CONNECT_TARGET_RE.search(message)
+        return NormalizedLog(
+            timestamp=timestamp,
+            service=service,
+            log_type="nginx_log" if service == "nginx" else "service_log",
+            level=match["level"],
+            code_loc=code_loc,
+            message=message,
+            target_service=canonical_service(target.group(1)) if target else None,
+            event_type=event_type,
+        )
