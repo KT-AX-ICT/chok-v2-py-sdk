@@ -4,7 +4,7 @@ from rca_sdk.collectors.base import Collector
 from rca_sdk.collectors.log import LogCollector
 from rca_sdk.collectors.metric import MetricCollector
 from rca_sdk.collectors.tail import (
-    JsonlTailCollector,
+    LineTailCollector,
     SourceLayoutError,
     validate_source_layout,
 )
@@ -12,7 +12,7 @@ from rca_sdk.collectors.trace import TraceCollector
 
 __all__ = [
     "Collector",
-    "JsonlTailCollector",
+    "LineTailCollector",
     "LogCollector",
     "MetricCollector",
     "TraceCollector",

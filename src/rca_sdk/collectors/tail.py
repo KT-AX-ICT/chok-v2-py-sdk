@@ -1,12 +1,12 @@
-"""JSONL tailer 공통 구현 — 파일별 byte offset 을 기억하고 신규 완성 라인만 읽는다.
+"""라인 tailer 공통 구현 — 파일별 byte offset 을 기억하고 신규 완성 라인만 읽는다.
 
-계획 02 §① collectors. 세 모달리티가 같은 로직을 쓰며, 서브클래스는 modality 만 지정한다.
-소스 present/missing 판정은 normalizer 전담 — 여기서는 관측 사실(sources)만 전달한다.
+계획 03 §1. var/ 는 원본 형식 그대로(log 텍스트 라인·CSV)이므로 라인 해석은
+서브클래스 훅 `_frame` 이 담당한다. 소스 present/missing 판정은 normalizer 전담 —
+여기서는 관측 사실(sources)만 전달한다.
 """
 
 from __future__ import annotations
 
-import json
 import logging
 from datetime import datetime
 from pathlib import Path
@@ -35,8 +35,10 @@ def validate_source_layout(source_root: str) -> None:
         )
 
 
-class JsonlTailCollector(Collector):
-    """`<source_root>/<modality>/*.jsonl` 을 tail 해 신규 라인을 RawBatch 로 산출한다."""
+class LineTailCollector(Collector):
+    """`<source_root>/<modality>/<pattern>` 을 tail 해 신규 완성 라인을 RawBatch 로 산출한다."""
+
+    pattern = "*"  # 서브클래스가 모달리티별 glob 지정 (*.log / *.csv)
 
     def __init__(self, source_root: str) -> None:
         self.source_root = source_root
@@ -46,10 +48,10 @@ class JsonlTailCollector(Collector):
 
     def poll(self) -> RawBatch:
         now = datetime.now()  # naive (계획 02 C6)
-        records: list[dict[str, Any]] = [] #poll에서 새롭게 읽은 데이터
-        sources: list[str] = [] # 현재 디렉토리에 존재하는 파일 목록
-        # 현재 디렉토리에서 모든 .jsonl 파일을 순회하며 새롭게 추가된 라인을 읽어온다
-        for path in sorted(self._dir.glob("*.jsonl")):
+        records: list[dict[str, Any]] = []  # poll에서 새롭게 읽은 데이터
+        sources: list[str] = []  # 현재 디렉토리에 존재하는 파일 목록
+        # 현재 디렉토리에서 pattern 에 맞는 파일을 순회하며 새롭게 추가된 라인을 읽어온다
+        for path in sorted(self._dir.glob(self.pattern)):
             try:
                 new_records = self._read_new_lines(path)
             except OSError:
@@ -68,29 +70,36 @@ class JsonlTailCollector(Collector):
         self._last_poll_at = now
         return batch
 
+    def _frame(self, line: str, path: Path) -> dict[str, Any] | None:
+        """완성 라인 1개 → 레코드 dict. None 이면 레코드 아님(헤더·스킵). 서브클래스가 구현."""
+        raise NotImplementedError
+
+    def _reset_file_state(self, name: str) -> None:
+        """truncate(--reset 재실행) 감지 시 파일별 부가 상태 초기화 훅 (기본 없음)."""
+
     def _read_new_lines(self, path: Path) -> list[dict[str, Any]]:
         offset = self._offsets.get(path.name, 0)
         # 현재 파일 크기 < 내가 기억하는 offset
         if path.stat().st_size < offset:
             offset = 0  # 파일이 줄어듦 = 리플레이어 --reset 재실행 → 처음부터
-        with path.open("rb") as f: # read binary 모드로 열어 offset 위치부터 읽는다. 
+            self._reset_file_state(path.name)
+        with path.open("rb") as f:  # read binary 모드로 열어 offset 위치부터 읽는다.
             f.seek(offset)
             chunk = f.read()
         incomplete = chunk.rpartition(b"\n")[2]
         if incomplete:  # 개행 없는 마지막 조각 = 쓰는 도중 → 다음 poll 로 미룸
             chunk = chunk[: -len(incomplete)]
         records: list[dict[str, Any]] = []
-        for line in chunk.splitlines():
-            if not line.strip():
+        for line_bytes in chunk.splitlines():
+            if not line_bytes.strip():
                 continue
             try:
-                rec = json.loads(line)
-            except (json.JSONDecodeError, UnicodeDecodeError):
-                logger.warning("%s: JSON 파싱 실패 줄 스킵 (계획 02 C7)", path.name)
+                line = line_bytes.decode("utf-8")
+            except UnicodeDecodeError:
+                logger.warning("%s: UTF-8 해석 실패 줄 스킵 (계획 03 N3)", path.name)
                 continue
-            # 원하는 jsonl 형식이 아니면 스킵 
-            if not isinstance(rec, dict):
-                logger.warning("%s: 객체가 아닌 JSON 줄 스킵", path.name)
+            rec = self._frame(line, path)
+            if rec is None:
                 continue
             rec["_source"] = path.name
             records.append(rec)

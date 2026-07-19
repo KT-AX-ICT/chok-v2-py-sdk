@@ -1,10 +1,17 @@
-"""메트릭 tailer — `<source_root>/metric/*.jsonl` 의 신규 라인을 산출한다."""
+"""메트릭 tailer — 임시 raw 프레이밍 (Task 3 에서 CsvTailCollector 로 교체 예정)."""
 
 from __future__ import annotations
 
-from rca_sdk.collectors.tail import JsonlTailCollector
+from pathlib import Path
+from typing import Any
+
+from rca_sdk.collectors.tail import LineTailCollector
 from rca_sdk.schemas.events import Modality
 
 
-class MetricCollector(JsonlTailCollector):
+class MetricCollector(LineTailCollector):
     modality = Modality.METRIC
+    pattern = "*.csv"
+
+    def _frame(self, line: str, path: Path) -> dict[str, Any] | None:
+        return {"raw": line}

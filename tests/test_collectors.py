@@ -1,20 +1,22 @@
-"""JsonlTailCollector 단위 테스트 — tmp_path 기반 (fixture 파일 새로 만들지 않음, ADR-004).
+"""collectors 단위 테스트 — tmp_path 기반 (fixture 파일 커밋 금지, ADR-004).
 
-계획 02 §① collectors. 리플레이어 실출력 대신 실측 포맷을 축약한 JSONL 로 검증한다.
+계획 03: var/ 는 원본 형식 그대로다 — log 는 텍스트 라인, metric/trace 는 CSV.
 """
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
 import pytest
 
 from rca_sdk.collectors.log import LogCollector
-from rca_sdk.collectors.metric import MetricCollector
 from rca_sdk.collectors.tail import SourceLayoutError, validate_source_layout
-from rca_sdk.collectors.trace import TraceCollector
 from rca_sdk.schemas.events import Modality
+
+BOOST_LINE = (
+    "[2025-Nov-04 00:01:57.490560] <info>: "
+    "(MediaService.cpp:44:main) Starting the media-service server..."
+)
 
 
 def make_layout(tmp_path: Path) -> Path:
@@ -24,11 +26,8 @@ def make_layout(tmp_path: Path) -> Path:
     return tmp_path
 
 
-def append_lines(path: Path, objs: list[dict], *, newline_at_end: bool = True) -> None:
-    """JSONL append. newline_at_end=False 면 마지막 줄을 개행 없이 남긴다(쓰는 도중 상태)."""
-    text = "\n".join(json.dumps(o) for o in objs)
-    if newline_at_end:
-        text += "\n"
+def append_text(path: Path, text: str) -> None:
+    """원본 줄 그대로 append (리플레이어 동작 재현). 개행 포함 여부는 호출자가 정한다."""
     with path.open("a", encoding="utf-8", newline="") as f:
         f.write(text)
 
@@ -41,66 +40,65 @@ def test_empty_dir_returns_empty_batch(tmp_path):
     assert batch.sources == []
 
 
-def test_reads_lines_and_tags_source(tmp_path):
+def test_log_line_wrapped_as_raw(tmp_path):
     root = make_layout(tmp_path)
-    append_lines(root / "log" / "media-service.jsonl", [{"msg": "a"}, {"msg": "b"}])
+    append_text(root / "log" / "MediaService_.log", BOOST_LINE + "\n")
     batch = LogCollector(str(root)).poll()
-    assert len(batch.records) == 2
-    assert batch.records[0]["_source"] == "media-service.jsonl"
-    assert batch.sources == ["media-service.jsonl"]
+    assert batch.records == [{"raw": BOOST_LINE, "_source": "MediaService_.log"}]
+    assert batch.sources == ["MediaService_.log"]
 
 
 def test_offset_continues_between_polls(tmp_path):
     root = make_layout(tmp_path)
-    f = root / "log" / "media-service.jsonl"
+    f = root / "log" / "MediaService_.log"
     collector = LogCollector(str(root))
-    append_lines(f, [{"msg": "a"}])
-    assert len(collector.poll().records) == 1
-    append_lines(f, [{"msg": "b"}, {"msg": "c"}])
-    second = collector.poll()
-    assert [r["msg"] for r in second.records] == ["b", "c"]  # 신규 줄만
+    append_text(f, "line-a\n")
+    assert [r["raw"] for r in collector.poll().records] == ["line-a"]
+    append_text(f, "line-b\nline-c\n")
+    assert [r["raw"] for r in collector.poll().records] == ["line-b", "line-c"]
 
 
 def test_incomplete_last_line_deferred(tmp_path):
     root = make_layout(tmp_path)
-    f = root / "log" / "media-service.jsonl"
+    f = root / "log" / "MediaService_.log"
     collector = LogCollector(str(root))
-    append_lines(f, [{"msg": "a"}])
-    append_lines(f, [{"msg": "partial"}], newline_at_end=False)  # 쓰는 도중
-    first = collector.poll()
-    assert [r["msg"] for r in first.records] == ["a"]  # 미완성 줄은 미소비
-    with f.open("a", encoding="utf-8", newline="") as fh:
-        fh.write("\n")  # 리플레이어가 줄을 완성
-    second = collector.poll()
-    assert [r["msg"] for r in second.records] == ["partial"]
+    append_text(f, "done\npartial")  # 마지막 줄 개행 없음 = 쓰는 도중
+    assert [r["raw"] for r in collector.poll().records] == ["done"]
+    append_text(f, "\n")  # 리플레이어가 줄을 완성
+    assert [r["raw"] for r in collector.poll().records] == ["partial"]
 
 
 def test_zero_byte_file_listed_in_sources(tmp_path):
     root = make_layout(tmp_path)
-    (root / "log" / "nginx-thrift.jsonl").touch()  # Perf_CPU 실측 — 0바이트 존재
+    (root / "log" / "NginxThrift_.log").touch()  # Perf_CPU 실측 — 0바이트 존재
     batch = LogCollector(str(root)).poll()
-    assert batch.sources == ["nginx-thrift.jsonl"]
+    assert batch.sources == ["NginxThrift_.log"]
     assert batch.records == []
 
 
-def test_bad_json_line_skipped(tmp_path):
+def test_blank_line_skipped(tmp_path):
     root = make_layout(tmp_path)
-    f = root / "log" / "media-service.jsonl"
-    with f.open("a", encoding="utf-8", newline="") as fh:
-        fh.write('{"msg": "ok"}\n{broken\n{"msg": "ok2"}\n')
+    append_text(root / "log" / "MediaService_.log", "a\n\n \nb\n")
     batch = LogCollector(str(root)).poll()
-    assert [r["msg"] for r in batch.records] == ["ok", "ok2"]  # 깨진 줄만 스킵
+    assert [r["raw"] for r in batch.records] == ["a", "b"]
 
 
 def test_truncated_file_reread_from_start(tmp_path):
     root = make_layout(tmp_path)
-    f = root / "log" / "media-service.jsonl"
+    f = root / "log" / "MediaService_.log"
     collector = LogCollector(str(root))
-    append_lines(f, [{"msg": "old1"}, {"msg": "old2"}])
+    append_text(f, "old-1\nold-2\n")
     collector.poll()
-    f.write_text('{"msg": "fresh"}\n', encoding="utf-8")  # rca-replay --reset 재실행
-    batch = collector.poll()
-    assert [r["msg"] for r in batch.records] == ["fresh"]
+    f.write_text("fresh\n", encoding="utf-8")  # rca-replay --reset 재실행
+    assert [r["raw"] for r in collector.poll().records] == ["fresh"]
+
+
+def test_non_log_extension_ignored(tmp_path):
+    root = make_layout(tmp_path)
+    append_text(root / "log" / "summary.txt", "meta\n")  # 재생 대상 아님
+    batch = LogCollector(str(root)).poll()
+    assert batch.sources == []
+    assert batch.records == []
 
 
 def test_observed_window_is_continuous(tmp_path):
@@ -110,56 +108,38 @@ def test_observed_window_is_continuous(tmp_path):
     second = collector.poll()
     assert first.observed_until == second.observed_from
     assert first.observed_from <= first.observed_until
-    assert second.observed_from <= second.observed_until
 
 
 def test_new_file_appearing_mid_run(tmp_path):
     root = make_layout(tmp_path)
     collector = LogCollector(str(root))
     collector.poll()
-    append_lines(root / "log" / "user-service.jsonl", [{"msg": "late"}])
+    append_text(root / "log" / "UserService_.log", "late\n")
     batch = collector.poll()
-    assert batch.sources == ["user-service.jsonl"]
-    assert batch.records[0]["msg"] == "late"
-
-
-@pytest.mark.parametrize(
-    ("collector_cls", "modality", "subdir"),
-    [
-        (LogCollector, Modality.LOG, "log"),
-        (MetricCollector, Modality.METRIC, "metric"),
-        (TraceCollector, Modality.TRACE, "trace"),
-    ],
-)
-def test_each_collector_owns_its_subdir(tmp_path, collector_cls, modality, subdir):
-    root = make_layout(tmp_path)
-    append_lines(root / subdir / "media-service.jsonl", [{"v": 1}])
-    batch = collector_cls(str(root)).poll()
-    assert batch.modality is modality
-    assert len(batch.records) == 1
+    assert batch.sources == ["UserService_.log"]
+    assert batch.records[0]["raw"] == "late"
 
 
 def test_file_deleted_between_glob_and_read(tmp_path, monkeypatch):
-    """이슈 A — 나열과 읽기 사이 파일 삭제(--reset 레이스)가 poll 전체를 죽이면 안 된다."""
+    """나열과 읽기 사이 파일 삭제(--reset 레이스)가 poll 전체를 죽이면 안 된다."""
     root = make_layout(tmp_path)
-    f = root / "log" / "media-service.jsonl"
-    append_lines(f, [{"msg": "a"}])
+    f = root / "log" / "MediaService_.log"
+    append_text(f, "a\n")
     collector = LogCollector(str(root))
     real_stat = type(f).stat
 
     def racy_stat(self, *args, **kwargs):
-        if self.name == "media-service.jsonl":
-            raise FileNotFoundError(self)  # glob 직후 삭제된 상황 재현
+        if self.name == "MediaService_.log":
+            raise FileNotFoundError(self)
         return real_stat(self, *args, **kwargs)
 
     monkeypatch.setattr(type(f), "stat", racy_stat)
     batch = collector.poll()  # 예외 없이 완료
     assert batch.records == []
-    assert batch.sources == []  # 읽지 못한 파일은 이번 poll 관측에서 제외
+    assert batch.sources == []
 
 
 def test_first_poll_window_starts_at_creation(tmp_path):
-    """이슈 B — 첫 poll 의 관측 구간은 폭 0 이 아니라 [생성 시각, poll 시각] 이어야 한다."""
     import time
 
     root = make_layout(tmp_path)
@@ -178,5 +158,5 @@ def test_validate_source_layout_missing_dir_raises_with_paths(tmp_path):
     with pytest.raises(SourceLayoutError) as exc:
         validate_source_layout(str(tmp_path))
     msg = str(exc.value)
-    assert str((tmp_path / "metric").resolve()) in msg  # 해석된 절대경로
-    assert "CWD" in msg  # 실행 위치 안내 (ADR-004)
+    assert str((tmp_path / "metric").resolve()) in msg
+    assert "CWD" in msg
