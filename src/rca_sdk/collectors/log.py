@@ -1,17 +1,17 @@
-"""로그 tailer (스캐폴드). 서비스별 로그 파일을 tail 해 신규 라인을 산출한다."""
+"""로그 tailer — `<source_root>/log/*.log` 원본 라인을 {"raw": 라인} 으로 산출한다 (계획 03 N1)."""
 
 from __future__ import annotations
 
-from rca_sdk.collectors.base import Collector
-from rca_sdk.schemas.events import Modality, RawBatch
+from pathlib import Path
+from typing import Any
+
+from rca_sdk.collectors.tail import LineTailCollector
+from rca_sdk.schemas.events import Modality
 
 
-class LogCollector(Collector):
+class LogCollector(LineTailCollector):
     modality = Modality.LOG
+    pattern = "*.log"
 
-    def __init__(self, source_root: str) -> None:
-        self.source_root = source_root
-
-    def poll(self) -> RawBatch:
-        # TODO: 로그 디렉터리 tail → 신규 라인을 RawBatch.records 로, observed_from/until 세팅.
-        raise NotImplementedError("LogCollector.poll 스캐폴드")
+    def _frame(self, line: str, path: Path) -> dict[str, Any] | None:
+        return {"raw": line}  # boost/nginx 해석은 normalizer 소관

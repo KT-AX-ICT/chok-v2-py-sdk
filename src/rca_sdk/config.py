@@ -24,6 +24,13 @@ class Settings(BaseSettings):
     # 원본 데이터셋 경로 - 리플레이어가 source_root로 전달할 데이터셋 경로
     dataset_root: str = "./datasets/sn"
 
+    # 기대 서비스 로스터 (canonical, 계획 03 §3) — missing 판정의 관측 밖 기준
+    expected_services: list[str] = [
+        "media", "nginx", "user", "text", "uniqueid", "urlshorten",
+        "usermention", "usertimeline", "hometimeline", "poststorage",
+        "composepost", "socialgraph",
+    ]
+
 
 def load_settings() -> Settings:
     """설정 로드 진입점 (테스트에서 override 하기 쉽게 함수로 감쌈)."""
