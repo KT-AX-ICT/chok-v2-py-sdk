@@ -31,4 +31,11 @@ pre 와 post 는 **시점이 다른 별개 질의**라 더해지지 않는다. `
 ## 미결
 
 - 발화 시점 이벤트의 pre/post 귀속 규칙.
-- post 수집 중 재트리거 처리(윈도 연장 vs 별도 번들).
+- ~~post 수집 중 재트리거 처리(윈도 연장 vs 별도 번들)~~ — **해소.** `register_triggers` 가
+  단일 세션 슬롯을 써서 post 대기 중 재트리거를 기존 세션에 흡수한다(anchor·창·pre 고정,
+  `triggered_by` 만 누적). 윈도 연장은 하지 않는다.
+- **번들 전송 이후의 재발화 기준** — 미해결. 창 기반 detector 가 이미 전송한 구간을 다시 세어
+  anchor 가 과거로 끌려간다. 제안은 `evaluate(..., since=직전 번들 window_end)` 로 평가 하한을
+  자르는 것 — [계획 04 §7-3](../plans/04-memory-buffer.md).
+- **`trigger_time` 의 의미** — 미해결. "이상 확증 시각" 과 "창 중심" 을 한 필드가 겸한다.
+  [계획 04 §9](../plans/04-memory-buffer.md).

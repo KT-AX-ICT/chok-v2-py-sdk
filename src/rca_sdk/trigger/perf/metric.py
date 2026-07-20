@@ -9,7 +9,7 @@ host CPU(`system_cpu_usage`)가 bar(기본 50%)를 넘는 샘플이 최근 창(c
 
 from __future__ import annotations
 
-from datetime import timedelta
+from datetime import datetime
 
 from rca_sdk.buffer.memory_buffer import MemoryBuffer
 from rca_sdk.schemas.events import Modality, NormalizedBatch, NormalizedMetric
@@ -26,18 +26,23 @@ class CpuSpikeDetector(TriggerDetector):
     MODALITY = Modality.METRIC
     DETECTOR_TYPE = "cpu_spike"
 
-    def evaluate(self, new_batch: NormalizedBatch, buffer: MemoryBuffer) -> list[TriggerEvidence]:
+    def evaluate(
+        self,
+        new_batch: NormalizedBatch,
+        buffer: MemoryBuffer,
+        since: datetime | None = None,
+    ) -> list[TriggerEvidence]:
         if new_batch.modality != self.MODALITY:
             return []  # metric 배치만 평가
 
         bar = float(self.condition.get("bar", 50.0))         # 샘플을 '높음'으로 치는 기준선(%)
         min_over = int(self.condition.get("min_over", 5))    # 윈도 내 초과 샘플 최소 개수(plateau)
-        lookback = int(self.condition.get("window_sec", 210))  # 되돌아볼 창(초) — detector 설정
 
-        # 이번 배치가 아니라 최근 lookback 초 구간을 계약의 get_snapshot 으로만 조회한다
+        # 이번 배치가 아니라 최근 window_sec 구간을 계약의 get_snapshot 으로만 조회한다
         # (buffer 내부 속성에 의존하지 않음 — 계약 §2.3).
+        # since 가 있으면 그 뒤만 센다 — 직전 번들이 담아 간 샘플로 재발화하지 않게 (계획 04 §7-3).
         anchor = new_batch.observed_until
-        start = anchor - timedelta(seconds=lookback)
+        start = self._lookback_start(anchor, since)
         snapshot = buffer.get_snapshot(start, anchor)
 
         # 윈도 내 system_cpu_usage 샘플 중 bar 초과분을 모은다.

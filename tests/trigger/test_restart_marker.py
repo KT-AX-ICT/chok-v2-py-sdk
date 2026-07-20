@@ -93,3 +93,28 @@ def test_boot_outside_window_not_counted():
     old_boot = datetime(2025, 11, 3, 23, 59, 0)
     buffer = FakeBuffer([boot("media", old_boot), boot("media", BOOT2)])
     assert RestartMarkerDetector({"threshold": 2}).evaluate(log_batch(ANCHOR), buffer) == []
+
+
+# ── since (평가 하한) — 계획 04 §7-3 ─────────────────────────────────────────
+
+
+def test_since_clips_boots_already_bundled():
+    # BOOT1 이 직전 번들에 실려 나갔다면 다시 세지 않는다 → 남은 부팅 1회 → 무발화
+    buffer = FakeBuffer([boot("media", BOOT1), boot("media", BOOT2)])
+    detector = RestartMarkerDetector({"threshold": 2})
+    assert detector.evaluate(log_batch(ANCHOR), buffer, since=BOOT2) == []
+
+
+def test_since_is_inclusive_lower_bound():
+    # since 와 같은 시각의 부팅은 포함 — 직전 번들이 [.., end) 로 제외했으므로 누락 없음
+    buffer = FakeBuffer([boot("media", BOOT1), boot("media", BOOT2)])
+    ev = RestartMarkerDetector({"threshold": 2}).evaluate(log_batch(ANCHOR), buffer, since=BOOT1)
+    assert len(ev) == 1
+    assert ev[0].trigger_time == BOOT2
+
+
+def test_since_older_than_window_does_not_widen_lookback():
+    old_boot = datetime(2025, 11, 3, 23, 59, 0)  # 창 밖
+    buffer = FakeBuffer([boot("media", old_boot), boot("media", BOOT2)])
+    detector = RestartMarkerDetector({"threshold": 2})
+    assert detector.evaluate(log_batch(ANCHOR), buffer, since=old_boot) == []
