@@ -16,13 +16,17 @@
 
 ## 버퍼 보존 기간 (계획 04 에서 확정)
 
-버퍼 보존은 pre 윈도(210초)가 아니라 **pre + post(=390초)** 로 둔다. pre 는 트리거 시점에
-`SnapshotManager.register_triggers` 가 즉시 복사하므로 안전하지만, post 는 `finalize_ready`
-시점에 버퍼에서 꺼내므로 보존이 210초면 여유가 **정확히 1 tick(30초)** 뿐이다.
-모달리티별 `observed_until` 불일치·tick 드리프트·재시도로 한 사이클만 밀려도 post 앞부분이
-로그 없이 잘린다. 근거 타임라인은 [계획 04 §1](../plans/04-memory-buffer.md) 참조.
+버퍼 보존 = `PRE_SEC(180) + 루프 주기(30) = **210초**`.
 
-버퍼는 `retention_sec` 만 주입받고 pre/post 의미는 모른다 — 정책이 바뀌어도 버퍼는 불변.
+pre 와 post 는 **시점이 다른 별개 질의**라 더해지지 않는다. `register_triggers` 는 트리거
+시점에 pre `[T−180, T)` 를 즉시 복사하고, `finalize_ready` 는 `T+180` 도달 틱에 post
+`[T, T+180)` 를 따로 뜬다. 각 질의에 필요한 보존이 모두 210 으로 수렴한다 —
+유도표는 [계획 04 §1](../plans/04-memory-buffer.md).
+
+여유는 각각 1 틱이다. 넓히려면 `retention_sec` 만 올린다(`PRE+POST` 로 부풀리지 않는다 —
+그렇게 적어두면 다음 사람이 post 정책을 조절 레버로 착각한다).
+
+버퍼는 `retention_sec` 만 주입받고 pre/post 의미는 모른다.
 
 ## 미결
 
