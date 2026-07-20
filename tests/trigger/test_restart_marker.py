@@ -26,6 +26,12 @@ class FakeBuffer:
         logs = [rec for rec in self._logs if start_ts <= rec.timestamp < end_ts]
         return MultimodalSnapshot(logs=logs)
 
+    def scan(self, start_ts: datetime, end_ts: datetime, modality: Modality):
+        return sorted(
+            (r for r in self._logs if start_ts <= r.timestamp < end_ts),
+            key=lambda r: r.timestamp,
+        )
+
 
 def boot(service: str, ts: datetime) -> NormalizedLog:
     return NormalizedLog(timestamp=ts, service=service, event_type="service_start")

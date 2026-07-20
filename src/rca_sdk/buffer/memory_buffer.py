@@ -62,6 +62,22 @@ class MemoryBuffer:
             self._watermark = batch.observed_until
         self._evict()
 
+    def scan(
+        self, start_ts: datetime, end_ts: datetime, modality: Modality
+    ) -> list[NormalizedRecord]:
+        """구간 [start_ts, end_ts) 의 한 모달리티를 **복사 없이** 시간순으로 돌려준다.
+
+        읽고 버리는 호출자(detector)용이다. detector 는 매 틱 창을 되돌아보며 세기만 하는데,
+        `get_snapshot` 은 번들 조립용이라 독립 복사본을 만든다 — Svc_Kill 재생 프로파일에서
+        그 복사(244만 회)가 전체 시간의 88% 였다.
+
+        **반환값은 버퍼 내부 레코드의 참조다.** 수정하면 버퍼가 오염된다. 번들에 실어
+        내보낼 것이라면 `get_snapshot` 을 쓴다.
+        """
+        picked = [r for r in self._records.get(modality, []) if start_ts <= r.timestamp < end_ts]
+        picked.sort(key=lambda r: r.timestamp)  # 배치 내 순서는 파일 순 — 시간순 아님 (B4)
+        return picked
+
     def get_snapshot(self, start_ts: datetime, end_ts: datetime) -> MultimodalSnapshot:
         """반열림 구간 [start_ts, end_ts) 의 모달리티별 레코드를 독립 복사본으로 반환한다."""
         selected: dict[Modality, list[NormalizedRecord]] = {}

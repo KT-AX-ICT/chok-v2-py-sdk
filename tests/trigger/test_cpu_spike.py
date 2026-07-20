@@ -36,6 +36,12 @@ class FakeBuffer:
         metrics = [m for m in self._metrics if start_ts <= m.timestamp < end_ts]
         return MultimodalSnapshot(metrics=metrics)
 
+    def scan(self, start_ts: datetime, end_ts: datetime, modality: Modality):
+        return sorted(
+            (m for m in self._metrics if start_ts <= m.timestamp < end_ts),
+            key=lambda r: r.timestamp,
+        )
+
 
 def samples(values: list[float], name: str = CPU_METRIC) -> list[NormalizedMetric]:
     start = TS - timedelta(seconds=200)  # 윈도 [TS-210, TS) 안
