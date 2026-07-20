@@ -118,20 +118,31 @@ def _modality_info(
     window_start: datetime,
     window_end: datetime,
 ) -> dict[str, ModalityInfo]:
-    # coverage(roster)의 레코드 수를 Pre+Post 합산 → >0 이면 data, 아니면 empty.
-    # missing(파일 부재)은 Normalizer roster 완성 후. coverage 비면 빈 dict.
-    merged: dict[tuple[str, str], int] = {}
+    # coverage(roster)를 Pre+Post 로 접어 소스별 3상태(missing/empty/data)를 낸다 (계약 §0-11).
+    # present 와 record_count 가 **둘 다** 있어야 missing(파일 없음)과 empty(있지만 0건)가 갈린다
+    # (정규화 스펙 §2). coverage 가 비면 빈 dict.
+    #
+    # 접는 규칙은 버퍼의 윈도 집계(_aggregate_roster)와 동일하게 present=OR, count=합계.
+    # OR 이라 창 중간에 소스가 생겼다면 missing 이 아니다 — "창 안에서 한 번이라도 관측됐는가".
+    merged: dict[tuple[str, str], tuple[bool, int]] = {}
     for snap in (pre, post):
         for modality, statuses in snap.coverage.items():
             for status in statuses:
                 key = (modality, status.source)
-                merged[key] = merged.get(key, 0) + status.record_count
+                present, count = merged.get(key, (False, 0))
+                merged[key] = (present or status.present, count + status.record_count)
 
     info: dict[str, ModalityInfo] = {}
-    for (modality, source), count in merged.items():
+    for (modality, source), (present, count) in merged.items():
+        if count > 0:
+            status_value = "data"
+        elif present:
+            status_value = "empty"  # 파일은 있는데 이 창에 레코드가 없었다
+        else:
+            status_value = "missing"  # 파일 자체가 없었다 — 중앙 RCA 의 죽은 서비스 국소화 근거
         interval = SourceInterval(
             fileName=source,
-            status="data" if count > 0 else "empty",
+            status=status_value,
             start=window_start,
             end=window_end,
         )
