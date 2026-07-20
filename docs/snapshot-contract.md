@@ -11,7 +11,7 @@
                                               발화 시점
 ```
 
-- `pre_events`  = 트리거 직전 버퍼 윈도(`RCA_BUFFER_WINDOW_SEC`, 기본 210초) 내용
+- `pre_events`  = 트리거 직전 pre 윈도(`PRE_SEC`, 180초) 내용 — 버퍼 보존(`RCA_BUFFER_RETENTION_SEC`, 210초)과는 다른 값
 - `post_events` = 발화 후 `RCA_POST_TRIGGER_WAIT_SEC`(기본 180초) 동안 추가 수집
 
 ## 필드

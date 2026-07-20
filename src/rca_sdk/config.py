@@ -15,7 +15,11 @@ class Settings(BaseSettings):
     loop_interval_sec: int = 30
 
     # 버퍼 / 스냅샷 윈도  (docs/decisions/ADR-001 참조)
-    buffer_window_sec: int = 210        # 3분 30초 롤링 윈도
+    #
+    # 보존은 pre 윈도(PRE_SEC=180)와 **다른 값**이다. "window" 라는 이름이 스냅샷 창과 같아야
+    # 하는 것처럼 읽혀 한때 180 으로 되돌려진 적이 있어 retention 으로 개명했다.
+    # 210 = PRE_SEC(180) + 루프 주기(30). 유도는 계획 04 §1.
+    buffer_retention_sec: int = 210     # 버퍼가 레코드를 들고 있는 기간
     post_trigger_wait_sec: int = 180    # 트리거 후 3분 post 수집
 
     # 원천 로그 경로 - tail이 추적하는 데이터 경로

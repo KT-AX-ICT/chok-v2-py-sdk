@@ -5,6 +5,7 @@ from __future__ import annotations
 from datetime import datetime, timedelta
 
 from rca_sdk.buffer.memory_buffer import MemoryBuffer
+from rca_sdk.config import Settings
 from rca_sdk.normalization.log import LogNormalizer
 from rca_sdk.schemas.events import (
     Modality,
@@ -14,7 +15,7 @@ from rca_sdk.schemas.events import (
     RawBatch,
     SourceStatus,
 )
-from rca_sdk.snapshot.assembler import SnapshotManager
+from rca_sdk.snapshot.assembler import POST_SEC, PRE_SEC, SnapshotManager
 from rca_sdk.trigger.models import TriggerEvidence
 
 ANCHOR = datetime(2026, 1, 15, 10, 1, 30)
@@ -64,16 +65,40 @@ def metric_at(ts: datetime) -> NormalizedMetric:
     )
 
 
+def test_window_constants_match_configured_design():
+    """계약 고정: PRE_SEC/POST_SEC 가 설계값(ADR-001)·config 와 같은지.
+
+    다른 테스트들은 PRE_SEC 을 import 해 쓰므로 값이 틀려도 통과한다(창 계산 로직만 검증).
+    실제 초 수가 설계와 맞는지는 여기서만 깨진다.
+
+    현재는 앞뒤 대칭 180/180. Pre 를 210 으로 두는 비대칭 안은 검증 중이다(ADR-001).
+    """
+    settings = Settings()
+    assert PRE_SEC == 180
+    assert POST_SEC == settings.post_trigger_wait_sec == 180
+
+    # 버퍼 보존은 pre 윈도와 **다른 값**이다 — 이름도 retention 으로 갈라 두었다.
+    # 불변식은 PRE+POST(360) 가 아니라 각 질의별로 "창 + 한 틱".
+    #   pre  — 트리거 시점 조회. anchor ≈ watermark 라 PRE_SEC 뒤까지 + 한 틱 여유
+    #   post — anchor+POST_SEC 도달 틱에 조회. watermark < anchor+retention 이라 anchor 가 남아 있음
+    # PRE+POST 를 요구하지 않는 이유: pre 는 트리거 시점에 이미 복사돼 나가므로 창 전체를
+    # 한 시점에 들고 있을 일이 없다 (ADR-001 §버퍼 보존 기간, 계획 04 §1).
+    retention = MemoryBuffer().retention_sec
+    assert retention == settings.buffer_retention_sec == 210
+    assert retention >= PRE_SEC + settings.loop_interval_sec
+    assert retention >= POST_SEC + settings.loop_interval_sec
+
+
 def test_register_opens_session_and_captures_pre():
-    # pre 구간 [anchor-180, anchor) 에 로그 1건
+    # pre 구간 [anchor-PRE_SEC, anchor) 에 로그 1건
     buf = FakeBuffer(logs=[log_at(ANCHOR - timedelta(seconds=60))])
     m = SnapshotManager()
     m.register_triggers([evidence(Modality.METRIC)], buf)
     s = m._session
     assert s is not None
     assert s.anchor == ANCHOR
-    assert s.window_start == ANCHOR - timedelta(seconds=180)
-    assert s.window_end == ANCHOR + timedelta(seconds=180)
+    assert s.window_start == ANCHOR - timedelta(seconds=PRE_SEC)
+    assert s.window_end == ANCHOR + timedelta(seconds=POST_SEC)
     assert s.triggered_by == {Modality.METRIC}
     assert len(s.pre.logs) == 1  # Pre 즉시 캡처됨
 
@@ -93,7 +118,7 @@ def test_reregister_accumulates_without_changing_window():
     m.register_triggers([evidence(Modality.LOG, ANCHOR + timedelta(seconds=30))], buf)
     s = m._session
     assert s.anchor == ANCHOR  # window/anchor 불변
-    assert s.window_end == ANCHOR + timedelta(seconds=180)
+    assert s.window_end == ANCHOR + timedelta(seconds=POST_SEC)
     assert s.triggered_by == {Modality.METRIC, Modality.LOG}
     assert len(s.evidences) == 2
 
@@ -108,7 +133,7 @@ def test_finalize_returns_empty_before_window_end():
     buf = FakeBuffer()
     m = SnapshotManager()
     m.register_triggers([evidence(Modality.METRIC, ANCHOR)], buf)
-    assert m.finalize_ready(ANCHOR + timedelta(seconds=179), buf) == []
+    assert m.finalize_ready(ANCHOR + timedelta(seconds=POST_SEC - 1), buf) == []
     assert m._session is not None  # 아직 세션 유지
 
 
@@ -124,11 +149,11 @@ def test_finalize_assembles_bundle_and_closes_session():
     m = SnapshotManager()
     m.register_triggers([evidence(Modality.METRIC, ANCHOR), evidence(Modality.LOG, ANCHOR)], buf)
 
-    bundles = m.finalize_ready(ANCHOR + timedelta(seconds=180), buf)
+    bundles = m.finalize_ready(ANCHOR + timedelta(seconds=POST_SEC), buf)
     assert len(bundles) == 1
     b = bundles[0]
-    assert b.window.start == ANCHOR - timedelta(seconds=180)
-    assert b.window.end == ANCHOR + timedelta(seconds=180)
+    assert b.window.start == ANCHOR - timedelta(seconds=PRE_SEC)
+    assert b.window.end == ANCHOR + timedelta(seconds=POST_SEC)
     assert b.trigger_info.trigger_time == ANCHOR
     assert b.trigger_info.triggered_by == ["log", "metric"]  # 정렬·중복제거
     assert len(b.metrics) == 1  # pre
@@ -142,7 +167,7 @@ def _bundle_with_coverage(cov: dict) -> object:
     buf = FakeBuffer(coverage=cov)
     m = SnapshotManager()
     m.register_triggers([evidence(Modality.METRIC, ANCHOR)], buf)
-    return m.finalize_ready(ANCHOR + timedelta(seconds=180), buf)[0]
+    return m.finalize_ready(ANCHOR + timedelta(seconds=POST_SEC), buf)[0]
 
 
 def test_modality_info_three_states_from_coverage():
@@ -208,7 +233,7 @@ def test_missing_flows_from_real_normalizer_roster_through_real_buffer():
 
     m = SnapshotManager()
     m.register_triggers([evidence(Modality.LOG, ANCHOR)], buf)
-    bundle = m.finalize_ready(ANCHOR + timedelta(seconds=180), buf)[0]
+    bundle = m.finalize_ready(ANCHOR + timedelta(seconds=POST_SEC), buf)[0]
 
     statuses = {i.fileName: i.status for i in bundle.modality_info["log"].intervals}
     assert statuses == {"nginx": "data", "media": "missing", "user": "missing"}
@@ -218,6 +243,6 @@ def test_finalize_after_close_needs_new_session():
     buf = FakeBuffer()
     m = SnapshotManager()
     m.register_triggers([evidence(Modality.METRIC, ANCHOR)], buf)
-    m.finalize_ready(ANCHOR + timedelta(seconds=180), buf)
+    m.finalize_ready(ANCHOR + timedelta(seconds=POST_SEC), buf)
     # 세션 종료 후 finalize → []
     assert m.finalize_ready(ANCHOR + timedelta(seconds=300), buf) == []

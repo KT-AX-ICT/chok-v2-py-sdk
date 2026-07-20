@@ -34,7 +34,7 @@ anchor `T`, 루프 주기 30초 기준:
 | post — `observed_until ≥ T+180` 인 틱 | `W₂ ∈ [T+180, T+210)` | `[T, T+180)` | `W₂ − T` → **< 210** |
 
 두 요구가 같은 값(210)으로 수렴하므로 `retention_sec = PRE_SEC(180) + 루프 주기(30) = 210`
-이다. `Settings.buffer_window_sec` 기본값 210 과도 일치한다.
+이다. `Settings.buffer_retention_sec` 기본값 210 과도 일치한다.
 
 여유는 각각 정확히 1 틱이다. 조회가 한 사이클 밀리면 앞부분이 **로그 없이** 잘린다.
 밀릴 수 있는 경로는 **tick 드리프트** 하나다 — `sleep(30)` + 처리 시간이라 실제 주기는

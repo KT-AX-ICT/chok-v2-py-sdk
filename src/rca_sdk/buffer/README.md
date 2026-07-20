@@ -4,7 +4,7 @@
 pre/post 를 가져가게 한다. 설계 근거는 [계획 04](../../../docs/plans/04-memory-buffer.md) 참조.
 
 - `memory_buffer.MemoryBuffer(retention_sec)` — `append(NormalizedBatch)` / `get_snapshot(start, end)`
-- **보존 기간 = `PRE_SEC(180) + 루프 주기(30) = 210`** (`Settings.buffer_window_sec` 와 동일).
+- **보존 기간 = `PRE_SEC(180) + 루프 주기(30) = 210`** (`Settings.buffer_retention_sec`).
   pre 와 post 는 **시점이 다른 별개 질의**라 더해지지 않는다 — `snapshot/` 이 트리거 시점에
   pre 를 즉시 복사하고, post 는 3분 뒤 따로 떠 간다. 두 질의 각각의 요구가 210 으로 수렴한다
   (유도표: 계획 04 §1). 여유는 각각 1 틱이라, 넓히려면 `retention_sec` 만 올린다.
