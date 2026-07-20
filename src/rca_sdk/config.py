@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="RCA_", env_file=".env", extra="ignore")
 
     # 전송 대상
-    collect_endpoint: str = "http://localhost:8000/v1/ingest"
+    collect_endpoint: str = "http://localhost:8000/ingest"
 
     # 관측 루프
     loop_interval_sec: int = 30
