@@ -56,7 +56,7 @@ class CpuSpikeDetector(TriggerDetector):
             TriggerEvidence(
                 trigger_time=confirm.timestamp,
                 modality=self.MODALITY,
-                service=confirm.canonical_service,  # 호스트 지표면 "__node__"
+                service=confirm.service,  # 호스트 지표면 "__node__"
                 detector_type=self.DETECTOR_TYPE,
                 value=float(len(over)),  # 초과 샘플 수 = plateau 강도
                 baseline=float(self.condition.get("baseline", 0.0)),

@@ -1,7 +1,7 @@
 """svc_kill · log — restart_marker.
 
 최근 창(condition window_sec, 기본 210초) 안의 부팅 마커(event_type=="service_start")를
-canonical_service 별로 세어 threshold(기본 2) 이상이면 발화. 발화 서비스명이 곧 kill 후
+service 별로 세어 threshold(기본 2) 이상이면 발화. 발화 서비스명이 곧 kill 후
 재시작된 서비스. 무상태: 매 evaluate 마다 buffer.get_snapshot 으로 창을 다시 센다(설계 §5.4).
 """
 
@@ -37,8 +37,8 @@ class RestartMarkerDetector(TriggerDetector):
         # 윈도 내 부팅 마커(service_start)를 서비스별로 모은다.
         boots: dict[str, list[datetime]] = {}
         for rec in snapshot.logs:
-            if rec.event_type == self.BOOT_EVENT_TYPE and rec.canonical_service is not None:
-                boots.setdefault(rec.canonical_service, []).append(rec.timestamp)
+            if rec.event_type == self.BOOT_EVENT_TYPE and rec.service is not None:
+                boots.setdefault(rec.service, []).append(rec.timestamp)
 
         # 부팅 마커가 threshold(2) 이상인 서비스 = kill 후 재시작된 대상 → 발화.
         evidences: list[TriggerEvidence] = []

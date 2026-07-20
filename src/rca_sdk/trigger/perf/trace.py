@@ -20,5 +20,5 @@ class LatencySpikeDetector(NumericThresholdDetector):
         for rec in new_batch.records:
             if isinstance(rec, NormalizedTrace) and rec.duration_ms is not None:
                 if best is None or rec.duration_ms > best[0]:
-                    best = (float(rec.duration_ms), rec.canonical_service, rec.timestamp)
+                    best = (float(rec.duration_ms), rec.service, rec.timestamp)
         return best  # span 없으면 None → 무발화

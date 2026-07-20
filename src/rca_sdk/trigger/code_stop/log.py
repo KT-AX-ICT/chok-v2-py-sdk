@@ -26,7 +26,7 @@ class NginxErrorDetector(NumericThresholdDetector):
             for rec in new_batch.records
             if (
                 isinstance(rec, NormalizedLog)
-                and rec.canonical_service == "nginx"
+                and rec.service == "nginx"
                 and rec.event_type == "connection_error"
             )
         )

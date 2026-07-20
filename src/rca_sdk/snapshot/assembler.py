@@ -107,7 +107,7 @@ def _rec(record: NormalizedLog | NormalizedTrace | NormalizedMetric) -> BundleRe
     # 정규화 레코드 → 전송용 얇은 레코드. raw 는 원본이 없어 정규화 레코드를 JSON 직렬화한 것.
     return BundleRecord(
         timestamp=record.timestamp,
-        service=record.canonical_service,
+        service=record.service,
         raw=record.model_dump_json(),
     )
 
