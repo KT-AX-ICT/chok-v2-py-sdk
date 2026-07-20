@@ -27,8 +27,8 @@ class SnapshotManager:
 ### 2. 단일 활성 세션 + window 고정
 
 - 동시에 세션 **1개**. 최초 트리거가 열고, 창이 닫힐 때까지 재트리거는 같은 세션에 누적. finalize 후 종료 → 다음 트리거는 새 세션. **한 인시던트 = 번들 1개.**
-- `window_start = anchor - 210초`, `window_end = anchor + 180초`. **재트리거로 연장·재anchor 안 함**(§2.5).
-- Pre가 180이 아니라 **210초**인 이유: anchor는 30초 배치 한가운데일 수 있어 180으로 자르면 **트리거를 감지한 그 배치의 앞부분이 잘려나간다**. Pre = 트리거 배치 30초 + 이전 3분 = 버퍼 롤링 윈도 전체([ADR-001](ADR-001-snapshot-window.md)).
+- `window_start = anchor - 180초`, `window_end = anchor + 180초`(앞뒤 대칭). **재트리거로 연장·재anchor 안 함**(§2.5).
+- Pre를 210초로 두는 비대칭 안은 **보류·검증 중**이다. `anchor = 발단 + 탐지 지연`이라 지연이 Pre만 갉아먹는다는 논거인데, 실측 전이라 대칭을 유지한다. 경위와 철회된 근거는 [ADR-001 §비대칭 검토](ADR-001-snapshot-window.md) 참조.
 - 재트리거는 `triggered_by`(발화 모달리티)에 누적. anchor·window·Pre는 최초 값 고정.
 
 ### 3. 반열림 창 — anchor 중복 방지
@@ -55,7 +55,7 @@ coverage 비면 빈 dict.
 
 ### 7. window 폭은 상수
 
-`PRE_SEC = 210`, `POST_SEC = 180`(모듈 상수). config(`buffer_window_sec`/`post_trigger_wait_sec`) 주입은 후속 — 현재 `SnapshotManager`에 주입 경로가 없어 두 값이 드리프트할 수 있고, 테스트가 상수와 config가 같은지 핀으로 고정한다.
+`PRE_SEC = POST_SEC = 180`(모듈 상수). config(`buffer_window_sec`/`post_trigger_wait_sec`) 주입은 후속 — 현재 `SnapshotManager`에 주입 경로가 없어 두 값이 드리프트할 수 있고, 테스트가 상수와 config가 같은지 핀으로 고정한다.
 
 ## 결과/영향
 

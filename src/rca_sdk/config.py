@@ -14,8 +14,8 @@ class Settings(BaseSettings):
     # 관측 루프
     loop_interval_sec: int = 30
 
-    # 버퍼 / 스냅샷 윈도  (docs/decisions/ADR-001 참조)
-    buffer_window_sec: int = 210        # 3분 30초 롤링 윈도
+    # 버퍼 / 스냅샷 윈도
+    buffer_window_sec: int = 180        # 3분 롤링 윈도
     post_trigger_wait_sec: int = 180    # 트리거 후 3분 post 수집
 
     # 원천 로그 경로 - tail이 추적하는 데이터 경로
