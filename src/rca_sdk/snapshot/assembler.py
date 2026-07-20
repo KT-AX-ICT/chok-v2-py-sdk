@@ -30,7 +30,10 @@ from rca_sdk.schemas.snapshot import (
 )
 from rca_sdk.trigger.models import TriggerEvidence
 
-PRE_SEC = 180   # anchor 앞 3분 (Pre)
+# Pre 는 **트리거가 감지된 배치(30초)를 포함한** 3분 30초 = 버퍼 롤링 윈도 전체다 (ADR-001 §13).
+# anchor 는 배치 한가운데일 수 있으므로, 180 으로 자르면 그 배치의 앞부분이 잘려나간다.
+# 값은 config 의 buffer_window_sec(210) / post_trigger_wait_sec(180) 과 같다 — 주입은 러너 소관.
+PRE_SEC = 210   # anchor 앞 3분 30초 (Pre) — 트리거 배치 30초 + 이전 3분
 POST_SEC = 180  # anchor 뒤 3분 (Post)
 
 
