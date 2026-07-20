@@ -71,11 +71,10 @@ def test_window_constants_match_configured_design():
     다른 테스트들은 PRE_SEC 을 import 해 쓰므로 값이 틀려도 통과한다(창 계산 로직만 검증).
     실제 초 수가 설계와 맞는지는 여기서만 깨진다.
 
-    Pre 는 트리거가 감지된 배치(30초)를 포함한 3분 30초 = 버퍼 롤링 윈도 전체다.
-    180 으로 자르면 그 배치의 앞부분이 잘려나간다.
+    현재는 앞뒤 대칭 180/180. Pre 를 210 으로 두는 비대칭 안은 검증 중이다(ADR-001).
     """
     settings = Settings()
-    assert PRE_SEC == settings.buffer_window_sec == 210
+    assert PRE_SEC == settings.buffer_window_sec == 180
     assert POST_SEC == settings.post_trigger_wait_sec == 180
     # 버퍼 보존은 pre+post 를 담을 만큼이어야 한다 (ADR-001 §19)
     assert MemoryBuffer().retention_sec >= PRE_SEC + POST_SEC

@@ -30,10 +30,13 @@ from rca_sdk.schemas.snapshot import (
 )
 from rca_sdk.trigger.models import TriggerEvidence
 
-# Pre 는 **트리거가 감지된 배치(30초)를 포함한** 3분 30초 = 버퍼 롤링 윈도 전체다 (ADR-001 §13).
-# anchor 는 배치 한가운데일 수 있으므로, 180 으로 자르면 그 배치의 앞부분이 잘려나간다.
-# 값은 config 의 buffer_window_sec(210) / post_trigger_wait_sec(180) 과 같다 — 주입은 러너 소관.
-PRE_SEC = 210   # anchor 앞 3분 30초 (Pre) — 트리거 배치 30초 + 이전 3분
+# anchor 앞뒤 대칭 3분 (ADR-001). 값은 config 의 buffer_window_sec / post_trigger_wait_sec
+# 와 같다 — 주입은 러너 소관.
+#
+# Pre 를 210 으로 두는 안이 검토 중이다(ADR-001 §비대칭 검토). anchor 는 발단보다 항상 늦게
+# 잡히고(anchor = 발단 + 탐지 지연), 그 지연이 Pre 만 갉아먹기 때문. 다만 실측 검증 전이라
+# 대칭 180 을 유지한다.
+PRE_SEC = 180   # anchor 앞 3분 (Pre)
 POST_SEC = 180  # anchor 뒤 3분 (Post)
 
 
