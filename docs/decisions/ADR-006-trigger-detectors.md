@@ -27,12 +27,12 @@
 ### 발화 규칙 — 두 종류
 
 1. **숫자 임계 (5개, `NumericThresholdDetector` 공통 base):** 이번 배치에서 대표값을 뽑아 `value > max(baseline*ratio, floor)`이면 발화. 무상태.
-   - `cpu_spike`: cpu 지표(`container_cpu`/`system_cpu`) 최댓값
+   - `cpu_spike`: cpu 지표(`container_cpu`/`system_cpu_usage`) 최댓값
    - `latency_spike`: span `duration_ms` 최댓값
    - `error_rate`: `level=="error"` 로그 건수
    - `trace_5xx`: `http_status_code==500` span 건수 (500만, hung 제외)
    - `nginx_error`: nginx의 `event_type=="connection_error"` 로그 건수
-2. **최근 창 카운트 (`restart_marker`, `cpu_spike`):** `buffer.get_snapshot(observed_until - lookback, observed_until)`로 최근 창을 조회해 카운트한다. `lookback`은 **detector의 `condition["window_sec"]`(기본 210초)** — buffer 내부 속성이 아니라 detector 설정에서 온다(계약 §2.3의 `get_snapshot`만 사용). restart_marker는 `service_start`를 서비스별로 세어 `>= threshold(2)`면, cpu_spike는 `system_cpu > bar`를 세어 `>= min_over`면 발화. 무상태(매 평가마다 창 재계산).
+2. **최근 창 카운트 (`restart_marker`, `cpu_spike`):** `buffer.get_snapshot(observed_until - lookback, observed_until)`로 최근 창을 조회해 카운트한다. `lookback`은 **detector의 `condition["window_sec"]`(기본 210초)** — buffer 내부 속성이 아니라 detector 설정에서 온다(계약 §2.3의 `get_snapshot`만 사용). restart_marker는 `service_start`를 서비스별로 세어 `>= threshold(2)`면, cpu_spike는 `system_cpu_usage > bar`를 세어 `>= min_over`면 발화. 무상태(매 평가마다 창 재계산).
 
 ### 핵심 원칙
 
@@ -45,7 +45,7 @@
 
 ### cpu_spike 판정 기준 변경 — 절대 임계(≥95) → plateau(지속)
 
-초기 정책은 `system_cpu ≥ 95 절대값 1회 초과 시 발화`였으나, AnoMod SN 3종 실측 분석 후 **host CPU plateau(지속)** 기준으로 변경한다.
+초기 정책은 `system_cpu_usage ≥ 95 절대값 1회 초과 시 발화`였으나, AnoMod SN 3종 실측 분석 후 **host CPU plateau(지속)** 기준으로 변경한다.
 
 **실측 근거 (AnoMod SN, `SN오류정리` — 저장소 외부 옵시디언):**
 - baseline CPU도 순간 **max 81%**까지 튄다 → 단일 샘플 절대값 판정은 산발 노이즈에 취약(측정 스파이크·GC 등으로 순간 고점 발생 가능).
@@ -71,7 +71,7 @@
 - 현재 `cpu_spike`는 **단일 배치 `max(cpu) > threshold` 무상태**로, plateau를 아직 구현하지 않았다(MVP에서 "연속 지속성 판정"을 제외했기 때문).
 - **≥95 절대** 채택 시 → 코드 변경 0, `condition={"baseline":0, "floor":95}` 주입만으로 즉시 동작(임계를 코드에 안 박은 덕).
 - **plateau / sustained** 채택 시 → cpu_spike를 위 윈도 로직으로 전환(restart_marker 동형). condition에 `sample_bar`·`min_over` 주입. **plateau와 sustained는 같은 코드, `bar`·`count` 파라미터만 다르다** — 하나 만들면 condition으로 전환 가능.
-- **확정: plateau 채택** (실데이터 근거 — Perf CPU 분석: median/단일절대 판별 불가, baseline `3/79` 산발 vs 주입 `23/80` 연속). ≥95 절대·sustained는 미채택. → **cpu_spike를 윈도 로직으로 구현**: `system_cpu`(호스트) 샘플 중 `bar`(기본 50%) 초과가 buffer 윈도에서 `min_over`(기본 5)개 이상이면 발화. `container_cpu`는 국소화용이라 트리거 대상 아님.
+- **확정: plateau 채택** (실데이터 근거 — Perf CPU 분석: median/단일절대 판별 불가, baseline `3/79` 산발 vs 주입 `23/80` 연속). ≥95 절대·sustained는 미채택. → **cpu_spike를 윈도 로직으로 구현**: `system_cpu_usage`(호스트) 샘플 중 `bar`(기본 50%) 초과가 buffer 윈도에서 `min_over`(기본 5)개 이상이면 발화. `container_cpu`는 국소화용이라 트리거 대상 아님.
 
 ### 방어 코드 (Codex 검토 반영)
 
@@ -87,13 +87,18 @@
 ## 미결
 
 - **실 임계값 도출 (실측 근거 확보, 배선은 러너 때)** — 각 detector의 `condition`을 실데이터 분포로 도출함:
-  - `cpu_spike`(plateau): `{metric:"system_cpu", bar:50, min_over:5}` — baseline 3/80 산발 vs 주입 23/80 연속.
+  - `cpu_spike`(plateau): `{metric:"system_cpu_usage", bar:50, min_over:5}` — baseline 3/80 산발 vs 주입 23/80 연속.
   - `trace_5xx`: `{baseline:0, floor:1~3}` — 500 span baseline 0, Code_Stop 70~98건.
   - `nginx_error`: `{baseline:0, floor:3~5}` — connection_error baseline 0, ~11/분(≈5.5/30s).
   - `restart_marker`: `{threshold:2}` — 정상 부팅 1, kill 2. (이미 구현 일치)
   - `error_rate`(perf): perf log는 duplicate-key(j1) **artifact라 무신호** — threshold를 baseline 아티팩트율(~5/30s) 위로 둬 거의 침묵.
   - `latency_spike`(확증): OUT p50 11.6 → IN 21.3ms. floor~20ms 또는 ratio~1.8. 전체창 희석 주의.
   - 값 확정 완료, config·러너 주입은 러너 단계.
+  - ⚠️ **`metric_name` 은 임의 별칭이 아니라 `MetricNormalizer` 가 파일명에서 기계적으로 유도한 값**이다
+    (`socialnet_` 접두어만 제거: `system_cpu_usage.csv` → `system_cpu_usage`, `socialnet_container_cpu.csv` → `container_cpu`).
+    리플레이어가 원본 파일명을 그대로 `var/` 에 쓰므로 실운용에서도 동일하다. detector 는 이 값과 `==` 정확일치로 비교하며,
+    어긋나면 예외도 로그도 없이 조용히 0건이 되어 "CPU 정상"과 구분되지 않는다
+    (실제로 `system_cpu` 로 적혀 있어 cpu_spike 가 무발화였다 — 2026-07-20 수정).
 - **`restart_marker` 윈도 경계 — 수용(MVP 확정)** — 두 부팅이 210초를 넘게 벌어지면 못 잡는다. MVP는 이 한계를 **수용하고 현행(단순 윈도 카운트) 그대로 간다.** 반열림 `[start, end)`라 `observed_until`에 정확히 걸친 마커는 다음 배치에서 집계. (개선 필요 시 후속에서 윈도 확장·상태 추적 검토.)
 - **번들 payload 상한** — 실데이터상 6분 윈도에 전 서비스 로그가 수십만 줄. 샘플링/상한/서비스 필터 필요.
 - **러너 통합 전제** — `append → evaluate` 순서(restart_marker가 buffer 윈도에 의존).

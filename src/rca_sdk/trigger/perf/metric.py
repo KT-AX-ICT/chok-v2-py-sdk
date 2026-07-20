@@ -1,6 +1,6 @@
 """perf · metric — cpu_spike (plateau).
 
-host CPU(`system_cpu`)가 bar(기본 50%)를 넘는 샘플이 최근 창(condition window_sec, 기본 210초)
+host CPU(`system_cpu_usage`)가 bar(기본 50%)를 넘는 샘플이 최근 창(condition window_sec, 기본 210초)
 안에서 min_over(기본 5)개 이상 누적되면 발화한다. 단일 봉우리(1회 초과)가 아니라 "높은 샘플의
 지속(plateau)"으로 판정한다 — 실측상 median/단일절대는 판별 불가고, baseline은 3/80 산발 vs
 주입은 23/80 연속이다(ADR-006). container_cpu 는 국소화용이라 트리거 대상이 아니다.
@@ -16,7 +16,10 @@ from rca_sdk.schemas.events import Modality, NormalizedBatch, NormalizedMetric
 from rca_sdk.trigger.detector import TriggerDetector
 from rca_sdk.trigger.models import TriggerEvidence
 
-CPU_METRIC = "system_cpu"  # host CPU (node-exporter). container_cpu 는 트리거 아님(ADR-006).
+# host CPU (node-exporter). container_cpu 는 트리거 아님(ADR-006).
+# 값은 MetricNormalizer 가 파일명에서 유도하는 metric_name 과 정확히 일치해야 한다
+# (`system_cpu_usage.csv` → `system_cpu_usage`). 어긋나면 예외 없이 조용히 0건이 된다.
+CPU_METRIC = "system_cpu_usage"
 
 
 class CpuSpikeDetector(TriggerDetector):
@@ -37,7 +40,7 @@ class CpuSpikeDetector(TriggerDetector):
         start = anchor - timedelta(seconds=lookback)
         snapshot = buffer.get_snapshot(start, anchor)
 
-        # 윈도 내 system_cpu 샘플 중 bar 초과분을 모은다.
+        # 윈도 내 system_cpu_usage 샘플 중 bar 초과분을 모은다.
         over = [
             rec
             for rec in snapshot.metrics
