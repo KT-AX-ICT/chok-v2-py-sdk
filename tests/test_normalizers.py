@@ -247,3 +247,22 @@ def test_settings_default_expected_services():
     assert "media" in settings.expected_services
     assert "nginx" in settings.expected_services
     assert len(settings.expected_services) == 12
+
+
+def test_boost_line_with_cpp_operator_in_function_name():
+    """`operator()` 처럼 함수명에 괄호가 든 줄도 읽어야 한다.
+
+    C++ 람다·펑터는 함수명이 `operator()` 로 찍힌다. func 패턴이 첫 `)` 에서 멈추면
+    그 줄이 통째로 버려진다 — 실데이터에서 TextService 400줄이 조용히 사라졌다
+    (시나리오 재생 실측, 계획 05 §6).
+    """
+    line = (
+        "[2025-Nov-04 00:03:50.448151] <info>: (TextHandler.h:105:operator()) "
+        "ComposeUrls to url-shorten-service succeeded [req_id=32999497]"
+    )
+    batch = log_batch([{"raw": line, "_source": "TextService_.log"}], ["TextService_.log"])
+    [rec] = LogNormalizer().normalize(batch).records
+    assert rec.service == "text"
+    assert rec.code_loc == "TextHandler.h:105"
+    assert rec.level == "info"
+    assert rec.message.startswith("ComposeUrls to url-shorten-service")

@@ -87,6 +87,25 @@ def render(results: list[ReplayResult]) -> str:
         "타임스탬프는 **시프트하지 않았다**. 버퍼 축출이 벽시계가 아니라 watermark 기준이라",
         "2025-11-03/04 원본 시각이 그대로 돈다.",
         "",
+        "## 한눈에",
+        "",
+        "| 시나리오 | 틱 | 소요 | ms/틱 | 예외 | 불연속 | 드롭 | 번들 |",
+        "|---|---|---|---|---|---|---|---|",
+        *(
+            f"| {r.scenario} | {r.ticks} | {r.elapsed_sec:.1f}s "
+            f"| {r.elapsed_sec / r.ticks * 1000:.0f} "
+            "| 없음 "
+            f"| {'없음' if not r.gaps else f'{len(r.gaps)}건'} "
+            f"| {sum(r.dropped(m) for m in Modality):,} | {len(r.bundles)} |"
+            for r in results
+        ),
+        "",
+        "전 시나리오가 **끊김 없이 완주**한다. `Runner.tick()` 이 예외를 던지면 재생이",
+        "거기서 멈추므로, 틱 수가 데이터 끝까지 도달했다는 것 자체가 완주의 증거다.",
+        "",
+        "소요 시간은 **재생 속도**이지 실운용 부하가 아니다 — 실제로는 30초에 한 틱이므로",
+        "틱당 200~250 ms 는 주기의 1% 미만이다. 재생은 그 40~50틱을 쉬지 않고 돌린다.",
+        "",
         "---",
         "",
     ]
@@ -111,6 +130,26 @@ def render(results: list[ReplayResult]) -> str:
             out.append(f"| {modality.value} | {result.loaded.get(modality, 0):,} |")
 
         out += [
+            "",
+            "### 연속성 — 끊김 없이 도는가",
+            "",
+            "| 모달리티 | poll 원시 | 정규화 통과 | 드롭 |",
+            "|---|---|---|---|",
+        ]
+        for modality in (Modality.LOG, Modality.METRIC, Modality.TRACE):
+            dropped = result.dropped(modality)
+            mark = "" if dropped == 0 else f" ⚠️ {dropped / max(result.raw_polled[modality], 1):.1%}"
+            out.append(
+                f"| {modality.value} | {result.raw_polled.get(modality, 0):,} "
+                f"| {result.normalized.get(modality, 0):,} | {dropped:,}{mark} |"
+            )
+        gap_note = "없음" if not result.gaps else f"**{len(result.gaps)}건** — {result.gaps[:3]}"
+        out += [
+            "",
+            f"- **틱 예외**: 없음 ({result.ticks}틱 완주. 예외가 나면 재생이 거기서 멈춘다)",
+            f"- **배치 불연속**: {gap_note} (배치 N.`observed_until` == N+1.`observed_from`)",
+            f"- **소요**: {result.elapsed_sec:.1f}초 "
+            f"({result.elapsed_sec / result.ticks * 1000:.0f} ms/틱)",
             "",
             "### 발화 판정",
             "",

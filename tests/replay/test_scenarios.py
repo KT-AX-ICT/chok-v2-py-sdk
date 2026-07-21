@@ -10,6 +10,7 @@ from datetime import timedelta
 import pytest
 
 from rca_sdk.config import Settings
+from rca_sdk.schemas.events import Modality
 from rca_sdk.schemas.snapshot import SnapshotBundle
 from rca_sdk.snapshot.assembler import POST_SEC, PRE_SEC
 from tests.replay.report import render
@@ -182,6 +183,34 @@ def test_every_source_gets_a_three_state_verdict(name):
         for info in bundle.modality_info.values():
             for interval in info.intervals:
                 assert interval.status in {"missing", "empty", "data"}
+
+
+# ── 연속성 (계획 05 §6) ─────────────────────────────────────────────────────
+
+
+@pytest.mark.parametrize("name", ALL)
+def test_replay_runs_to_completion_without_exception(name):
+    """끊김 없이 도는가 — tick() 이 던지면 재생이 거기서 멈춰 틱 수가 모자란다."""
+    result = replay(name)
+    assert result.ticks >= 40
+
+
+@pytest.mark.parametrize("name", ALL)
+def test_batches_are_contiguous_across_the_run(name):
+    """배치 N.observed_until == N+1.observed_from — 끊기면 coverage 겹침 판정이 무너진다."""
+    assert replay(name).gaps == []
+
+
+@pytest.mark.parametrize("name", ALL)
+def test_normalization_drops_nothing(name):
+    """정규화가 조용히 버리는 레코드가 없어야 한다.
+
+    boost 로그의 func 패턴이 `operator()` 를 못 읽어 시나리오당 400줄이 사라지던 것을
+    이 검증이 잡았다 (계획 05 §6).
+    """
+    result = replay(name)
+    for modality in Modality:
+        assert result.dropped(modality) == 0, f"{modality.value} {result.dropped(modality)}건 유실"
 
 
 # ── 리포트 (계획 05 §6) ─────────────────────────────────────────────────────
