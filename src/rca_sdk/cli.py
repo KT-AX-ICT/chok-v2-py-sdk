@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import logging
 
 from rca_sdk import __version__
 from rca_sdk.config import load_settings
@@ -18,6 +19,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+    logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
     settings = load_settings()
     runner = build_runner(settings)
     runner.run(once=args.once)
