@@ -10,7 +10,7 @@ from __future__ import annotations
 from datetime import datetime
 
 from rca_sdk.buffer.memory_buffer import MemoryBuffer
-from rca_sdk.schemas.events import Modality, NormalizedBatch
+from rca_sdk.schemas.events import Modality, NormalizedBatch, NormalizedLog
 from rca_sdk.trigger.detector import TriggerDetector
 from rca_sdk.trigger.models import TriggerEvidence
 
@@ -33,15 +33,18 @@ class RestartMarkerDetector(TriggerDetector):
         baseline = float(self.condition.get("baseline", 1.0))
 
         # 부팅 2회가 배치를 가로지르므로 최근 window_sec 구간을 조회한다.
-        # 계약의 get_snapshot 만 사용 — buffer 내부 속성 의존 안 함(§2.3).
+        # 계약의 scan 만 사용 — buffer 내부 속성 의존 안 함(§2.3). 세기만 하고 버리므로
+        # 복사본이 필요 없다. 로그는 결함 순간에 분당 29만 줄까지 폭주하므로 이 차이가 크다.
         # since 가 있으면 그 뒤 부팅만 센다 — 직전 번들이 담아 간 부팅으로 재발화하지 않게.
         anchor = new_batch.observed_until
         start = self._lookback_start(anchor, since)
-        snapshot = buffer.get_snapshot(start, anchor)
+        window = buffer.scan(start, anchor, self.MODALITY)
 
         # 윈도 내 부팅 마커(service_start)를 서비스별로 모은다.
         boots: dict[str, list[datetime]] = {}
-        for rec in snapshot.logs:
+        for rec in window:
+            if not isinstance(rec, NormalizedLog):
+                continue
             if rec.event_type == self.BOOT_EVENT_TYPE and rec.service is not None:
                 boots.setdefault(rec.service, []).append(rec.timestamp)
 

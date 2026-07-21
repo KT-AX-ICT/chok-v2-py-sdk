@@ -38,10 +38,18 @@ class NumericThresholdDetector(TriggerDetector):
         buffer: MemoryBuffer,
         since: datetime | None = None,
     ) -> list[TriggerEvidence]:
-        # buffer·since 는 시그니처용 — 숫자 detector 는 이번 배치만 보므로 되돌아보기가 없다.
-        # 배치는 항상 직전 번들 이후라 자를 것도 없다.
+        # buffer 는 시그니처용 — 숫자 detector 는 되돌아보기가 없어 이번 배치만 본다.
+        #
+        # 그렇다고 since 가 무관한 것은 아니다. **배치가 직전 번들 창 끝을 걸칠 수 있다** —
+        # 걸친 배치의 앞부분은 이미 번들에 실려 나갔으므로 다시 세면 재발화 anchor 가
+        # 직전 번들 안으로 끌려간다(시나리오 재생에서 실측). 창 기반 detector 와 같은
+        # 규칙으로 자른다 — 경계는 since 포함(직전 번들이 [.., end) 로 제외했다).
         if new_batch.modality != self.MODALITY:
             return []  # 자기 모달리티 배치만 평가 (metric detector 는 log 배치 무시)
+        if since is not None:
+            new_batch = new_batch.model_copy(
+                update={"records": [r for r in new_batch.records if r.timestamp >= since]}
+            )
         result = self._value_and_meta(new_batch)
         if result is None:
             return []  # 배치에 이 신호 자체가 없음 → 무발화

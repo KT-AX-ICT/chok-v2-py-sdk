@@ -14,9 +14,13 @@ from rca_sdk.schemas.events import NormalizedBatch, NormalizedLog, RawBatch
 logger = logging.getLogger(__name__)
 
 # boost: [ts] <level>: (file:line:func) message
+#
+# func 는 `.*?` 다. C++ 람다·펑터는 함수명이 `operator()` 로 찍혀 **괄호를 품는다** —
+# `[^)]*` 로 두면 첫 `)` 에서 멈춰 그 줄이 통째로 버려진다(실데이터에서 TextService
+# 400줄/시나리오가 조용히 사라졌다). 비탐욕 + 뒤의 `\) ` 앵커로 마지막 닫는 괄호를 잡는다.
 _BOOST_RE = re.compile(
     r"^\[(?P<ts>[^\]]+)\] <(?P<level>\w+)>: "
-    r"\((?P<file>[^:()]+):(?P<line>\d+):(?P<func>[^)]*)\) (?P<msg>.*)$"
+    r"\((?P<file>[^:()]+):(?P<line>\d+):(?P<func>.*?)\) (?P<msg>.*)$"
 )
 # nginx: YYYY/MM/DD HH:MM:SS [level] message
 _NGINX_RE = re.compile(

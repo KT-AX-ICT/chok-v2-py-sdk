@@ -38,17 +38,18 @@ class CpuSpikeDetector(TriggerDetector):
         bar = float(self.condition.get("bar", 50.0))         # 샘플을 '높음'으로 치는 기준선(%)
         min_over = int(self.condition.get("min_over", 5))    # 윈도 내 초과 샘플 최소 개수(plateau)
 
-        # 이번 배치가 아니라 최근 window_sec 구간을 계약의 get_snapshot 으로만 조회한다
-        # (buffer 내부 속성에 의존하지 않음 — 계약 §2.3).
+        # 이번 배치가 아니라 최근 window_sec 구간을 계약의 scan 으로만 조회한다
+        # (buffer 내부 속성에 의존하지 않음 — 계약 §2.3). 세기만 하고 버리므로 복사본이
+        # 필요 없다 — get_snapshot 을 쓰면 매 틱 창 전체를 deep copy 한다 (계획 04 §4).
         # since 가 있으면 그 뒤만 센다 — 직전 번들이 담아 간 샘플로 재발화하지 않게 (계획 04 §7-3).
         anchor = new_batch.observed_until
         start = self._lookback_start(anchor, since)
-        snapshot = buffer.get_snapshot(start, anchor)
+        window = buffer.scan(start, anchor, self.MODALITY)
 
         # 윈도 내 system_cpu_usage 샘플 중 bar 초과분을 모은다.
         over = [
             rec
-            for rec in snapshot.metrics
+            for rec in window
             if isinstance(rec, NormalizedMetric)
             and rec.metric_name == CPU_METRIC
             and rec.value is not None

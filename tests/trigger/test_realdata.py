@@ -58,6 +58,12 @@ class FakeBuffer:
             metrics=[r for r in self._metrics if start_ts <= r.timestamp < end_ts],
         )
 
+    def scan(self, start_ts: datetime, end_ts: datetime, modality: Modality) -> list:
+        source = self._logs if modality is Modality.LOG else self._metrics
+        return sorted(
+            (r for r in source if start_ts <= r.timestamp < end_ts), key=lambda r: r.timestamp
+        )
+
 
 def _batch(modality: Modality, records: list, until: datetime) -> NormalizedBatch:
     return NormalizedBatch(
