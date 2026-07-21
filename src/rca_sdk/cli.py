@@ -6,6 +6,7 @@ import argparse
 
 from rca_sdk import __version__
 from rca_sdk.config import load_settings
+from rca_sdk.runtime.runner import build_runner
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -18,9 +19,8 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     settings = load_settings()
-    # TODO: from rca_sdk.runtime.runner import Runner; Runner(settings).run(once=args.once)
-    print(f"rca-collect {__version__} - endpoint={settings.collect_endpoint} once={args.once}")
-    print("runner not implemented (scaffold). see runtime/runner.py")
+    runner = build_runner(settings)
+    runner.run(once=args.once)
     return 0
 
 

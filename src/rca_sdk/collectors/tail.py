@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import csv
 import logging
-from datetime import datetime
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -19,6 +19,16 @@ from rca_sdk.schemas.events import RawBatch
 logger = logging.getLogger(__name__)
 
 MODALITY_SUBDIRS = ("log", "metric", "trace")
+
+
+def _utc_now() -> datetime:
+    """naive datetime, UTC 시각 기준.
+
+    리플레이어가 레코드에 찍는 시각이 UTC(`datetime.now(UTC)`)라 관측 시각도 같은 기준이어야
+    한다. 로컬 시각(`datetime.now()`)을 쓰면 시스템 tz 만큼(KST 면 9시간) 버퍼 watermark 가
+    데이터보다 앞서가, `_evict()` 가 append 직후 레코드를 전부 축출해버린다.
+    """
+    return datetime.now(UTC).replace(tzinfo=None)
 
 
 class SourceLayoutError(RuntimeError):
@@ -45,10 +55,10 @@ class LineTailCollector(Collector):
         self.source_root = source_root
         self._dir = Path(source_root) / self.modality.value
         self._offsets: dict[str, int] = {}  # 파일명 → 소비한 byte 수 (인메모리, 계획 02 C1)
-        self._last_poll_at = datetime.now()  # 첫 poll 의 관측 하한 = 생성 시각 (폭 0 구간 방지)
+        self._last_poll_at = _utc_now()  # 첫 poll 의 관측 하한 = 생성 시각 (폭 0 구간 방지)
 
     def poll(self) -> RawBatch:
-        now = datetime.now()  # naive (계획 02 C6)
+        now = _utc_now()
         records: list[dict[str, Any]] = []  # poll에서 새롭게 읽은 데이터
         sources: list[str] = []  # 현재 디렉토리에 존재하는 파일 목록
         # 현재 디렉토리에서 pattern 에 맞는 파일을 순회하며 새롭게 추가된 라인을 읽어온다
