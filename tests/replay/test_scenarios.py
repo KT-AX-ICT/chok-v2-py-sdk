@@ -9,7 +9,6 @@ from datetime import timedelta
 
 import pytest
 
-from rca_sdk.config import Settings
 from rca_sdk.schemas.events import Modality
 from rca_sdk.schemas.snapshot import SnapshotBundle
 from rca_sdk.snapshot.assembler import POST_SEC, PRE_SEC
@@ -160,21 +159,16 @@ def test_bundle_anchors_advance(name):
 
 @pytest.mark.parametrize("name", ALL)
 def test_refire_anchor_does_not_reach_back_into_previous_bundle(name):
-    """since 의 실데이터 확인 — 재발화 anchor 가 직전 번들 깊숙이 끌려가면 안 된다.
+    """since 의 실데이터 확인 — 재발화 anchor 가 직전 번들 안으로 끌려가면 안 된다.
 
-    허용 하한은 `직전 번들 창 끝 − 한 틱`이지 창 끝 자체가 아니다. **배치 기반
-    detector 는 `since` 를 안 본다** — 되돌아보기가 없어 이번 배치의 레코드 시각을 그대로
-    `trigger_time` 으로 쓰기 때문이다. `since` 경계를 걸친 배치에서 발화하면 anchor 가
-    최대 한 배치(30초)만큼 과거가 된다.
-
-    창 기반 detector 라면 이 여유가 아예 필요 없다(`since` 로 잘려 항상 그 뒤).
-    이 30초는 무해하지만 — 새 창이 직전 번들과 어차피 겹치고 보존 여유 안이다 —
-    `since` 가 두 detector 계열에 일관되게 걸리지 않는다는 증거이며 계획 05 §7 에 기록했다.
+    "트리거는 번들 전송 이후의 배치부터 다시 검사한다" 는 요구를 창 기반·배치 기반
+    **양쪽**이 지켜야 성립한다. 한때 이 단정이 배치 기반 detector 때문에 깨졌고,
+    당시 허용 하한을 한 틱 넓혀 통과시켰다 — 잘못된 대응이었다. `NumericThresholdDetector`
+    가 `since` 이전 레코드를 걸러내도록 고쳐 원래 단정으로 되돌렸다.
     """
-    interval = timedelta(seconds=Settings().loop_interval_sec)
     bundles = replay(name).bundles
     for previous, current in zip(bundles, bundles[1:], strict=False):
-        assert current.trigger_info.trigger_time >= previous.window.end - interval
+        assert current.trigger_info.trigger_time >= previous.window.end
 
 
 @pytest.mark.parametrize("name", ALL)

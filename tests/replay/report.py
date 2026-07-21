@@ -240,17 +240,23 @@ def _findings(results: list[ReplayResult]) -> list[str]:
             ]
 
     lines += [
-        "### 3. `since` 가 detector 계열에 일관되게 걸리지 않는다",
+        "### 3. `since` 가 detector 계열에 일관되게 안 걸리던 것 — 수정됨",
         "",
-        "창 기반 detector(`cpu_spike`·`restart_marker`)는 `since` 로 되돌아보기가 잘려",
-        "재발화 anchor 가 항상 직전 번들 창 끝 뒤에 온다. 그런데 **배치 기반 detector**",
-        "(`trace_5xx`·`nginx_error`·`error_rate`·`latency_spike`)는 되돌아보기 자체가 없어",
-        "`since` 를 보지 않고, 이번 배치의 레코드 시각을 그대로 `trigger_time` 으로 쓴다.",
+        "창 기반 detector(`cpu_spike`·`restart_marker`)는 `since` 로 되돌아보기가 잘리는데,",
+        "**배치 기반 detector**(`trace_5xx`·`nginx_error`·`error_rate`·`latency_spike`)는",
+        "되돌아보기가 없다는 이유로 `since` 를 보지 않았다. 배치가 직전 번들 창 끝을 걸치면",
+        "이미 전송된 앞부분을 다시 세어, 재발화 anchor 가 직전 번들 안으로 끌려갔다",
+        "(실측 최대 6.6초).",
         "",
-        "그래서 `since` 경계를 걸친 배치에서 발화하면 anchor 가 **최대 한 배치(30초)** 과거가",
-        "된다. 실측 최대 6.6초였다. 무해하다 — 새 창이 직전 번들과 어차피 겹치고 보존 여유",
-        "안이다. 다만 계약이 계열마다 다르다는 뜻이라 [계획 04 §9]"
-        "(../docs/plans/04-memory-buffer.md)(`trigger_time` 의미)와 함께 정리해야 한다.",
+        "`NumericThresholdDetector` 가 `since` 이전 레코드를 걸러내도록 고쳤다. 이제",
+        "**두 계열 모두** `재발화 anchor >= 직전 번들 창 끝` 을 지킨다",
+        "(`test_refire_anchor_does_not_reach_back_into_previous_bundle`).",
+        "",
+        "> 이 문제는 처음에 해당 불변식의 허용 하한을 한 틱 넓혀 통과시켰다가 되돌린 것이다.",
+        "> 테스트를 약화시키는 대응이었고, 원인이 배치 detector 쪽에 있었다.",
+        "",
+        "남은 것은 `trigger_time` 이 \"이상 확증 시각\" 과 \"창 중심\" 을 겸한다는 점이다 —",
+        "[계획 04 §9](../docs/plans/04-memory-buffer.md).",
         "",
     ]
     return lines
