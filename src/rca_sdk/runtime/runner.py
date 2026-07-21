@@ -91,12 +91,28 @@ class Runner:
             for detector in self.detectors
             for evidence in detector.evaluate(batch, self.buffer, since=self._detect_since)
         ]
+        for evidence in evidences:
+            logger.info(
+                "트리거 발화: %s (service=%s, trigger_time=%s)",
+                evidence.detector_type,
+                evidence.service,
+                evidence.trigger_time,
+            )
         self.snapshot.register_triggers(evidences, self.buffer)
 
         # 전송은 마지막. 실패해도 위 상태 전이는 이미 끝나 있다.
         for bundle in bundles:
             result = self.transport.send(bundle)
-            if not result.accepted:
+            if result.accepted:
+                logger.info(
+                    "번들 전송 완료: window=%s~%s logs=%d metrics=%d traces=%d",
+                    bundle.window.start,
+                    bundle.window.end,
+                    len(bundle.logs),
+                    len(bundle.metrics),
+                    len(bundle.traces),
+                )
+            else:
                 logger.warning("번들 전송 실패 (창 %s): %s", bundle.window.end, result.error)
         return bundles
 
