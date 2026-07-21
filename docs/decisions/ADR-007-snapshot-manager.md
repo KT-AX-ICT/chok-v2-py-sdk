@@ -55,7 +55,7 @@ coverage 비면 빈 dict.
 
 ### 7. window 폭은 상수
 
-`PRE_SEC = POST_SEC = 180`(모듈 상수). config(`buffer_window_sec`/`post_trigger_wait_sec`) 주입은 후속 — 현재 `SnapshotManager`에 주입 경로가 없어 두 값이 드리프트할 수 있고, 테스트가 상수와 config가 같은지 핀으로 고정한다.
+`PRE_SEC = POST_SEC = 180`(모듈 상수). config(`buffer_retention_sec`/`post_trigger_wait_sec`) 주입은 후속 — 현재 `SnapshotManager`에 주입 경로가 없어 두 값이 드리프트할 수 있고, 테스트가 상수와 config가 같은지 핀으로 고정한다.
 
 ## 결과/영향
 

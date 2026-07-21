@@ -6,7 +6,7 @@
 
 ## 맥락
 
-`TriggerDetector.evaluate(new_batch, buffer) -> list[TriggerEvidence]` 계약 위에 MVP 3종 결함(Perf CPU / Svc_Kill / Code_Stop)을 실시간 감지하는 detector를 구현해야 한다. 감지 로직은 계약 이전 프로토타입(`perf_trigger_sim`, `observe(value, ts)`)으로 러프하게 검증했고, 이를 계약 인터페이스로 옮기며 detector 구성·발화 규칙·임계 주입 방식을 확정한다.
+`TriggerDetector.evaluate(new_batch, buffer, since=None) -> list[TriggerEvidence]` 계약 위에 MVP 3종 결함(Perf CPU / Svc_Kill / Code_Stop)을 실시간 감지하는 detector를 구현해야 한다. 감지 로직은 계약 이전 프로토타입(`perf_trigger_sim`, `observe(value, ts)`)으로 러프하게 검증했고, 이를 계약 인터페이스로 옮기며 detector 구성·발화 규칙·임계 주입 방식을 확정한다.
 
 전제: SDK는 런타임에 **어느 시나리오가 재생 중인지 모른다**(ADR-004). 따라서 detector는 "시나리오별"이 아니라 **신호별**이며, 모든 detector가 동시에 돌고 무엇이 발화하는지로 시나리오가 사후에 드러난다.
 
@@ -49,7 +49,8 @@
 
 **실측 근거 (AnoMod SN, `SN오류정리` — 저장소 외부 옵시디언):**
 - baseline CPU도 순간 **max 81%**까지 튄다 → 단일 샘플 절대값 판정은 산발 노이즈에 취약(측정 스파이크·GC 등으로 순간 고점 발생 가능).
-- 결함 신호의 특징은 **봉우리가 아니라 plateau**(높은 샘플의 연속 누적): baseline **3/79 산발** vs 주입 **23/80 연속**. 주입 후 약 1분이면 50% 초과 샘플이 5개 이상 연속 누적, 최대 99%.
+- 결함 신호의 특징은 **봉우리가 아니라 plateau**(높은 샘플의 지속): baseline **3/79** vs 주입 **23/80**. 주입 후 약 1분이면 50% 초과 샘플이 5개 이상 연속 누적, 최대 99%.
+  - ⚠️ **정정(2026-07-20)** — 초판은 이를 "baseline 3/79 **산발** vs 주입 23/80 **연속**"으로 적었으나 **사실이 아니다.** 재측정 결과 baseline의 초과 3개도 최장 연속 런이 3 — 즉 **연속**이다. 실제 판별 축은 `산발 vs 연속`이 아니라 **런 길이 3 vs 23**이다. plateau 채택 결론 자체는 유지된다(분리 폭이 오히려 명확). 측정표는 [계획 04 §8](../plans/04-memory-buffer.md).
 
 **판정 방식:**
 - 대상 = host CPU(`system_cpu_usage`). 샘플 "높음" 기준선(예: 50%) 초과 샘플의 **연속 누적 수·지속시간**으로 판정. 절대값 1회 초과가 아니다.
@@ -63,7 +64,7 @@
 | **plateau** | 50% | N개 누적 | 윈도 로직 필요 | 실측 지지. 단일 튐·약한 결함 다 대응. 정상 고부하엔 오탐 여지 |
 | **sustained ≥95** | 90~95% | N개 | 윈도 로직 필요 | 절충. 단일 튐·정상 고부하 둘 다 방어. bar 높으면 약한 결함 놓칠 수 |
 
-- 이 시스템 baseline은 **3~10%**라 "50%"는 낮은 값이 아니라 정상의 5~15배 = 명백한 이상. 그래서 실측(baseline 3/79 산발 vs 주입 23/80 연속)이 plateau·bar50을 지지한다.
+- 이 시스템 baseline은 **3~10%**라 "50%"는 낮은 값이 아니라 정상의 5~15배 = 명백한 이상. 그래서 실측(baseline 3/79 vs 주입 23/80 — 런 길이 3 vs 23)이 plateau·bar50을 지지한다.
 
 **"윈도 로직"이란:** 이번 배치 하나가 아니라 `buffer.get_snapshot(observed_until - lookback, observed_until)`로 **최근 창의 샘플들을 되돌아봐** "높음(>bar)" 샘플 수를 센다(`lookback` = condition `window_sec`). `restart_marker`가 부팅 마커를 세는 방식과 **동형**이고, detector는 카운터를 들지 않고 매 평가마다 buffer로 재계산하므로 **무상태 유지**. **구현 완료** — cpu_spike는 이 방식으로 전환됨. 계약의 `get_snapshot`만 쓰고 buffer 내부 속성엔 의존하지 않는다.
 
@@ -71,7 +72,7 @@
 - 현재 `cpu_spike`는 **단일 배치 `max(cpu) > threshold` 무상태**로, plateau를 아직 구현하지 않았다(MVP에서 "연속 지속성 판정"을 제외했기 때문).
 - **≥95 절대** 채택 시 → 코드 변경 0, `condition={"baseline":0, "floor":95}` 주입만으로 즉시 동작(임계를 코드에 안 박은 덕).
 - **plateau / sustained** 채택 시 → cpu_spike를 위 윈도 로직으로 전환(restart_marker 동형). condition에 `sample_bar`·`min_over` 주입. **plateau와 sustained는 같은 코드, `bar`·`count` 파라미터만 다르다** — 하나 만들면 condition으로 전환 가능.
-- **확정: plateau 채택** (실데이터 근거 — Perf CPU 분석: median/단일절대 판별 불가, baseline `3/79` 산발 vs 주입 `23/80` 연속). ≥95 절대·sustained는 미채택. → **cpu_spike를 윈도 로직으로 구현**: `system_cpu_usage`(호스트) 샘플 중 `bar`(기본 50%) 초과가 buffer 윈도에서 `min_over`(기본 5)개 이상이면 발화. `container_cpu`는 국소화용이라 트리거 대상 아님.
+- **확정: plateau 채택** (실데이터 근거 — Perf CPU 분석: median/단일절대 판별 불가, baseline `3/79` vs 주입 `23/80`, 런 길이 3 vs 23). ≥95 절대·sustained는 미채택. → **cpu_spike를 윈도 로직으로 구현**: `system_cpu_usage`(호스트) 샘플 중 `bar`(기본 50%) 초과가 buffer 윈도에서 `min_over`(기본 5)개 이상이면 발화. `container_cpu`는 국소화용이라 트리거 대상 아님.
 
 ### 방어 코드 (Codex 검토 반영)
 
@@ -87,7 +88,7 @@
 ## 미결
 
 - **실 임계값 도출 (실측 근거 확보, 배선은 러너 때)** — 각 detector의 `condition`을 실데이터 분포로 도출함:
-  - `cpu_spike`(plateau): `{metric:"system_cpu_usage", bar:50, min_over:5}` — baseline 3/80 산발 vs 주입 23/80 연속.
+  - `cpu_spike`(plateau): `{metric:"system_cpu_usage", bar:50, min_over:5}` — baseline 3/79 vs 주입 23/80(런 길이 3 vs 23). 규칙은 **창 내 총 개수 유지**로 결정 — 런 기반 대안은 판별력이 같아 미채택([계획 04 §8](../plans/04-memory-buffer.md)).
   - `trace_5xx`: `{baseline:0, floor:1~3}` — 500 span baseline 0, Code_Stop 70~98건.
   - `nginx_error`: `{baseline:0, floor:3~5}` — connection_error baseline 0, ~11/분(≈5.5/30s).
   - `restart_marker`: `{threshold:2}` — 정상 부팅 1, kill 2. (이미 구현 일치)
@@ -101,4 +102,7 @@
     (실제로 `system_cpu` 로 적혀 있어 cpu_spike 가 무발화였다 — 2026-07-20 수정).
 - **`restart_marker` 윈도 경계 — 수용(MVP 확정)** — 두 부팅이 210초를 넘게 벌어지면 못 잡는다. MVP는 이 한계를 **수용하고 현행(단순 윈도 카운트) 그대로 간다.** 반열림 `[start, end)`라 `observed_until`에 정확히 걸친 마커는 다음 배치에서 집계. (개선 필요 시 후속에서 윈도 확장·상태 추적 검토.)
 - **번들 payload 상한** — 실데이터상 6분 윈도에 전 서비스 로그가 수십만 줄. 샘플링/상한/서비스 필터 필요.
-- **러너 통합 전제** — `append → evaluate` 순서(restart_marker가 buffer 윈도에 의존).
+- **러너 통합 전제** — `append → finalize_ready → evaluate → register_triggers` 순서.
+  `append` 가 먼저인 이유는 restart_marker 가 buffer 윈도에 의존해서고, `finalize_ready` 가
+  `evaluate` 앞인 이유는 이 틱에 완성된 번들의 창 끝이 곧 이번 평가의 하한(`since`)이기 때문이다.
+  뒤집으면 방금 전송한 구간으로 즉시 재발화한다 ([계획 04 §7-3](../plans/04-memory-buffer.md)).

@@ -30,8 +30,8 @@ from rca_sdk.schemas.snapshot import (
 )
 from rca_sdk.trigger.models import TriggerEvidence
 
-# anchor 앞뒤 대칭 3분 (ADR-001). 값은 config 의 buffer_window_sec / post_trigger_wait_sec
-# 와 같다 — 주입은 러너 소관.
+# anchor 앞뒤 대칭 3분 (ADR-001). POST_SEC 은 config 의 post_trigger_wait_sec 와 같다 —
+# 주입은 러너 소관. buffer_retention_sec(210) 은 버퍼 보존이라 이 값들과 별개다.
 #
 # Pre 를 210 으로 두는 안이 검토 중이다(ADR-001 §비대칭 검토). anchor 는 발단보다 항상 늦게
 # 잡히고(anchor = 발단 + 탐지 지연), 그 지연이 Pre 만 갉아먹기 때문. 다만 실측 검증 전이라

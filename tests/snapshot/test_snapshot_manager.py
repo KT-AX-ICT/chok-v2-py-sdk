@@ -74,10 +74,19 @@ def test_window_constants_match_configured_design():
     현재는 앞뒤 대칭 180/180. Pre 를 210 으로 두는 비대칭 안은 검증 중이다(ADR-001).
     """
     settings = Settings()
-    assert PRE_SEC == settings.buffer_window_sec == 180
+    assert PRE_SEC == 180
     assert POST_SEC == settings.post_trigger_wait_sec == 180
-    # 버퍼 보존은 pre+post 를 담을 만큼이어야 한다 (ADR-001 §19)
-    assert MemoryBuffer().retention_sec >= PRE_SEC + POST_SEC
+
+    # 버퍼 보존은 pre 윈도와 **다른 값**이다 — 이름도 retention 으로 갈라 두었다.
+    # 불변식은 PRE+POST(360) 가 아니라 각 질의별로 "창 + 한 틱".
+    #   pre  — 트리거 시점 조회. anchor ≈ watermark 라 PRE_SEC 뒤까지 + 한 틱 여유
+    #   post — anchor+POST_SEC 도달 틱에 조회. watermark < anchor+retention 이라 anchor 가 남아 있음
+    # PRE+POST 를 요구하지 않는 이유: pre 는 트리거 시점에 이미 복사돼 나가므로 창 전체를
+    # 한 시점에 들고 있을 일이 없다 (ADR-001 §버퍼 보존 기간, 계획 04 §1).
+    retention = MemoryBuffer().retention_sec
+    assert retention == settings.buffer_retention_sec == 210
+    assert retention >= PRE_SEC + settings.loop_interval_sec
+    assert retention >= POST_SEC + settings.loop_interval_sec
 
 
 def test_register_opens_session_and_captures_pre():

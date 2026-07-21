@@ -32,8 +32,14 @@ class NumericThresholdDetector(TriggerDetector):
         floor = float(self.condition.get("floor", 0.0))
         return max(baseline * ratio, floor)
 
-    def evaluate(self, new_batch: NormalizedBatch, buffer: MemoryBuffer) -> list[TriggerEvidence]:
-        # buffer 는 시그니처용 — 숫자 detector 는 무상태라 이번 배치만 본다.
+    def evaluate(
+        self,
+        new_batch: NormalizedBatch,
+        buffer: MemoryBuffer,
+        since: datetime | None = None,
+    ) -> list[TriggerEvidence]:
+        # buffer·since 는 시그니처용 — 숫자 detector 는 이번 배치만 보므로 되돌아보기가 없다.
+        # 배치는 항상 직전 번들 이후라 자를 것도 없다.
         if new_batch.modality != self.MODALITY:
             return []  # 자기 모달리티 배치만 평가 (metric detector 는 log 배치 무시)
         result = self._value_and_meta(new_batch)

@@ -10,9 +10,10 @@
 
 ## 결정 (잠정)
 
-- 버퍼(pre) 윈도 = **180초(3분)**. 트리거 직전 버퍼 전체를 `pre_events` 로 사용.
-- post 수집 = 180초(3분). 발화 후 이 기간 이벤트를 `post_events` 로.
-- 설정: `RCA_BUFFER_WINDOW_SEC`, `RCA_POST_TRIGGER_WAIT_SEC`.
+- **pre 윈도 = 180초(3분)**. anchor 앞 `[anchor−180, anchor)` 를 `pre_events` 로.
+- **post 수집 = 180초(3분)**. anchor 뒤 `[anchor, anchor+180)` 을 `post_events` 로.
+- **버퍼 보존 = 210초.** pre 윈도와 **다른 값**이다 — 아래 "버퍼 보존 기간" 절 참조.
+- 설정: `RCA_BUFFER_RETENTION_SEC`, `RCA_POST_TRIGGER_WAIT_SEC`.
 
 앞뒤 **대칭 180/180**. 아래 "비대칭 검토"의 210 안은 실측 검증 후 재도입을 판단한다.
 
@@ -59,18 +60,47 @@ anchor·배치 중간 anchor 양쪽 다 확인했다.
 
 ## 버퍼 보존 기간 (계획 04 에서 확정)
 
-> **재검토 중** — 이 절의 유도 근거는 `fix/buffer-retention-rationale` 에서 다시 다루고 있다.
-> 값(기본 390)은 아래 불변식을 만족하므로 그대로 두되, 근거는 그쪽 결론을 따른다.
+버퍼 보존 = `PRE_SEC(180) + 루프 주기(30) = **210초**`.
 
-불변식은 **`retention_sec >= PRE_SEC + POST_SEC`**(창 전체를 담을 것). pre 는 트리거 시점에
-`SnapshotManager.register_triggers` 가 즉시 복사하므로 안전하지만, post 는 `finalize_ready`
-시점에 버퍼에서 꺼내므로 보존이 창 폭과 같으면 여유가 **정확히 1 tick(30초)** 뿐이다.
-모달리티별 `observed_until` 불일치·tick 드리프트·재시도로 한 사이클만 밀려도 post 앞부분이
-로그 없이 잘린다. 근거 타임라인은 [계획 04 §1](../plans/04-memory-buffer.md) 참조.
+pre 와 post 는 **시점이 다른 별개 질의**라 더해지지 않는다. `register_triggers` 는 트리거
+시점에 pre `[T−180, T)` 를 즉시 복사하고, `finalize_ready` 는 `T+180` 도달 틱에 post
+`[T, T+180)` 를 따로 뜬다. 각 질의에 필요한 보존이 모두 210 으로 수렴한다 —
+유도표는 [계획 04 §1](../plans/04-memory-buffer.md).
 
-버퍼는 `retention_sec` 만 주입받고 pre/post 의미는 모른다 — 정책이 바뀌어도 버퍼는 불변.
+`retention_sec >= PRE_SEC + POST_SEC`(=360) 은 **불필요하게 강하다**. 그 불변식은 창 전체를
+한 시점에 들고 있어야 성립하는데, pre 는 트리거 시점에 이미 복사돼 나갔으므로 그럴 일이 없다.
+
+### 여유가 1 틱인 것에 대하여
+
+post 질의의 여유가 정확히 1 틱이라는 지적은 **맞다.** finalize 는 `T >= anchor+180` 인 틱에서
+일어나고 버퍼는 `[T−210, T]` 를 들고 있으므로, `T <= anchor+210` 인 동안만 post 앞부분이
+남아 있다. 정상 주기(30초)에서는 `T < anchor+210` 이 보장되지만, **틱 드리프트·재시도로 한
+사이클이 밀리면 post 앞이 로그 없이 잘린다.**
+
+다만 이는 유도를 360 으로 바꿀 근거가 아니라 **운영 여유(slack)의 문제**다. 넓힐 때는
+`retention_sec` 만 올린다 — `PRE+POST` 로 부풀려 적으면 다음 사람이 post 정책을 조절 레버로
+착각한다. 드리프트 방어가 필요하다고 판단되면 `210 + 여유 틱 수 × 30` 으로 명시하는 편이
+의도가 드러난다.
+
+모달리티별 `observed_until` 불일치는 이 문제에 해당하지 않는다 — 러너가 한 틱에 3개 모달리티를
+함께 폴링하므로 무해하다(ADR-007 §4).
+
+### 설정 이름
+
+`buffer_window_sec`(→ `buffer_retention_sec`) 은 **PRE_SEC 과 다른 값**이다. "윈도" 라는 이름이
+스냅샷 창(180)과 같아야 하는 것처럼 읽혀 한때 180 으로 되돌려진 적이 있다. 버퍼가 아는 것은
+"얼마나 오래 들고 있을지" 뿐이고 pre/post 의미는 모른다.
+
+버퍼는 `retention_sec` 만 주입받고 pre/post 의미는 모른다.
 
 ## 미결
 
 - 발화 시점 이벤트의 pre/post 귀속 규칙.
-- post 수집 중 재트리거 처리(윈도 연장 vs 별도 번들).
+- ~~post 수집 중 재트리거 처리(윈도 연장 vs 별도 번들)~~ — **해소.** `register_triggers` 가
+  단일 세션 슬롯을 써서 post 대기 중 재트리거를 기존 세션에 흡수한다(anchor·창·pre 고정,
+  `triggered_by` 만 누적). 윈도 연장은 하지 않는다.
+- **번들 전송 이후의 재발화 기준** — 미해결. 창 기반 detector 가 이미 전송한 구간을 다시 세어
+  anchor 가 과거로 끌려간다. 제안은 `evaluate(..., since=직전 번들 window_end)` 로 평가 하한을
+  자르는 것 — [계획 04 §7-3](../plans/04-memory-buffer.md).
+- **`trigger_time` 의 의미** — 미해결. "이상 확증 시각" 과 "창 중심" 을 한 필드가 겸한다.
+  [계획 04 §9](../plans/04-memory-buffer.md).

@@ -93,3 +93,44 @@ def test_trigger_time_is_confirmation_sample():
     ev = CpuSpikeDetector(COND).evaluate(metric_batch(), FakeBuffer(recs))
     # min_over=5 → 5번째 초과 샘플에서 plateau 확증
     assert ev[0].trigger_time == recs[4].timestamp
+
+
+# ── since (평가 하한) — 계획 04 §7-3 ─────────────────────────────────────────
+# 직전 번들이 담아 전송한 구간을 다시 세지 않게 되돌아보기 시작점을 자른다.
+
+
+def test_since_clips_lookback_and_suppresses_refire():
+    # 6개 전부 초과지만, since 를 5번째 샘플 시각으로 두면 셀 수 있는 건 2개뿐 → 무발화
+    recs = samples([60, 70, 80, 90, 95, 99])
+    ev = CpuSpikeDetector(COND).evaluate(
+        metric_batch(), FakeBuffer(recs), since=recs[4].timestamp
+    )
+    assert ev == []
+
+
+def test_since_is_inclusive_lower_bound():
+    # since 와 정확히 같은 시각의 샘플은 포함된다 — 직전 번들이 [.., end) 로 제외했으므로
+    # 누락도 중복도 없다. since=recs[1] 이면 recs[1..5] 5개가 남아 min_over(5) 충족.
+    recs = samples([60, 70, 80, 90, 95, 99])
+    ev = CpuSpikeDetector(COND).evaluate(
+        metric_batch(), FakeBuffer(recs), since=recs[1].timestamp
+    )
+    assert len(ev) == 1
+    assert ev[0].value == 5.0
+    assert ev[0].trigger_time == recs[5].timestamp  # 5번째 초과 = 마지막 = 최신
+
+
+def test_since_older_than_window_does_not_widen_lookback():
+    # since 가 창보다 과거면 창이 이긴다 — max() 라 되돌아보기가 넓어지지 않는다
+    recs = samples([60, 70, 80, 90, 95, 99])
+    far_past = TS - timedelta(days=1)
+    with_since = CpuSpikeDetector(COND).evaluate(metric_batch(), FakeBuffer(recs), since=far_past)
+    without = CpuSpikeDetector(COND).evaluate(metric_batch(), FakeBuffer(recs))
+    assert with_since == without
+
+
+def test_since_none_keeps_current_behavior():
+    recs = samples([60, 70, 80, 90, 95, 99])
+    assert CpuSpikeDetector(COND).evaluate(
+        metric_batch(), FakeBuffer(recs), since=None
+    ) == CpuSpikeDetector(COND).evaluate(metric_batch(), FakeBuffer(recs))
