@@ -39,15 +39,15 @@ def test_version():
 
 
 def test_record_schemas_instantiate():
-    NormalizedLog(timestamp=TS, canonical_service="user", level="error")
-    NormalizedTrace(timestamp=TS, canonical_service="nginx", http_status_code=500)
+    NormalizedLog(timestamp=TS, service="user", level="error")
+    NormalizedTrace(timestamp=TS, service="nginx", http_status_code=500)
     NormalizedMetric(
-        timestamp=TS, canonical_service="user", metric_name="container_cpu", value=0.97
+        timestamp=TS, service="user", metric_name="container_cpu", value=0.97
     )
 
 
 def test_batch_and_snapshot_contracts():
-    log = NormalizedLog(timestamp=TS, canonical_service="user")
+    log = NormalizedLog(timestamp=TS, service="user")
     raw = RawBatch(modality=Modality.LOG, observed_from=TS, observed_until=TS, records=[{"x": 1}])
     nb = NormalizedBatch(
         modality=Modality.LOG,
@@ -58,7 +58,7 @@ def test_batch_and_snapshot_contracts():
     )
     snap = MultimodalSnapshot(logs=[log], coverage={"log": nb.roster})
     assert raw.modality is Modality.LOG
-    assert nb.records[0].canonical_service == "user"
+    assert nb.records[0].service == "user"
     assert nb.roster[0].present is True
     assert snap.coverage["log"][0].source == "UserService"
 
