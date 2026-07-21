@@ -27,13 +27,16 @@ class TransportClient(Transport):
         self.timeout = timeout
 
     def send(self, bundle: SnapshotBundle) -> SubmissionResult:
-        # TODO: 재시도/백오프, 인증, 실패 시 SubmissionResult(accepted=False, error=...).
-        resp = httpx.post(
-            self.endpoint,
-            content=bundle.model_dump_json(),
-            headers={"Content-Type": "application/json"},
-            timeout=self.timeout,
-        )
-        resp.raise_for_status()
-        data = resp.json()
+        # TODO: 재시도/백오프, 인증 — 서버팀과 미확정 (docs/api-contract.md).
+        try:
+            resp = httpx.post(
+                self.endpoint,
+                content=bundle.model_dump_json(),
+                headers={"Content-Type": "application/json"},
+                timeout=self.timeout,
+            )
+            resp.raise_for_status()
+            data = resp.json()
+        except httpx.HTTPError as e:
+            return SubmissionResult(accepted=False, error=str(e))
         return SubmissionResult(accepted=data.get("accepted", True), job_id=data.get("job_id"))
