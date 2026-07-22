@@ -1,6 +1,6 @@
 """표준 라이브러리만 쓰는 mock ingest 서버 (계획 06 §1).
 
-rca-collect 가 트리거 시 보내는 SnapshotBundle 을 받아 window·trigger_info·모달리티별
+rca-collect 가 트리거 시 보내는 SnapshotBundle 을 받아 window·triggerInfo·모달리티별
 레코드 수를 한 줄 로그로 남기고 200 을 돌려준다. `demo/replayer` 와 같은 이유로
 pyproject.toml 에 등록하지 않는다 — 등록하면 wheel 에 들어가 실서비스 설치본에 딸려간다.
 
@@ -18,13 +18,13 @@ PORT = 8000  # settings.collect_endpoint 기본값(http://localhost:8000/ingest)
 
 
 def summarize(bundle: dict) -> str:
-    """수신 로그 한 줄. window·trigger_info·모달리티별 레코드 수만 뽑는다."""
+    """수신 로그 한 줄. window·triggerInfo·모달리티별 레코드 수만 뽑는다."""
     window = bundle.get("window", {})
-    trigger = bundle.get("trigger_info", {})
-    triggered_by = ",".join(trigger.get("triggered_by", []))
+    trigger = bundle.get("triggerInfo", {})
+    triggered_by = ",".join(trigger.get("triggeredBy", []))
     return (
         f"[수신] window={window.get('start')}~{window.get('end')} "
-        f"trigger={trigger.get('trigger_time')}({triggered_by}) "
+        f"trigger={trigger.get('triggerTime')}({triggered_by}) "
         f"logs={len(bundle.get('logs', []))} "
         f"metrics={len(bundle.get('metrics', []))} "
         f"traces={len(bundle.get('traces', []))}"

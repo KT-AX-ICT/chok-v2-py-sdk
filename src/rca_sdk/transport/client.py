@@ -31,7 +31,7 @@ class TransportClient(Transport):
         try:
             resp = httpx.post(
                 self.endpoint,
-                content=bundle.model_dump_json(),
+                content=bundle.model_dump_json(by_alias=True),
                 headers={"Content-Type": "application/json"},
                 timeout=self.timeout,
             )
