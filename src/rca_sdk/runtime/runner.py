@@ -28,6 +28,7 @@ from rca_sdk.buffer.memory_buffer import MemoryBuffer
 from rca_sdk.collectors.base import Collector
 from rca_sdk.collectors.log import LogCollector
 from rca_sdk.collectors.metric import MetricCollector
+from rca_sdk.collectors.tail import validate_source_layout
 from rca_sdk.collectors.trace import TraceCollector
 from rca_sdk.config import Settings, load_settings
 from rca_sdk.normalization.base import Normalizer
@@ -123,6 +124,7 @@ DETECTOR_TYPES: dict[str, type[TriggerDetector]] = {
 def build_runner(settings: Settings | None = None) -> Runner:
     """Settings 만으로 실운용 Runner 를 조립한다 — 배선의 정답을 여기 한 곳에 둔다."""
     settings = settings or load_settings()
+    validate_source_layout(settings.source_root)  # 경로 오류 = 기동 시 즉시 실패 (계획 06 §3)
     expected = settings.expected_services
     return Runner(
         settings,
