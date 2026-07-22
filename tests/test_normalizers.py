@@ -27,6 +27,10 @@ BOOST_CONNECT = (
     "[2025-Nov-04 02:58:00.000000] <error>: (TextHandler.h:10:main) "
     "TTransportException: Could not connect to media-service:9090"
 )
+THRIFT_GETADDRINFO = (
+    "Thrift: Tue Nov  4 02:58:25 2025 TSocket::open() getaddrinfo() "
+    "<Host: media-service Port: 9090>Name or service not known"
+)
 
 
 def log_batch(records: list[dict], sources: list[str]) -> RawBatch:
@@ -43,15 +47,13 @@ def test_boost_line_parsed():
     assert rec.level == "info"
     assert rec.code_loc == "MediaService.cpp:44"
     assert rec.timestamp == datetime(2025, 11, 4, 0, 1, 57, 490560)
-    assert rec.event_type == "service_start"      # restart_marker 원천
+    assert rec.event_type == "service_start"  # restart_marker 원천
     assert rec.target_service is None
     assert rec.message.startswith("Starting the media-service")
 
 
 def test_nginx_line_parsed_anonymous_resolve_host():
-    batch = log_batch(
-        [{"raw": NGINX_RESOLVE, "_source": "NginxThrift_.log"}], ["NginxThrift_.log"]
-    )
+    batch = log_batch([{"raw": NGINX_RESOLVE, "_source": "NginxThrift_.log"}], ["NginxThrift_.log"])
     [rec] = LogNormalizer().normalize(batch).records
     assert rec.service == "nginx"
     assert rec.log_type == "nginx_log"
@@ -59,16 +61,36 @@ def test_nginx_line_parsed_anonymous_resolve_host():
     assert rec.code_loc == "compose.lua:62"
     assert rec.timestamp == datetime(2025, 11, 4, 2, 58, 25)
     assert rec.event_type == "connection_error"
-    assert rec.target_service is None             # 익명 — Code_Stop 신호 그대로 보존
+    assert rec.target_service is None  # 익명 — Code_Stop 신호 그대로 보존
 
 
 def test_connect_target_extracted():
-    batch = log_batch(
-        [{"raw": BOOST_CONNECT, "_source": "TextService_.log"}], ["TextService_.log"]
-    )
+    batch = log_batch([{"raw": BOOST_CONNECT, "_source": "TextService_.log"}], ["TextService_.log"])
     [rec] = LogNormalizer().normalize(batch).records
     assert rec.event_type == "connection_error"
     assert rec.target_service == "media"
+
+
+def test_thrift_line_parsed():
+    """thrift 라이브러리가 boost 로그 파일에 직접 찍는 3번째 형식 (C asctime, level 없음).
+
+    readers.py 가 리플레이 충실도를 위해 이미 인식하는 형식인데, 정작 실제 파이프라인의
+    LogNormalizer 는 boost/nginx 둘뿐이라 여태 조용히 드롭되고 있었다 — 실측: Code_Stop 의
+    ComposePostService_.log 1001줄 중 200줄.
+    """
+    batch = log_batch(
+        [{"raw": THRIFT_GETADDRINFO, "_source": "ComposePostService_.log"}],
+        ["ComposePostService_.log"],
+    )
+    [rec] = LogNormalizer().normalize(batch).records
+    assert rec.service == "composepost"
+    assert rec.log_type == "service_log"
+    assert rec.level is None  # thrift 줄엔 level 표기가 없다
+    assert rec.code_loc is None  # file:line 표기가 없다
+    assert rec.timestamp == datetime(2025, 11, 4, 2, 58, 25)
+    assert rec.message == (
+        "TSocket::open() getaddrinfo() <Host: media-service Port: 9090>Name or service not known"
+    )
 
 
 def test_unparseable_line_skipped():
@@ -99,7 +121,7 @@ def test_container_metric_normalized():
         MetricNormalizer().normalize(metric_batch([rec], ["socialnet_container_cpu.csv"])).records
     )
     assert out.service == "user"
-    assert out.metric_name == "container_cpu"     # socialnet_ 접두 제거
+    assert out.metric_name == "container_cpu"  # socialnet_ 접두 제거
     assert out.value == 0.006794
     assert out.dimension == "user-service"
     assert out.unit == "fraction"
@@ -115,7 +137,7 @@ def test_system_metric_is_node():
         "_source": "system_cpu_usage.csv",
     }
     [out] = MetricNormalizer().normalize(metric_batch([rec], ["system_cpu_usage.csv"])).records
-    assert out.service == "__node__"              # cpu_spike 신호 원천
+    assert out.service == "__node__"  # cpu_spike 신호 원천
     assert out.metric_name == "system_cpu_usage"
     assert out.unit == "percent"
     assert out.dimension == "node-exporter:9100"
@@ -131,7 +153,7 @@ def test_unknown_dimension_service_none():
 def test_bad_metric_value_skipped():
     rec = {"timestamp": "2025-11-04 00:03:13", "value": "?", "_source": "system_load1.csv"}
     out = MetricNormalizer().normalize(metric_batch([rec], ["system_load1.csv"]))
-    assert out.records == []                      # N3
+    assert out.records == []  # N3
 
 
 TRACE_ROW = {
@@ -153,41 +175,39 @@ TRACE_ROW = {
 
 
 def trace_batch(records: list[dict]) -> RawBatch:
-    return RawBatch(
-        modality=Modality.TRACE, records=records, sources=["all_traces.csv"], **WINDOW
-    )
+    return RawBatch(modality=Modality.TRACE, records=records, sources=["all_traces.csv"], **WINDOW)
 
 
 def test_trace_row_normalized():
     [out] = TraceNormalizer().normalize(trace_batch([TRACE_ROW])).records
     assert out.service == "nginx"
     assert out.trace_id == "00375a1ade701ffa"
-    assert out.parent_span_id is None             # 공백 → None
-    assert out.http_status_code is None           # 공백 → None
+    assert out.parent_span_id is None  # 공백 → None
+    assert out.http_status_code is None  # 공백 → None
     assert out.duration_us == 490
     assert out.duration_ms == 0.49
     assert out.timestamp == datetime(2025, 11, 4, 0, 20, 0, 521783)
     assert out.tags == {"internal.span.format": "proto"}
-    assert out.logs is None                       # 공백 → None
+    assert out.logs is None  # 공백 → None
 
 
 def test_trace_status_code_parsed():
     row = dict(TRACE_ROW, http_status_code="500", parent_span_id="c4c6197d4cc6a67e")
     [out] = TraceNormalizer().normalize(trace_batch([row])).records
-    assert out.http_status_code == 500            # trace_5xx 신호 원천
+    assert out.http_status_code == 500  # trace_5xx 신호 원천
     assert out.parent_span_id == "c4c6197d4cc6a67e"
 
 
 def test_trace_bad_tags_kept_as_empty_dict():
     row = dict(TRACE_ROW, tags="{broken")
     [out] = TraceNormalizer().normalize(trace_batch([row])).records
-    assert out.tags == {}                         # 파싱 실패 → 빈 dict + warning
+    assert out.tags == {}  # 파싱 실패 → 빈 dict + warning
 
 
 def test_trace_missing_start_time_skipped():
     row = dict(TRACE_ROW, start_time="")
     out = TraceNormalizer().normalize(trace_batch([row]))
-    assert out.records == []                      # N3
+    assert out.records == []  # N3
 
 
 def test_window_preserved():
@@ -209,9 +229,9 @@ def test_log_roster_missing_empty_data():
         sources=["TextService_.log", "NginxThrift_.log"],  # media 파일은 관측 안 됨
     )
     roster = roster_of(normalizer.normalize(batch))
-    assert roster["media"] == (False, 0)   # missing
-    assert roster["nginx"] == (True, 0)    # empty
-    assert roster["text"] == (True, 1)     # data
+    assert roster["media"] == (False, 0)  # missing
+    assert roster["nginx"] == (True, 0)  # empty
+    assert roster["text"] == (True, 1)  # data
 
 
 def test_metric_roster_includes_node():
@@ -232,7 +252,7 @@ def test_trace_roster_single_artifact():
     normalizer = TraceNormalizer(expected_services=["nginx", "media"])
     roster = roster_of(normalizer.normalize(trace_batch([TRACE_ROW])))
     assert roster["nginx"] == (True, 1)
-    assert roster["media"] == (True, 0)     # 파일은 있으니 empty
+    assert roster["media"] == (True, 0)  # 파일은 있으니 empty
 
 
 def test_trace_roster_missing_when_no_file():
