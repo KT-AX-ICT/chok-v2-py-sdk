@@ -17,18 +17,25 @@ MODALITIES = ("log", "metric", "trace")
 
 
 def reset(source_root: Path) -> None:
-    """`<source_root>/{log,metric,trace}` 를 비운다.
+    """`<source_root>/{log,metric,trace}` 를 비운다. 디렉터리 자체는 즉시 재생성해 남긴다.
 
     **`source_root` 자체를 `rmtree` 에 넘기지 않는다.** 이것이 방어의 전부다 — 경로가 어디로 잘못
     잡히든 날아가는 것은 그 밑의 이 세 폴더로 한정된다. `.replay/` 는 대상이 아니라 이력이 남는다.
 
     CWD 하위인지는 검사하지 않는다. 상대경로는 정의상 항상 CWD 하위라 오설정을 걸러내지 못하면서
     (`./var` 는 엉뚱한 CWD 에서도 통과한다) 절대경로 override 만 거부한다 (`ADR-004`).
+
+    디렉터리를 지운 채로 두지 않는 이유 — SDK 의 `validate_source_layout()`(계획 06 §3)이 기동 시
+    이 세 디렉터리의 존재를 확인한다. 지운 채로 두면, 리플레이어가 아직 데이터를 안 쓴 모달리티
+    (trace 는 t0+126초까지 지연)만큼 그 사이에 rca-collect 가 기동 실패한다. `--reset` 을 먼저
+    실행하고 나서 rca-collect 를 띄우는 순서에서도 즉시 안전하도록, 내용만 비우고 빈 디렉터리는
+    바로 되돌려준다.
     """
     for name in MODALITIES:
         d = source_root / name
         if d.is_dir():
             shutil.rmtree(d)
+        d.mkdir(parents=True, exist_ok=True)
 
 
 class Writer:
