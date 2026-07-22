@@ -18,7 +18,7 @@ _SPEC.loader.exec_module(mock_ingest_server)
 def test_summarize_includes_window_trigger_and_counts():
     bundle = {
         "window": {"start": "2026-07-22T00:00:41", "end": "2026-07-22T00:06:41"},
-        "trigger_info": {"trigger_time": "2026-07-22T00:03:41", "triggered_by": ["log"]},
+        "triggerInfo": {"triggerTime": "2026-07-22T00:03:41", "triggeredBy": ["log"]},
         "logs": [{}, {}, {}],
         "metrics": [{}],
         "traces": [],
@@ -36,7 +36,7 @@ def test_summarize_includes_window_trigger_and_counts():
 def test_summarize_handles_multiple_triggered_modalities():
     bundle = {
         "window": {"start": "a", "end": "b"},
-        "trigger_info": {"trigger_time": "c", "triggered_by": ["log", "trace"]},
+        "triggerInfo": {"triggerTime": "c", "triggeredBy": ["log", "trace"]},
         "logs": [],
         "metrics": [],
         "traces": [{}],
