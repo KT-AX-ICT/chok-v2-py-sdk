@@ -106,7 +106,8 @@ class Runner:
             result = self.transport.send(bundle)
             if result.accepted:
                 logger.info(
-                    "번들 전송 완료: window=%s~%s logs=%d metrics=%d traces=%d",
+                    "번들 전송 완료: job_id=%s window=%s~%s logs=%d metrics=%d traces=%d",
+                    result.job_id,
                     bundle.window.start,
                     bundle.window.end,
                     len(bundle.logs),
@@ -154,6 +155,11 @@ def build_runner(settings: Settings | None = None) -> Runner:
             DETECTOR_TYPES[name](dict(condition))
             for name, condition in settings.trigger_conditions.items()
         ],
-        snapshot=SnapshotManager(company_code=settings.company_code),
+        snapshot=SnapshotManager(
+            company_code=settings.company_code,
+            log_truncation_enabled=settings.log_truncation_enabled,
+            log_truncation_cap=settings.log_truncation_cap,
+            log_truncation_backstop_cap=settings.log_truncation_backstop_cap,
+        ),
         transport=TransportClient(settings.collect_endpoint),
     )

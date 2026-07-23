@@ -60,6 +60,18 @@ class Settings(BaseSettings):
         "composepost", "socialgraph",
     ]
 
+    # 로그 truncate — 번들 용량 상한 보장 (2026-07-23 설계, service+level 축).
+    #
+    # 대상: level=="info" AND event_type=="normal_log" AND service 가 이번 세션 trigger 근거에
+    # 없는 레코드만. error/warn·service_start/connection_error·trigger 귀속 서비스는 절대 안 자름.
+    # cap 초과 시 균등 간격(stride) 샘플링 — head-N 이 아니라 창 전체 모양을 유지한다.
+    #
+    # backstop_cap 은 exempt 레코드를 포함한 서비스별 최후 상한 — 정상 동작에서는 절대 안 걸리고,
+    # trigger 귀속 서비스 자체가 폭주하는 미지의 사태에 대한 번들 크기 상한 보장용이다.
+    log_truncation_enabled: bool = True
+    log_truncation_cap: int = 5000
+    log_truncation_backstop_cap: int = 50000
+
 
 def load_settings() -> Settings:
     """설정 로드 진입점 (테스트에서 override 하기 쉽게 함수로 감쌈)."""
