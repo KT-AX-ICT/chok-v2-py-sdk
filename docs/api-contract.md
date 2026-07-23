@@ -21,6 +21,19 @@ Body: SnapshotBundle (schemas/snapshot.py 직렬화)
 
 서버는 `job_id` 를 생성해 FastAPI DB 에 job 진행상태를 저장하고, 멀티에이전트 RCA 를 개시한다.
 
+## companyCode (2026-07-23)
+
+`SnapshotBundle` 최상위에 `companyCode` 필드 추가 — 번들이 어느 회사(고객사) 데이터인지
+식별. 현재는 SN 데이터셋 하나뿐이라 `"SN001"` 고정값만 보낸다. 다른 회사 데이터셋은 추후
+추가 예정 — 그때는 `Settings.company_code`(env `RCA_COMPANY_CODE`)를 배포별로 다르게 설정.
+
+```json
+{ "bundleVersion": "1.1", "companyCode": "SN001", "window": { "...": "..." } }
+```
+
+서버 쪽 요청 모델이 extra field 를 거부(`extra="forbid"`)하도록 설정돼 있다면 이 필드도
+반영이 필요하다.
+
 ## 로그 truncate 메타 (2026-07-23, bundle_version 1.1)
 
 번들 크기 상한(MySQL 단건 INSERT 64MB) 대응으로 로그를 서비스별 볼륨 캡으로 truncate 할 수

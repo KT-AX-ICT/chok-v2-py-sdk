@@ -156,6 +156,7 @@ def build_runner(settings: Settings | None = None) -> Runner:
             for name, condition in settings.trigger_conditions.items()
         ],
         snapshot=SnapshotManager(
+            company_code=settings.company_code,
             log_truncation_enabled=settings.log_truncation_enabled,
             log_truncation_cap=settings.log_truncation_cap,
             log_truncation_backstop_cap=settings.log_truncation_backstop_cap,

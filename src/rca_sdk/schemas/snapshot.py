@@ -59,6 +59,8 @@ class BundleRecord(_CamelModel):
 
 class SnapshotBundle(_CamelModel):
     bundle_version: str = "1.1"          # 1.1 = SourceInterval 에 truncate 메타 추가 (2026-07-23)
+    company_code: str = "SN001"          # 번들 소속 회사 코드. 현재 SN 데이터셋 하나뿐이라
+                                          # SN001 고정 — 다른 회사 코드는 추후 추가 (2026-07-23)
     window: Window
     trigger_info: TriggerInfo
     modality_info: dict[str, ModalityInfo] = Field(default_factory=dict)  # log/metric/trace

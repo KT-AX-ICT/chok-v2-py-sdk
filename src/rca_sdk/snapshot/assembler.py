@@ -57,11 +57,13 @@ class SnapshotManager:
     def __init__(
         self,
         *,
+        company_code: str = "SN001",
         log_truncation_enabled: bool = True,
         log_truncation_cap: int = 5000,
         log_truncation_backstop_cap: int = 50000,
     ) -> None:
         self._session: _CaptureSession | None = None  # None = 진행 중 캡처 없음
+        self._company_code = company_code
         self._log_truncation_enabled = log_truncation_enabled
         self._log_cap = log_truncation_cap
         self._log_backstop_cap = log_truncation_backstop_cap
@@ -118,6 +120,7 @@ class SnapshotManager:
             logs = _truncate_logs(logs, exempt, self._log_cap, self._log_backstop_cap)
 
         return SnapshotBundle(
+            company_code=self._company_code,
             window=Window(start=session.window_start, end=session.window_end),
             trigger_info=TriggerInfo(
                 trigger_time=session.anchor,

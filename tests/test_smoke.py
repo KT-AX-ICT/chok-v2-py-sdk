@@ -82,6 +82,7 @@ def test_snapshot_bundle_fixed_shape():
         logs=[BundleRecord(timestamp=TS, service="user", raw='{"level":"error"}')],
     )
     assert bundle.bundle_version == "1.1"
+    assert bundle.company_code == "SN001"
     assert bundle.trigger_info.triggered_by == ["metric", "log"]
     assert isinstance(bundle.logs[0].raw, str)  # raw = JSON 을 문자열로 감싼 형태
 
