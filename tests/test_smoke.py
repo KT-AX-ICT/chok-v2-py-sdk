@@ -81,13 +81,13 @@ def test_snapshot_bundle_fixed_shape():
         trigger_info=TriggerInfo(trigger_time=TS, triggered_by=["metric", "log"]),
         logs=[BundleRecord(timestamp=TS, service="user", raw='{"level":"error"}')],
     )
-    assert bundle.bundle_version == "1.0"
+    assert bundle.bundle_version == "1.1"
     assert bundle.trigger_info.triggered_by == ["metric", "log"]
     assert isinstance(bundle.logs[0].raw, str)  # raw = JSON 을 문자열로 감싼 형태
 
 
 def test_submission_result():
-    assert SubmissionResult(accepted=True, job_id="j1").accepted is True
+    assert SubmissionResult(accepted=True, job_id=1).accepted is True
 
 
 @pytest.mark.parametrize("abc_cls", [Collector, Normalizer, Transport])
