@@ -154,6 +154,6 @@ def build_runner(settings: Settings | None = None) -> Runner:
             DETECTOR_TYPES[name](dict(condition))
             for name, condition in settings.trigger_conditions.items()
         ],
-        snapshot=SnapshotManager(),
+        snapshot=SnapshotManager(company_code=settings.company_code),
         transport=TransportClient(settings.collect_endpoint),
     )

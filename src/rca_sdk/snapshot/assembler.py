@@ -53,8 +53,9 @@ class _CaptureSession:
 
 
 class SnapshotManager:
-    def __init__(self) -> None:
+    def __init__(self, *, company_code: str = "SN001") -> None:
         self._session: _CaptureSession | None = None  # None = 진행 중 캡처 없음
+        self._company_code = company_code
 
     def register_triggers(self, evidences: list[TriggerEvidence], buffer: MemoryBuffer) -> None:
         if not evidences:
@@ -96,6 +97,7 @@ class SnapshotManager:
     def _assemble(self, session: _CaptureSession, post: MultimodalSnapshot) -> SnapshotBundle:
         pre = session.pre
         return SnapshotBundle(
+            company_code=self._company_code,
             window=Window(start=session.window_start, end=session.window_end),
             trigger_info=TriggerInfo(
                 trigger_time=session.anchor,

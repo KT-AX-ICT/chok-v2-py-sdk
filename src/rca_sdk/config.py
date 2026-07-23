@@ -28,6 +28,10 @@ class Settings(BaseSettings):
     # 원본 데이터셋 경로 - 리플레이어가 source_root로 전달할 데이터셋 경로
     dataset_root: str = "./datasets/sn"
 
+    # 번들 소속 회사 코드 (전송 계약 companyCode, 2026-07-23). 현재는 SN 데이터셋 하나뿐이라
+    # SN001 고정 — 회사가 늘어나면 배포별로 RCA_COMPANY_CODE 로 오버라이드한다.
+    company_code: str = "SN001"
+
     # detector 조건 (ADR-006 §미결 "실 임계값 도출" 의 확정치, 계획 05 R2)
     #
     # 임계는 코드에 박지 않고 여기서만 주입한다(계약 §0-5). detector_type -> condition.

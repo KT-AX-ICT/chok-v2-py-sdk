@@ -239,6 +239,23 @@ def test_missing_flows_from_real_normalizer_roster_through_real_buffer():
     assert statuses == {"nginx": "data", "media": "missing", "user": "missing"}
 
 
+def test_bundle_defaults_to_sn001_company_code():
+    buf = FakeBuffer()
+    m = SnapshotManager()
+    m.register_triggers([evidence(Modality.METRIC, ANCHOR)], buf)
+    bundle = m.finalize_ready(ANCHOR + timedelta(seconds=POST_SEC), buf)[0]
+    assert bundle.company_code == "SN001"
+
+
+def test_bundle_uses_injected_company_code():
+    buf = FakeBuffer()
+    m = SnapshotManager(company_code="OTHER001")
+    m.register_triggers([evidence(Modality.METRIC, ANCHOR)], buf)
+    bundle = m.finalize_ready(ANCHOR + timedelta(seconds=POST_SEC), buf)[0]
+    assert bundle.company_code == "OTHER001"
+    assert '"companyCode":"OTHER001"' in bundle.model_dump_json(by_alias=True).replace(" ", "")
+
+
 def test_finalize_after_close_needs_new_session():
     buf = FakeBuffer()
     m = SnapshotManager()
