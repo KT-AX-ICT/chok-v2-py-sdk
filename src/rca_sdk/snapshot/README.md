@@ -13,8 +13,8 @@ bundle_version, window{start,end}, trigger_info{trigger_time, triggered_by[]},
 modality_info{log,metric,trace: intervals[]}, logs/metrics/traces: [{timestamp, service, raw}]
 ```
 
-조립 로직(버퍼 → 번들 채우기)은 구현 단계에서 채운다. service 미명시 시 null/"" 로 보내 agent 가
-서비스를 guessing 하도록 한다.
+조립 로직(버퍼 → 번들 채우기)은 구현 단계에서 채운다. service 미명시 시 "" 로 보내 agent 가
+서비스를 guessing 하도록 한다 (FastAPI `ModalityItem.service` 가 str 이라 null 은 422 — 2026-07-23 수정).
 
 참고: [docs/snapshot-contract.md](../../../docs/snapshot-contract.md),
 `chok_기술문서/정규화 스키마` 의 "SnapShot 전송시 schema" 절

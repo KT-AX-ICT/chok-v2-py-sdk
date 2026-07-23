@@ -36,6 +36,8 @@ class NormalizedLog(BaseModel):
     code_loc: str | None = None          # "MediaService.cpp:44" 등, 없으면 None
     message: str | None = None
     target_service: str | None = None    # 메시지 내 대상 서비스, 없으면 None
+    line: str = ""                       # 원본 로그 줄 원문 — 번들 전송 시 raw 로 그대로 씀
+                                          # (정규화 필드 JSON 재직렬화보다 훨씬 작다, 2026-07-23)
     event_type: str | None = None        # "service_start" | "connection_error" | "normal_log"
 
 

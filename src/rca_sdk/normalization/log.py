@@ -112,4 +112,5 @@ class LogNormalizer(Normalizer):
             message=message,
             target_service=canonical_service(target.group(1)) if target else None,
             event_type=event_type,
+            line=raw,
         )
