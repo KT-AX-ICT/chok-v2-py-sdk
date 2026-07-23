@@ -71,5 +71,5 @@ class SubmissionResult(BaseModel):
     """Transport.send 결과."""
 
     accepted: bool
-    job_id: str | None = None
+    job_id: int | None = None  # 서버 DB PK. 추적용 — 전송 성공 로그에 남긴다 (2026-07-23).
     error: str | None = None

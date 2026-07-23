@@ -13,8 +13,11 @@ Body: SnapshotBundle (schemas/snapshot.py 직렬화)
 ## 응답 (잠정)
 
 ```json
-{ "job_id": "…", "accepted": true }
+{ "job_id": 2, "accepted": true }
 ```
+
+`job_id` 는 서버 DB PK(int) — 2026-07-23 실물 E2E 로 확인(원래 SDK 는 문자열로 가정하고 있었다).
+전송 성공 운영 로그(`번들 전송 완료: job_id=...`)에 남아 서버 쪽과 상관관계 추적에 쓴다.
 
 서버는 `job_id` 를 생성해 FastAPI DB 에 job 진행상태를 저장하고, 멀티에이전트 RCA 를 개시한다.
 

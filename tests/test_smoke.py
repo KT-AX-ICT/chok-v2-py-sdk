@@ -87,7 +87,7 @@ def test_snapshot_bundle_fixed_shape():
 
 
 def test_submission_result():
-    assert SubmissionResult(accepted=True, job_id="j1").accepted is True
+    assert SubmissionResult(accepted=True, job_id=1).accepted is True
 
 
 @pytest.mark.parametrize("abc_cls", [Collector, Normalizer, Transport])

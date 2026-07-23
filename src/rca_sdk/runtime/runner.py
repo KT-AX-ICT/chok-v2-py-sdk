@@ -106,7 +106,8 @@ class Runner:
             result = self.transport.send(bundle)
             if result.accepted:
                 logger.info(
-                    "번들 전송 완료: window=%s~%s logs=%d metrics=%d traces=%d",
+                    "번들 전송 완료: job_id=%s window=%s~%s logs=%d metrics=%d traces=%d",
+                    result.job_id,
                     bundle.window.start,
                     bundle.window.end,
                     len(bundle.logs),
