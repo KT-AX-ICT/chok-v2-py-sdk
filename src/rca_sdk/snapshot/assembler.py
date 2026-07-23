@@ -116,7 +116,7 @@ def _rec(record: NormalizedLog | NormalizedTrace | NormalizedMetric) -> BundleRe
     raw = record.line if isinstance(record, NormalizedLog) else record.model_dump_json()
     return BundleRecord(
         timestamp=record.timestamp,
-        service=record.service or "",  # BundleRecord.service 는 non-null — 정규화 단계의 None 은 여기서 흡수
+        service=record.service or "",  # non-null 필드 — 정규화 단계의 None 은 여기서 흡수
         raw=raw,
     )
 
