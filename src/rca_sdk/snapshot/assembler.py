@@ -110,11 +110,14 @@ class SnapshotManager:
 
 
 def _rec(record: NormalizedLog | NormalizedTrace | NormalizedMetric) -> BundleRecord:
-    # 정규화 레코드 → 전송용 얇은 레코드. raw 는 원본이 없어 정규화 레코드를 JSON 직렬화한 것.
+    # 정규화 레코드 → 전송용 얇은 레코드. 로그는 원본 줄이 있어 그걸 raw 로 그대로 쓴다 —
+    # 정규화 필드를 다시 JSON 직렬화하면 키 이름·이스케이프 이중 오버헤드로 용량이 부풀었다
+    # (실측 49MB 원본 → 114MB 번들, 2026-07-23). metric/trace 는 원본이 없어 그대로 유지.
+    raw = record.line if isinstance(record, NormalizedLog) else record.model_dump_json()
     return BundleRecord(
         timestamp=record.timestamp,
-        service=record.service,
-        raw=record.model_dump_json(),
+        service=record.service or "",  # BundleRecord.service 는 non-null — 정규화 단계의 None 은 여기서 흡수
+        raw=raw,
     )
 
 

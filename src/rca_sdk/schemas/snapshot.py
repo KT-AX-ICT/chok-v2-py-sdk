@@ -48,7 +48,8 @@ class BundleRecord(_CamelModel):
     """전송용 얇은 레코드."""
 
     timestamp: datetime
-    service: str | None = None           # 없으면 None/"" (중앙 agent 가 guessing)
+    service: str = ""                    # 없으면 "" (중앙 agent 가 guessing). FastAPI 쪽
+                                          # ModalityItem.service 가 str(널 불허)라 null 은 422.
     raw: str                             # 원본 JSON 을 문자열로 감싼 형태
 
 
