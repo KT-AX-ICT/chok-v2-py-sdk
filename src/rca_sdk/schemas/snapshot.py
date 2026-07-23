@@ -38,6 +38,10 @@ class SourceInterval(_CamelModel):
     status: str                          # "missing" | "empty" | "data"
     start: datetime | None = None
     end: datetime | None = None
+    total_count: int | None = None       # truncate 전 원래 건수 (log truncate 도입, 2026-07-23)
+    record_count: int | None = None      # 번들에 실제 담긴 건수. record_count < total_count 면
+                                          # truncate 된 것 — 서버 요청으로 별도 bool 필드는 뺐다
+                                          # (두 카운트만으로 판별 가능, 2026-07-23).
 
 
 class ModalityInfo(_CamelModel):
@@ -54,7 +58,7 @@ class BundleRecord(_CamelModel):
 
 
 class SnapshotBundle(_CamelModel):
-    bundle_version: str = "1.0"
+    bundle_version: str = "1.1"          # 1.1 = SourceInterval 에 truncate 메타 추가 (2026-07-23)
     window: Window
     trigger_info: TriggerInfo
     modality_info: dict[str, ModalityInfo] = Field(default_factory=dict)  # log/metric/trace

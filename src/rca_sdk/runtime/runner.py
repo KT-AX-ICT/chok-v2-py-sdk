@@ -154,6 +154,10 @@ def build_runner(settings: Settings | None = None) -> Runner:
             DETECTOR_TYPES[name](dict(condition))
             for name, condition in settings.trigger_conditions.items()
         ],
-        snapshot=SnapshotManager(),
+        snapshot=SnapshotManager(
+            log_truncation_enabled=settings.log_truncation_enabled,
+            log_truncation_cap=settings.log_truncation_cap,
+            log_truncation_backstop_cap=settings.log_truncation_backstop_cap,
+        ),
         transport=TransportClient(settings.collect_endpoint),
     )
