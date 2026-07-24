@@ -42,12 +42,12 @@ def _one_dir(dataset_root: Path, modality: str, prefix: str) -> Path | None:
     return Path(hits[0])
 
 
-def discover(dataset_root: Path, scenario: str) -> list[Source]:
-    """시나리오의 재생 대상 전부. 존재하는 파일만 담는다 (Code_Stop 은 MediaService_.log 가 없다).
+def discover_prefix(dataset_root: Path, prefix: str) -> list[Source]:
+    """디렉터리 prefix의 재생 대상 전부를 공통 SN 레이아웃에서 찾는다.
 
-    빈 리스트면 데이터셋이 없다는 뜻 — 호출부(CLI)가 경로·CWD 를 알리고 실패한다.
+    one-shot replayer의 장애 3종뿐 아니라 infinite simulator의 normal baseline도 같은
+    탐색 규칙을 사용한다. 존재하는 파일만 담으며, 빈 리스트면 해당 데이터셋이 없다.
     """
-    prefix = SCENARIOS[scenario]
     sources: list[Source] = []
 
     log_dir = _one_dir(dataset_root, "log", prefix)
@@ -68,3 +68,8 @@ def discover(dataset_root: Path, scenario: str) -> list[Source]:
             sources.append(Source("trace", p.name, p, "csv", ts_column="start_time"))
 
     return sources
+
+
+def discover(dataset_root: Path, scenario: str) -> list[Source]:
+    """기존 CLI scenario 이름으로 찾는 호환 진입점."""
+    return discover_prefix(dataset_root, SCENARIOS[scenario])
