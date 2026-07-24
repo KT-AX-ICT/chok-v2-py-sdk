@@ -79,6 +79,22 @@ RCA_COLLECT_ENDPOINT=http://<서버 주소>:8000/ingest scripts/run_local_demo.s
 `run_local_demo.sh`는 리플레이어로 `var/`를 채우면서 동시에 `rca-collect`를 띄우고,
 `Ctrl+C` 한 번으로 둘 다 종료한다. `duration_sec`을 생략하면 데이터셋 끝까지 재생한다.
 
+### 시나리오 선택 없는 연속 데모
+
+SDK 저장소에 포함된 AnoMod 정상 baseline과 장애 3종을
+`normal → cpu → normal → kill_media → normal → code_media` 순서로 계속 재생하려면:
+
+```bash
+scripts/run_demo_server.sh
+```
+
+별도 설정이 없으면 실행마다 `var/demo-runs/<실행ID>`를 만들고 기존 `rca-collect`와 새
+simulator가 같은 경로를 사용한다. 자세한 순환 시간과 옵션은
+[demo/simulator/README.md](demo/simulator/README.md)를 참고한다.
+
+> TODO(timestamp-contract): SDK/FastAPI/Spring timestamp 계약은 담당 서비스에서 별도로
+> 정리해야 한다. 계약 수정 전에는 SDK report bundle 생성 뒤 Spring 저장이 422로 실패할 수 있다.
+
 ## MVP 범위
 
 SN(SocialNetwork) 데이터 기준, DB 관련 에러 제외, 세 결함군 탐지 검증:

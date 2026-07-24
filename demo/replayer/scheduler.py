@@ -76,8 +76,11 @@ def measure_start(loaded: list[Loaded]) -> datetime:
     return measure_t0(mins)
 
 
-def _shift_line(lo: Loaded, line: str, new_ts: datetime) -> str:
+def shift_line(lo: Loaded, line: str, new_ts: datetime) -> str:
+    """Loaded의 원본 형식에 맞춰 timestamp 하나만 옮기는 공통 진입점."""
     if lo.source.kind == "csv":
+        if lo.ts_index is None:
+            raise ValueError(f"timestamp column 없음: {lo.source.path}")
         return shift_csv_line(line, lo.ts_index, new_ts)
     if lo.source.kind == "nginx":
         return shift_nginx_line(line, new_ts)
@@ -125,6 +128,6 @@ def replay(
             sleep(wait)
         # 헤더는 파일이 비었을 때만 (open 이 멱등, 내부에서 판단). 데이터 줄 전에 반드시 선행한다.
         writer.open(lo.source.modality, lo.source.filename, header=lo.header)
-        writer.write(lo.source.modality, lo.source.filename, _shift_line(lo, r.line, new_ts))
+        writer.write(lo.source.modality, lo.source.filename, shift_line(lo, r.line, new_ts))
         written += 1
     return written

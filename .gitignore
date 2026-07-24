@@ -29,9 +29,9 @@ Thumbs.db
 scratch/
 *.local.json
 
-# 데이터셋 (ADR-004) — 전체는 833MB 라 MVP 3종의 log/metric/trace 만 커밋한다.
-# 나머지 시나리오와 api_responses/coverage_data 는 별도 공유. 폴더 구조는 README 로 유지.
-# baseline 데이터셋(Normal_Baseline_*)도 커밋하지 않는다 — 로컬 배치만, 별도 공유.
+# 데이터셋 (ADR-004) — 전체는 833MB 라 MVP 3종 + SN 정상 baseline 의
+# log/metric/trace 만 커밋한다. 나머지 시나리오와 api_responses/coverage_data 는
+# 별도 공유하고 폴더 구조는 README 로 유지한다.
 datasets/sn/*/*
 datasets/sn/*/Normal_Baseline_*/
 !datasets/sn/*/README.md
@@ -44,6 +44,9 @@ datasets/sn/*/Normal_Baseline_*/
 !datasets/sn/trace_data/Perf_CPU_Contention_*/
 !datasets/sn/trace_data/Svc_Kill_Media_*/
 !datasets/sn/trace_data/Code_Stop_MediaService_*/
+!datasets/sn/log_data/Normal_Baseline_*/
+!datasets/sn/metric_data/Normal_Baseline_*/
+!datasets/sn/trace_data/Normal_Baseline_*/
 
 # 리플레이어 출력 — 실행 시 생성되는 런타임 산출물
 var/
